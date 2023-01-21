@@ -1,0 +1,39 @@
+{{ define "header" }}
+  {{ partial "topnav" }}
+{{ end }}
+{{ define "main" }}
+  <main class="prose dark:prose-invert container">
+    <header class="text-center mb-8">
+      <span class="flex justify-between">
+        <span class="btn btn-lg btn-purple btn-display glow">Hoodies 🧥</span>
+        <span class="btn btn-lg btn-pink btn-display glow">Ladys 👗</span>
+        <span class="btn btn-lg btn-green btn-display glow">Mens 👨</span>
+        <span class="btn btn-lg btn-yellow btn-display glow">Kids 👼</span>
+        <span class="btn btn-lg btn-red btn-display glow">Shoals 🧶</span>
+        <span class="btn btn-lg btn-blue btn-display glow">Jewellery 💎</span>
+      </span>
+    </header>
+
+    <div class="mx-auto w-24 h-1 my-12 bg-gradient-to-r from-gray5 to-gray4 rounded-full"></div>
+
+
+    <ul class="grid-list justify-items-center pl-0">
+      {{ $paginator := .Paginate (where .Pages "Type" "categories") 20 }}
+
+      {{ range $paginator.Pages }}
+
+        <li class="list-none p-0">
+          {{ partial "card" (dict "context" .) }}
+        </li>  
+      {{ end }}
+    </ul>
+
+    {{ template "_internal/pagination.html" . }}
+
+
+  </main>
+{{ end }}
+
+{{ define "footer" }}
+	{{ partial "footer" }}
+{{ end }}
