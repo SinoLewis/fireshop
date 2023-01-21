@@ -2,6 +2,9 @@
 
 The Fireshop online shop platform frontend built with Svelte, Tailwind, Hugo, Firebase, & Flamethrower.
 
+### Acknowlodgements
+Much of the project acquaintance comes from the [fireship.io](github.com/fireship-io/fireship.io) repo.
+
 ## Dev Assistance
 
 All static content is managed with Hugo in the `content` dir. You can easily extend your ideas directly by forking this repo.
