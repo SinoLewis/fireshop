@@ -47,7 +47,6 @@ export * from "./components/ui/img-reveal.svelte";
 export * from "./components/ui/scroll-show.svelte";
 export * from "./components/ui/discord-count.svelte";
 export * from "./components/ui/scroll-up.svelte";
-export * from "./components/ui/hi-mom.svelte";
 
 // Shared
 export * from "./components/ui/loading-spinner.svelte";
