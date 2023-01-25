@@ -1,16 +1,24 @@
 # Build stage
-FROM node:14-alpine as build-stage
+FROM node:19.4.0-buster as build-stage
 
-RUN apk add --no-cache git
+RUN apt update && apt install -y git curl
+
+RUN curl -sSL https://github.com/gohugoio/hugo/releases/download/v0.109.0/hugo_0.109.0_linux-amd64.deb -o hugo.deb \
+    && dpkg -i hugo.deb \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY . /app
 
 WORKDIR /app
 
-RUN npm install && npm run build
+RUN hugo version
+
+RUN npm install -g pnpm && pnpm install
+
+RUN pnpm run build
 
 # Production stage
-FROM node:14-alpine
+FROM node:19.4.0-buster
 
 COPY --from=build-stage /app/public /app
 
