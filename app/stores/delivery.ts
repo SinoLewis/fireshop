@@ -99,7 +99,7 @@ interface StateChangeHistory {
   value: string;
 }
 
-interface VerifyParcel {
+interface ValidateParcel {
   address: CustomerAddress;
   pickupDetails: PickupDetails;
 }
@@ -116,7 +116,21 @@ interface Courier {
   position: Position;
   link: string;
 }
+interface WorkAreas {
+  workingAreas: WorkingArea[];
+}
 
+export interface WorkingArea {
+  code: string;
+  cityName: string;
+  polygons: string[];
+  workingTime: WorkingTime;
+}
+
+export interface WorkingTime {
+  from: string;
+  duration: number;
+}
 interface Simulate {
   success: {
     code: string;
@@ -131,6 +145,7 @@ interface Simulate {
 // TODO: if cancelParcel; if < ON_DELIVERY; set parcel null
 const parcel = writable<Parcel>(null);
 const courier = writable<Courier>(null);
+const workAreas = writable<WorkAreas>(null);
 // TODO: DEV ONLY
 const simulate = writable<Simulate>(null);
 
@@ -140,7 +155,7 @@ async function clearCart() {
 }
 const createParcel = async (body: Parcel) => {
   try {
-    let response = await fetch("http://localhost:3000/parcel", {
+    let response = await fetch("http://localhost:3000/parcels", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -171,20 +186,20 @@ const createParcel = async (body: Parcel) => {
     return null;
   }
 };
-const verifyParcel = async (
+const validateParcel = async (
   customerAddress: CustomerAddress,
   pickupDetails: PickupAddress
 ) => {
   try {
-    let response = await fetch("http://localhost:3000/parcel/verify", {
+    let response = await fetch("http://localhost:3000/parcels/validation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ customerAddress, pickupDetails }),
     });
-    let data: VerifyParcel = await response.json();
-    if (response.status === 200 || 201) {
+    let data: ValidateParcel = await response.json();
+    if (response.status === 200) {
       parcel.update((value) => {
         return {
           ...value,
@@ -202,10 +217,36 @@ const verifyParcel = async (
     return null;
   }
 };
+const workingAreas = async (trackingNumber: string): Promise<string> => {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/parcels/working-areas`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    if (response.status === 200) {
+      workAreas.update((value) => {
+        return { ...value, workingAreas: data.workingAreas };
+      });
+      console.log("GET: ", data);
+      return data.link;
+    } else {
+      console.log(`ERROR: ${response.status}: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error("GET: ", error.message);
+    return null;
+  }
+};
 const cancelParcel = async (trackingNumber: string) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/parcel/${trackingNumber}`,
+      `http://localhost:3000/parcels/${trackingNumber}`,
       {
         method: "POST",
         headers: {
@@ -214,7 +255,7 @@ const cancelParcel = async (trackingNumber: string) => {
       }
     );
     const data = await response.json();
-    if (response.status === 200 || 201) {
+    if (response.status === 200) {
       parcel.set(null);
       console.log("GET: ", data);
     } else {
@@ -231,7 +272,7 @@ const statusParcel = async (
 ): Promise<StateChangeHistory> => {
   try {
     const response = await fetch(
-      `http://localhost:3000/parcel/${trackingNumber}`,
+      `http://localhost:3000/parcels/${trackingNumber}`,
       {
         method: "GET",
         headers: {
@@ -240,7 +281,7 @@ const statusParcel = async (
       }
     );
     const data = await response.json();
-    if (response.status === 200 || 201) {
+    if (response.status === 200) {
       parcel.set(data);
       console.log("GET: ", data);
       return data.stateChangeHistory;
@@ -264,7 +305,7 @@ const infoCourier = async (trackingNumber: string): Promise<Asignee> => {
       }
     );
     const data = await response.json();
-    if (response.status === 200 || 201) {
+    if (response.status === 200) {
       courier.update((value) => {
         return { ...value, assignedCourier: data.assignedCourier };
       });
@@ -290,7 +331,7 @@ const postionCourier = async (trackingNumber: string): Promise<Position> => {
       }
     );
     const data = await response.json();
-    if (response.status === 200 || 201) {
+    if (response.status === 200) {
       courier.update((value) => {
         return { ...value, position: data.position };
       });
@@ -317,7 +358,7 @@ const trackLink = async (trackingNumber: string): Promise<string> => {
       }
     );
     const data = await response.json();
-    if (response.status === 200 || 201) {
+    if (response.status === 200) {
       courier.update((value) => {
         return { ...value, link: data.link };
       });
@@ -344,7 +385,7 @@ const simSuccess = async (trackingNumber: string) => {
       }
     );
     const data = await response.json();
-    if (response.status === 200 || 201) {
+    if (response.status === 200) {
       simulate.update((value) => {
         return { ...value, success: data.success };
       });
@@ -370,7 +411,7 @@ const simFail = async (trackingNumber: string) => {
       }
     );
     const data = await response.json();
-    if (response.status === 200 || 201) {
+    if (response.status === 200) {
       simulate.update((value) => {
         return { ...value, fail: data.fail };
       });
@@ -395,7 +436,7 @@ const testPost = async (user) => {
       body: JSON.stringify({ user }),
     });
     const data = await response.json();
-    if (response.status === 200 || 201) {
+    if (response.status === 200) {
       console.log("GET: ", data);
     } else {
       console.log(`ERROR: ${response.status}: ${response.statusText}`);
@@ -415,7 +456,7 @@ const testGet = async () => {
       },
     });
     const data = await response.json();
-    if (response.status === 200 || 201) {
+    if (response.status === 200) {
       console.log("GET: ", data);
       return data.position;
     } else {
@@ -426,6 +467,6 @@ const testGet = async () => {
     return null;
   }
 };
-export { parcel, verifyParcel, createParcel, statusParcel };
+export { parcel, validateParcel, createParcel, statusParcel };
 
 export type { Parcel, PickupAddress };
