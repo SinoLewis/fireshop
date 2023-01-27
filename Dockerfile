@@ -11,19 +11,10 @@ COPY . /app
 
 WORKDIR /app
 
-RUN hugo version
-
 RUN npm install -g pnpm && pnpm install
 
 RUN pnpm run build
 
-# Production stage
-FROM node:19.4.0-buster
+EXPOSE 6969
 
-COPY --from=build-stage /app/public /app
-
-WORKDIR /app
-
-EXPOSE 1313
-
-CMD ["npm", "run", "prod"]
+CMD ["npm", "run", "hugo"]
