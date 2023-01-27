@@ -11,12 +11,16 @@
 
 <!-- TODO: Add favourite fuctionality -->
 {#if $cart.cart_products[product_title]}
-  <button class="btn btn-red btn-sm glow" on:click={removeItem}>
-    🗑️ Remove</button
-  >
-  <button class="btn btn-red btn-sm glow" on:click={minusItem}> ➖ </button>
-  <div class="tag qty">{$cart.cart_products[product_title]?.quantity | 0}</div>
-  <button class="btn btn-blue btn-sm glow" on:click={addItem}> ➕ </button>
+  <div class="btns">
+    <button class="btn btn-red btn-sm glow" on:click={removeItem}> 🗑️ Remove </button>
+    <span>
+      <button class="btn btn-red btn-sm glow" on:click={minusItem}> ➖ </button>
+      <div class="tag qty">
+        {$cart.cart_products[product_title]?.quantity | 0}
+      </div>
+      <button class="btn btn-blue btn-sm glow" on:click={addItem}> ➕ </button>
+    </span>
+  </div>
 {:else}
   <button class="btn btn-blue btn-sm glow" on:click={addItem}> 🛒 Add </button>
 {/if}
@@ -61,5 +65,8 @@
     &.glow {
       @apply hover:drop-shadow-[0_0_5px_rgba(168,85,247,0.5)];
     }
+  }
+  .btns {
+    @apply flex justify-between p-2;
   }
 </style>

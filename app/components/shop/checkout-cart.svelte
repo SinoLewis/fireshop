@@ -1,7 +1,7 @@
 <svelte:options tag="checkout-cart" />
 
 <script lang="ts">
-  import { cart, products } from "../../stores";
+  import { cart } from "../../stores";
 
   let items = Object.keys($cart.cart_products);
 </script>
@@ -16,69 +16,41 @@
           alt="Selected Image"
         />
       </div>
-      <div class="description">
-        <h3>{item}</h3>
-        <p>{$cart.cart_products[item].id}</p>
-        <span class="price"
-          >Ksh {$cart.cart_products[item].total_price | 0}</span
-        >
-        <div class="actions">
-          <cart-buttons product_title={item} />
-        </div>
-      </div>
+      <span>
+        <h4>{item}</h4>
+      </span>
+      <!-- <p>
+        Many desktop publishing packages and web page editors now use Lorem
+        Ipsum as their default model text, and a search.
+      </p> -->
+      <span class="price">
+        <h4>Ksh {$cart.cart_products[item].total_price | 0}</h4>
+      </span>
+      <cart-buttons class="btns" product_title={item} />
     </div>
   {/if}
 {/each}
 
 <style lang="scss">
   .content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    // 4 elements in 2 rows: img, desc, price, btns
+    // sm: 1st row = 2 cols, 2nd row = btns
+    // md: 1st row = 3 cols, 2nd row = btns
+    @apply grid gap-x-4 grid-cols-3;
     border: 2px solid #ffffff;
-    padding: 1rem;
-    margin: 0.5rem;
     border-radius: 0.375rem;
     transition: border-color 0.15s ease-in-out;
     &:hover {
       border-color: #737373;
     }
-  }
-  .image-selector {
-    width: 320px;
-    height: 200px;
     img {
-      @apply rounded-l-md w-full h-full object-cover;
+      @apply rounded-l-md w-full object-cover;
     }
-  }
-  .description {
-    flex: 1 0 auto;
-    padding: 0.5rem;
-    text-align: center;
-
-    h3 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    p {
-      font-size: 0.875rem;
-      color: #737373;
-      margin-bottom: 0.5rem;
-    }
-
     .price {
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: #01b1b3;
+      @apply text-right px-2;
     }
-  }
-
-  .actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 0.5rem;
+    .btns {
+      @apply col-start-2 col-end-4;
+    }
   }
 </style>

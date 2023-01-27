@@ -8,7 +8,7 @@
 </script>
 
 <div>
-  <div class="box box-btns">
+  <div class="box-btns">
     <btn class="btn btn-lg btn-blue btn-display glow" on:click={tab1}
       >🛒 Cart</btn
     >
@@ -33,11 +33,11 @@
 </div>
 
 <style lang="scss">
-  .box {
-    @apply bg-gray6 shadow-lg border-l-4 border-gray5 p-6 rounded-r-lg;
-  }
+  // .box {
+  //   @apply bg-gray6 shadow-lg border-l-4 border-gray5 p-6 rounded-r-lg;
+  // }
   .box-btns {
-    @apply flex justify-between;
+    @apply flex justify-around p-4;
   }
   .btn {
     @apply bg-white text-black uppercase font-bold inline-flex cursor-pointer text-center shadow-md no-underline px-5 py-2 transition-all duration-150 my-0.5;
@@ -46,7 +46,7 @@
     }
   }
   .btn-lg {
-    @apply px-5 py-3 text-xl;
+    @apply text-xs md:text-xl;
   }
   .glow {
     @apply hover:translate-y-[-2px];

@@ -98,11 +98,6 @@ interface StateChangeHistory {
   reason: string;
   value: string;
 }
-
-interface ValidateParcel {
-  address: CustomerAddress;
-  pickupDetails: PickupDetails;
-}
 interface Asignee {
   courierName: string;
   phone: number;
@@ -116,18 +111,15 @@ interface Courier {
   position: Position;
   link: string;
 }
-interface WorkAreas {
-  workingAreas: WorkingArea[];
-}
 
-export interface WorkingArea {
+interface WorkingArea {
   code: string;
   cityName: string;
   polygons: string[];
   workingTime: WorkingTime;
 }
 
-export interface WorkingTime {
+interface WorkingTime {
   from: string;
   duration: number;
 }
@@ -142,10 +134,60 @@ interface Simulate {
   };
 }
 
+// Addres API types
+interface Result {
+  datasource: Datasource;
+  country: string;
+  country_code: string;
+  lon: number;
+  lat: number;
+  name: string;
+  formatted: string;
+  address_line1: string;
+  address_line2: string;
+  category: string;
+  timezone: Timezone;
+  result_type: string;
+  rank: Rank;
+  place_id: string;
+  bbox: Bbox;
+}
+
+interface Datasource {
+  sourcename: string;
+  attribution: string;
+  license: string;
+  url: string;
+}
+
+interface Timezone {
+  name: string;
+  name_alt: string;
+  offset_STD: string;
+  offset_STD_seconds: number;
+  offset_DST: string;
+  offset_DST_seconds: number;
+  abbreviation_STD: string;
+  abbreviation_DST: string;
+}
+
+interface Rank {
+  importance: number;
+  confidence: number;
+  match_type: string;
+}
+
+interface Bbox {
+  lon1: number;
+  lat1: number;
+  lon2: number;
+  lat2: number;
+}
+
 // TODO: if cancelParcel; if < ON_DELIVERY; set parcel null
 const parcel = writable<Parcel>(null);
 const courier = writable<Courier>(null);
-const workAreas = writable<WorkAreas>(null);
+const workAreas = writable<WorkingArea[]>(null);
 // TODO: DEV ONLY
 const simulate = writable<Simulate>(null);
 
@@ -180,14 +222,15 @@ const createParcel = async (body: Parcel) => {
         type: "error",
       });
       console.log(`POST: ${response.status}: ${response.statusText}`);
+      return null;
     }
   } catch (error) {
     console.error("POST: ", error.message);
-    return null;
+    return;
   }
 };
 const validateParcel = async (
-  customerAddress: CustomerAddress,
+  address: CustomerAddress,
   pickupDetails: PickupAddress
 ) => {
   try {
@@ -196,9 +239,9 @@ const validateParcel = async (
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ customerAddress, pickupDetails }),
+      body: JSON.stringify({ address, pickupDetails }),
     });
-    let data: ValidateParcel = await response.json();
+    let data = await response.json();
     if (response.status === 200) {
       parcel.update((value) => {
         return {
@@ -211,13 +254,14 @@ const validateParcel = async (
       return data;
     } else {
       console.log(`POST: ${response.status}: ${response.statusText}`);
+      return null;
     }
   } catch (error) {
     console.error("POST: ", error.message);
-    return null;
+    return;
   }
 };
-const workingAreas = async (trackingNumber: string): Promise<string> => {
+const workingAreas = async (): Promise<WorkingArea[]> => {
   try {
     const response = await fetch(
       `http://localhost:3000/parcels/working-areas`,
@@ -234,13 +278,14 @@ const workingAreas = async (trackingNumber: string): Promise<string> => {
         return { ...value, workingAreas: data.workingAreas };
       });
       console.log("GET: ", data);
-      return data.link;
+      return data.workingAreas;
     } else {
       console.log(`ERROR: ${response.status}: ${response.statusText}`);
+      return null;
     }
   } catch (error) {
     console.error("GET: ", error.message);
-    return null;
+    return;
   }
 };
 const cancelParcel = async (trackingNumber: string) => {
@@ -258,13 +303,14 @@ const cancelParcel = async (trackingNumber: string) => {
     if (response.status === 200) {
       parcel.set(null);
       console.log("GET: ", data);
+      return "SUCCESS";
     } else {
       console.log(`ERROR: ${response.status}: ${response.statusText}`);
       return { code: response.status, description: response.statusText };
     }
   } catch (error) {
     console.error("GET: ", error.message);
-    return null;
+    return;
   }
 };
 const statusParcel = async (
@@ -287,10 +333,11 @@ const statusParcel = async (
       return data.stateChangeHistory;
     } else {
       console.log(`ERROR: ${response.status}: ${response.statusText}`);
+      return null;
     }
   } catch (error) {
     console.error("GET: ", error.message);
-    return null;
+    return;
   }
 };
 const infoCourier = async (trackingNumber: string): Promise<Asignee> => {
@@ -313,10 +360,11 @@ const infoCourier = async (trackingNumber: string): Promise<Asignee> => {
       return data.assignedCourier;
     } else {
       console.log(`ERROR: ${response.status}: ${response.statusText}`);
+      return null;
     }
   } catch (error) {
     console.error("GET: ", error.message);
-    return null;
+    return;
   }
 };
 const postionCourier = async (trackingNumber: string): Promise<Position> => {
@@ -339,10 +387,11 @@ const postionCourier = async (trackingNumber: string): Promise<Position> => {
       return data.position;
     } else {
       console.log(`ERROR: ${response.status}: ${response.statusText}`);
+      return null;
     }
   } catch (error) {
     console.error("GET: ", error.message);
-    return null;
+    return;
   }
 };
 
@@ -366,10 +415,11 @@ const trackLink = async (trackingNumber: string): Promise<string> => {
       return data.link;
     } else {
       console.log(`ERROR: ${response.status}: ${response.statusText}`);
+      return null;
     }
   } catch (error) {
     console.error("GET: ", error.message);
-    return null;
+    return;
   }
 };
 
@@ -393,10 +443,11 @@ const simSuccess = async (trackingNumber: string) => {
       return data.success;
     } else {
       console.log(`ERROR: ${response.status}: ${response.statusText}`);
+      return null;
     }
   } catch (error) {
     console.error("GET: ", error.message);
-    return null;
+    return;
   }
 };
 const simFail = async (trackingNumber: string) => {
@@ -419,54 +470,65 @@ const simFail = async (trackingNumber: string) => {
       return data;
     } else {
       console.log(`ERROR: ${response.status}: ${response.statusText}`);
+      return null;
     }
   } catch (error) {
     console.error("GET: ", error.message);
-    return null;
+    return;
   }
 };
 
-const testPost = async (user) => {
-  try {
-    const response = await fetch("http://localhost:3000/users/21", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ user }),
-    });
-    const data = await response.json();
-    if (response.status === 200) {
-      console.log("GET: ", data);
-    } else {
-      console.log(`ERROR: ${response.status}: ${response.statusText}`);
-    }
-  } catch (error) {
-    console.error("GET: ", error.message);
-    return null;
-  }
-};
+// const testPost = async (user) => {
+//   try {
+//     const response = await fetch("http://localhost:3000/users/21", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ user }),
+//     });
+//     const data = await response.json();
+//     if (response.status === 200) {
+//       console.log("GET: ", data);
+//     } else {
+//       console.log(`ERROR: ${response.status}: ${response.statusText}`);
+//       return null;
+// }
+//   } catch (error) {
+//     console.error("GET: ", error.message);
+//     return ;
+//   }
+// };
 
-const testGet = async () => {
-  try {
-    const response = await fetch("http://localhost:3000/users/21", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    if (response.status === 200) {
-      console.log("GET: ", data);
-      return data.position;
-    } else {
-      console.log(`ERROR: ${response.status}: ${response.statusText}`);
-    }
-  } catch (error) {
-    console.error("GET: ", error.message);
-    return null;
-  }
-};
-export { parcel, validateParcel, createParcel, statusParcel };
+// const testGet = async () => {
+//   try {
+//     const response = await fetch("http://localhost:3000/users/21", {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
+//     const data = await response.json();
+//     if (response.status === 200) {
+//       console.log("GET: ", data);
+//       return data.position;
+//     } else {
+//       console.log(`ERROR: ${response.status}: ${response.statusText}`);
+//       return null;
+//     }
+//   } catch (error) {
+//     console.error("GET: ", error.message);
+//     return ;
+//   }
+// };
+export { parcel, validateParcel, createParcel, workingAreas, cancelParcel };
 
-export type { Parcel, PickupAddress };
+export type {
+  Parcel,
+  Result,
+  CustomerAddress,
+  Contact,
+  PackageDetails,
+  Price,
+  PickupDetails,
+};
