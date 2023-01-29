@@ -107,3 +107,25 @@ export async function updateCart(cart: Cart) {
     sendMessageToWebhook("ERROR", error.message);
   }
 }
+
+async function updateProductQuantity(cart: Cart) {
+  Object.values(cart.cart_products).forEach(async (item) => {
+    try {
+      const { data: product, error: p_error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("id", item.id);
+      if (p_error) throw p_error;
+      product[0]["quantity"] - item.quantity;
+      const { data, error } = await supabase
+        .from("products")
+        .update({ ...product })
+        .eq("id", item.id);
+      if (error) throw error;
+      console.log("PRODUCTS update: ", data);
+    } catch (error) {
+      console.log("PRODUCTS update ERROR: ", error);
+      sendMessageToWebhook("ERROR", error.message);
+    }
+  });
+}
