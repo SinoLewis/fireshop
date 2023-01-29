@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { toast, Cart } from "../stores";
+import { sendMessageToWebhook } from "./discord";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -16,6 +17,7 @@ async function loginHandler(error: any) {
       : "Access granted! Logged into the mainframe!",
     type: error ? "error" : "success",
   });
+  if (error) sendMessageToWebhook("ERROR", error.message);
 }
 
 export async function signInWithGoogle() {
@@ -44,6 +46,7 @@ export async function supabaseSignOut() {
     icon: error ? "❌" : "🫶",
     message: error ? error.message : "Thanks for hanging out, see ya around!",
   });
+  if (error) sendMessageToWebhook("ERROR", error.message);
 }
 
 export async function passwordlessSignin(email: string) {
@@ -55,8 +58,10 @@ export async function passwordlessSignin(email: string) {
     },
   });
   serverError = error;
-  if (!error) res = `Magic signin link sent to ${email}`;
-
+  if (!error) {
+    res = `Magic signin link sent to ${email}`;
+    sendMessageToWebhook("ERROR", error.message);
+  }
   return { res, serverError };
 }
 
@@ -71,6 +76,7 @@ async function getPriceById(id) {
     return data[0]["price"];
   } catch (error) {
     console.error("PRICE ERROR", error.message);
+    sendMessageToWebhook("ERROR", error.message);
   }
 }
 
@@ -98,24 +104,6 @@ export async function updateCart(cart: Cart) {
     console.log("CART update DB: ", data);
   } catch (error) {
     console.log("CART update ERROR: ", error);
-  }
-}
-
-export async function sendMessageToWebhook(message) {
-  const webhook = import.meta.env.VITE_WEBHOOK;
-  try {
-    const response = await fetch(webhook, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(message),
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    console.log("Successfully sent message to webhook");
-  } catch (err) {
-    console.error(`Error sending message to webhook: ${err}`);
+    sendMessageToWebhook("ERROR", error.message);
   }
 }
