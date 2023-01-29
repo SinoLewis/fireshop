@@ -15,7 +15,7 @@ interface CartProducts {
   };
 }
 
-interface Cart {
+export interface Cart {
   id?: string;
   user_id?: string;
   cart_products: CartProducts;

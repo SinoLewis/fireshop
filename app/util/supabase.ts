@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { toast } from "../stores";
+import { toast, Cart } from "../stores";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -58,4 +58,64 @@ export async function passwordlessSignin(email: string) {
   if (!error) res = `Magic signin link sent to ${email}`;
 
   return { res, serverError };
+}
+
+async function getPriceById(id) {
+  try {
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .eq("id", id);
+    if (error) throw error;
+    console.log("PRICE: ", data[0]["price"]);
+    return data[0]["price"];
+  } catch (error) {
+    console.error("PRICE ERROR", error.message);
+  }
+}
+
+export async function updateCart(cart: Cart) {
+  Object.values(cart.cart_products).forEach(
+    async (item) => (item.price = await getPriceById(item.id))
+  );
+  // TODO: Test if its right price with fake html price
+  try {
+    const { data, error } = await supabase
+      .from("carts")
+      .select("*")
+      .eq("id", cart.id);
+    if (error) throw error;
+    if (data[0]["id"] === cart.id) {
+      const { data, error } = await supabase
+        .from("carts")
+        .update({ ...cart })
+        .eq("user_id", cart.user_id);
+      if (error) throw error;
+    } else {
+      const { data, error } = await supabase.from("carts").insert(cart);
+      if (error) throw error;
+    }
+    console.log("CART update DB: ", data);
+  } catch (error) {
+    console.log("CART update ERROR: ", error);
+  }
+}
+
+export async function sendMessageToWebhook(message) {
+  const webhook = import.meta.env.VITE_WEBHOOK;
+  try {
+    const response = await fetch(webhook, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(message),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    console.log("Successfully sent message to webhook");
+  } catch (err) {
+    console.error(`Error sending message to webhook: ${err}`);
+  }
 }
