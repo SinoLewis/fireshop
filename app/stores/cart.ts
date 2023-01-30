@@ -1,6 +1,8 @@
 import { products } from "./products";
 import { writable } from "svelte/store";
 import CryptoJS from "crypto-js";
+import { v4 as uuidv4 } from 'uuid';
+
 const SELECTED_CART: any = import.meta.env.VITE_LOCAL_CART;
 const KEY: any = import.meta.env.VITE_LOCAL_KEY;
 // TODO: decrypt cart
@@ -45,7 +47,7 @@ function getCart(): Cart {
       timeStyle: "full",
     });
     const data = {
-      id: self.crypto.randomUUID(),
+      id: uuidv4(),
       cart_price: 0,
       cart_total: 0,
       cart_products: {},
