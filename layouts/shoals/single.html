@@ -17,27 +17,6 @@
 
 
 			<header>
-
-				<!-- Video player -->
-				{{ with .Params.youtube }}
-				<div itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-					<iframe class="w-full aspect-video" src="https://www.youtube.com/embed/{{ . }}"
-						frameborder="0"
-						allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-						allowfullscreen></iframe>
-
-					<meta itemprop="embedUrl" content="https://www.youtube.com/embed/{{ . }}" />
-					<meta itemprop="thumbnailUrl" content="{{ $.Params.featured_image }}" />
-					<meta itemprop="description" content="{{ $.Page.Params.description }}" />
-					<meta itemprop="uploadDate" content="{{ $.Page.Params.publishdate }}" />
-					<meta itemprop="publisher" content="Fireshop" />
-				</div>
-				{{ end }}
-
-				{{ with .Params.vimeo }}
-					<video-player single="true"></video-player>
-				{{ end }}
-
 				<div class="bg-gray6 py-5 px-3 rounded-lg mb-4 flex justify-between mt-3">
 
 					{{ $author := .Site.GetPage (print "/contributors/"  (anchorize .Params.Author)) }}
