@@ -1,9 +1,24 @@
 <svelte:options tag="checkout-delivery" />
 
 <script lang="ts">
-  import { cart, user, PickupAddress, Parcel } from "../../stores";
+  import {
+    cart,
+    user,
+    parcel,
+    validateParcel,
+    createParcel,
+    workingAreas,
+    Contact,
+    PackageDetails,
+    Price,
+    CustomerAddress,
+    PickupDetails,
+    Result,
+  } from "../../stores";
   import { onMount } from "svelte";
-  import { supabase } from "../../util/supabase";
+  import { updateCart } from "../../util/supabase";
+  import { toast } from "../../stores";
+  import confetti from "../../util/confetti";
 
   let emailEl: HTMLInputElement;
   let nameEl: HTMLInputElement;
@@ -21,7 +36,6 @@
   let results: any;
   let activeHit = 0;
   let noDelivery = false;
-  let pickupAddress: PickupAddress;
 
   let loading = false;
   // TODO: Error and confirmation objects w/ properties of input fields
@@ -49,84 +63,63 @@
       .catch((error) => console.log("error", error));
   }
   async function handleSelect(e, index) {
-    addressEl = results[index].formatted;
-    results = [];
+    addressEl.value = results[index].formatted;
+    results = [] as Result[];
     addressValid = true;
     console.log("SELECTED: ", addressEl);
   }
 
   async function handleSubmit(e) {
-    // TODO: address.rawAddress, contact, packageDetails(!), packageID(!), pickupDetails.address price
-    let request: Parcel = {
-      address: {},
-      contact: {},
-      packageDetails: {},
-      packageID: "",
-      pickupDetails: {
-        address: pickupAddress,
-      },
-      price: {},
-    };
-    const email = emailEl.value;
-    const name = nameEl.value;
-    const phone = phoneEl.value;
-    const address = addressEl.value;
+    // TODO: Handle request formating
     loading = true;
-    // const { res, serverError } = await sendPasswordlessEmail(email, url);
+    let request = {
+      address: { rawAddress: addressEl.value } as CustomerAddress,
+      contact: {
+        email: emailEl.value,
+        name: nameEl.value,
+        phone: phoneEl.value,
+      } as Contact,
+      packageDetails: {} as PackageDetails,
+      pickupDetails: {} as PickupDetails,
+      price: {} as Price,
+    };
+
+    try {
+      let working_areas = await workingAreas();
+      // TODO: API that can support glovo workingAreas
+      let valid_address = !!working_areas.find(
+        (value) => value.code === request.address.country
+      );
+      let valid_parcel = await validateParcel(
+        request.address,
+        request.pickupDetails.address
+      );
+      if (valid_address && valid_parcel["validationResult"] === "EXECUTABLE") {
+        createParcel(request);
+        toast.set({
+          icon: "😎",
+          message: "Your Order was succesful!",
+          type: "success",
+        });
+      } else {
+        throw new Error(`Address: ${emailEl.value} is not Deliverable`);
+      }
+    } catch (error) {
+      toast.set({
+        icon: "❌",
+        message: error.message,
+        type: "error",
+      });
+    }
     loading = false;
     // error = serverError;
     // confirmation = res;
   }
 
-  async function getPriceById(id) {
-    try {
-      const { data, error } = await supabase
-        .from("products")
-        .select("*")
-        .eq("id", id);
-      if (error) throw error;
-      console.log("PRICE: ", data[0]["price"]);
-      return data[0]["price"];
-    } catch (error) {
-      console.error("PRICE ERROR", error.message);
-    }
-  }
-  async function insertCart() {
-    try {
-      const { data, error } = await supabase
-        .from("carts")
-        .insert($cart)
-        .select();
-      if (error) throw error;
-      console.log("CART upsert DB: ");
-      console.dir(data);
-    } catch (error) {
-      console.log("CART upsert CHECKOUT: ", error);
-    }
-  }
-  async function updateCart() {
-    // TODO: getPrice for all cart items; change obj of cart_products with db prices
-    // const price = await getPriceById('item-123')
-
-    // TODO: Update cart db with the valid price data
-    // const { data, error } = await supabase.from('carts').insert([$cart])
-    try {
-      const { data, error } = await supabase
-        .from("carts")
-        .update({ ...$cart })
-        .eq("user_id", $cart.user_id)
-        .select();
-      if (error) insertCart();
-      // if (error) throw error;
-      console.log("CART update DB: ");
-      console.dir(data);
-    } catch (error) {
-      console.log("CART update ERROR: ", error);
-    }
-  }
-  // TODO: Push cart items to delivery store
   onMount(async () => {
-    // getPriceById("4b195327-2353-44fd-ba0a-d9754ed91e10");
+    // TODO: if cart change
+    console.log("CONFETTI: ", confetti())
+    updateCart($cart);
   });
 </script>
 
@@ -167,7 +160,7 @@
       type="text"
       name="address"
       placeholder="Address"
-      bind:value={addressEl}
+      bind:this={addressEl}
       on:input={address}
       required
     />
@@ -201,11 +194,18 @@
 
 <style lang="scss">
   form {
+    width: 100%;
     @apply grid justify-center;
   }
   .input {
-    @apply bg-gray7 bg-opacity-30 text-white text-lg block py-3 px-1 w-96 border-b-4 border-b-white border-t-0 border-r-0 border-l-0 rounded-none outline-none focus-visible:outline-none;
+    // width: 80%;
+    @apply block bg-gray7 bg-opacity-30 text-white text-lg py-3 px-1 border-b-4 border-b-white border-t-0 border-r-0 border-l-0 rounded-none outline-none focus-visible:outline-none;
   }
+  // @media screen and (min-width: 640px) {
+  //   .input {
+  //     width: 50%;
+  //   }
+  // }
   label {
     @apply text-gray3 font-bold;
   }
