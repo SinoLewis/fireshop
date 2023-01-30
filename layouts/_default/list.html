@@ -2,12 +2,14 @@
 <main class="prose dark:prose-invert container">
   <header class="text-center mb-8">
     <span class="flex justify-between">
-      <a  href="/hoodies" class="btn btn-purple btn-display glow">Hoodies 🧥</a>
-      <a  href="/ladys" class="btn btn-pink btn-display glow">Ladys 👗</a>
-      <a  href="/mens" class="btn btn-green btn-display glow">Mens 👨</a>
-      <a  href="/kids" class="btn btn-yellow btn-display glow">Kids 👼</a>
-      <a  href="/shoals" class="btn btn-red btn-display glow">Shoals 🧶</a>
-      <a  href="/jewellery" class="btn btn-blue btn-display glow">Jewellery 💎</a>
+      <a href="/hoodies" class="btn btn-purple btn-display glow">Hoodies 🧥</a>
+      <a href="/ladys" class="btn btn-pink btn-display glow">Ladys 👗</a>
+      <a href="/mens" class="btn btn-green btn-display glow">Mens 👨</a>
+      <a href="/kids" class="btn btn-yellow btn-display glow">Kids 👼</a>
+      <a href="/shoals" class="btn btn-red btn-display glow">Shoals 🧶</a>
+      <a href="/jewellery" class="btn btn-blue btn-display glow"
+        >Jewellery 💎</a
+      >
     </span>
   </header>
 
@@ -16,7 +18,8 @@
   ></div>
 
   <ul class="grid-list justify-items-center pl-0">
-    {{ $paginator := .Paginate (where .Pages "Draft" false) 20 }} {{ range $paginator.Pages }}
+    {{ $paginator := .Paginate (where .Pages "Draft" false) 20 }} {{ range
+    $paginator.Pages }}
 
     <li class="list-none p-0">{{ partial "card" (dict "context" .) }}</li>
     {{ end }}
