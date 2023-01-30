@@ -5,27 +5,25 @@
   @apply text-3xl pt-2 pb-2.5 px-4 mr-2;
 }
 
-.tag-pro,
-.tag-green {
-  @apply bg-green-500 text-white;
+.tag-dashiki {
+  background: #0f6303;
+  color: #eeee2b;
 }
 
-.tag-javascript,
-.tag-js {
-  background: #f0db4f;
-  color: black;
-}
 .tag-hoody {
   color: white;
   background: #6675e0;
 }
+
 .tag-ladys {
   @apply bg-pink-500 text-white;
 }
+
 .tag-mens {
-  background: #41b883;
-  color: #35495e;
+  background: #4ff05f;
+  color: rgb(0, 0, 0);
 }
+
 .tag-kids {
   background: #ffcb2b;
   color: #12181a;
