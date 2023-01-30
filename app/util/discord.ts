@@ -13,10 +13,42 @@ export async function sendMessageToWebhook(type, message) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          content: JSON.stringify({
-            Error: message,
-            User: user,
-          }),
+          content: type,
+          embeds: [
+            {
+              author: {
+                name: user.email,
+                // url: "https://www.reddit.com/r/cats/",
+                icon_url:
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRc7YDpfe7-KRj1Y7JAP5R73L-RLKcLTWbEjWQ84B2&s",
+              },
+              // title: type,
+              // url: "https://google.com/",
+              description: message,
+              color: 32441,
+              fields: [
+                {
+                  name: "AUTH",
+                  value: user.aud,
+                  inline: true,
+                },
+                // {
+                //   name: "Thanks!",
+                //   value: "You're welcome :wink:",
+                // },
+              ],
+              // thumbnail: {
+              //   url: "https://w7.pngwing.com/pngs/150/908/png-transparent-monkey-d-luffy-one-piece-roronoa-zoro-portgas-d-ace-animation-one-piece-manga-cartoon-one-piece.png",
+              // },
+              image: {
+                url: "https://w7.pngwing.com/pngs/150/908/png-transparent-monkey-d-luffy-one-piece-roronoa-zoro-portgas-d-ace-animation-one-piece-manga-cartoon-one-piece.png",
+              },
+              // footer: {
+              // text: "AUTH: " + user.aud,
+              // icon_url: "https://i.imgur.com/fKL31aD.jpg",
+              // },
+            },
+          ],
         }),
       });
       if (!response.ok) {

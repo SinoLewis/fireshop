@@ -2,6 +2,7 @@
 
 <script lang="ts">
   import { supabase } from "../../util/supabase";
+  import { sendMessageToWebhook } from "../../util/discord";
   import { cart, user } from "../../stores";
   import { onMount } from "svelte";
 
@@ -15,6 +16,7 @@
       console.log("CHECKOUT CART: ", $cart);
     } catch (error) {
       console.log("USER ERROR: ", error.message);
+      sendMessageToWebhook("ERROR", error.message)
     }
   }
 
