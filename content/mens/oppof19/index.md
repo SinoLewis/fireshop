@@ -3,6 +3,7 @@ title: OPPOF19
 lastmod: 2022-10-22T19:39:39.492Z
 publishdate: 2019-05-11T13:59:08-07:00
 category: Mens
+author: Lee Sino
 description: OPPO F19 is officially announced on April 2021.
 tags: 
     - mens

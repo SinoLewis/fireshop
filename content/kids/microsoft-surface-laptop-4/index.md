@@ -3,6 +3,7 @@ title: Microsoft Surface Laptop 4
 lastmod: 2019-08-25T10:43:13-07:00
 publishdate: 2022-10-22T19:39:39.384Z
 category: Kids
+author: Lee Sino
 description: Style and speed. Stand out on HD video calls backed by Studio Mics. Capture ideas on the vibrant touchscreen.
 tags: 
     - hoody

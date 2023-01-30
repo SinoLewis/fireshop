@@ -3,6 +3,7 @@ title: Samsung Galaxy Book
 lastmod: 2019-08-25T10:43:13-07:00
 publishdate: 2022-10-22T19:39:39.441Z
 category: Mens
+author: Lee Sino
 description: Samsung Galaxy Book S (2020) Laptop With Intel Lakefield Chip, 8GB of RAM Launched
 tags: 
     - mens
