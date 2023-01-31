@@ -17,8 +17,11 @@
 
 
 			<header>
-				<div class="bg-gray6 py-5 px-3 rounded-lg mb-4 flex justify-between mt-3">
+				{{ $itemImg := (print "/" (anchorize .Params.Category) "/" (anchorize .Params.Title) "/img/featured.png") }}
+				<img src="{{ $itemImg }}" alt="">
 
+				<div class="bg-gray6 py-5 px-3 rounded-lg mb-4 flex justify-between mt-3">
+		
 					{{ $author := .Site.GetPage (print "/contributors/"  (anchorize .Params.Author)) }}
 					{{ $authorImg := (print "/contributors/img/"  (anchorize .Params.Author) ".webp") }}
 					<a class="flex items-center no-underline" itemprop="author" name="{{ .Params.author }}" href="/contributors/{{ anchorize .Params.author }}/">
@@ -52,9 +55,6 @@
 
 			<!-- Lesson content -->
 			<section class="prose dark:prose-invert max-w-full lesson-content" itemprop="articleBody">
-				
-
-
 				<h1 itemprop="name headline" id="{{ anchorize .Title }}" class="gradient-text">
 					{{ .Title }}
 				</h1>
