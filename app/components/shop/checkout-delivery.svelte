@@ -34,13 +34,11 @@
   // TODO: button default=blue, all_inputs_valid=green
 
   let results: any;
-  let activeHit = 0;
-  let noDelivery = false;
+  let result: any;
+  let valid_address;
+  let working_areas;
 
   let loading = false;
-  // TODO: Error and confirmation objects w/ properties of input fields
-  let confirmation: string;
-  let error: string;
 
   async function validate() {
     emailValid = emailEl.validity.valid;
@@ -58,51 +56,70 @@
       .then((response) => response.json())
       .then((result) => {
         results = result.results;
-        console.log(result);
+        console.log("GEOAPIFY OBJ:  \n", result);
+        console.log("GEOAPIFY RESULTS:  \n", results);
       })
       .catch((error) => console.log("error", error));
   }
   async function handleSelect(e, index) {
+    result = results[index];
     addressEl.value = results[index].formatted;
+    // TODO: API that can support glovo workingAreas
+    valid_address = !!working_areas.find(
+      (value) => value.cityName === result.city
+    );
+    addressValid = valid_address ? true : false;
+    toast.set({
+      icon: !addressValid ? "❌" : "👍",
+      message: !addressValid
+        ? `${result.city} \nis not a deliverable city from address\n ${addressEl.value}`
+        : `${addressEl.value} is delivearable`,
+    });
     results = [] as Result[];
-    addressValid = true;
-    console.log("SELECTED: ", addressEl);
+    console.log("SELECTED: ", addressEl.value);
+    console.log("VALID: ", valid_address);
   }
 
   async function handleSubmit(e) {
     // TODO: Handle request formating
     loading = true;
     let request = {
-      address: { rawAddress: addressEl.value } as CustomerAddress,
+      address: {
+        rawAddress: result.formatted,
+        cityName: result.city,
+      } as CustomerAddress,
       contact: {
         email: emailEl.value,
         name: nameEl.value,
         phone: phoneEl.value,
       } as Contact,
       packageDetails: {} as PackageDetails,
-      pickupDetails: {} as PickupDetails,
-      price: {} as Price,
+      pickupDetails: {
+        address: { rawAddress: "Prestige Plaza, Ngong Road, Nairobi, Kenya" },
+      } as PickupDetails,
+      price: {
+        // TODO: getPrice from
+        delivery: { currencyCode: "KSH" },
+        parcel: { currencyCode: "KSH", value: $cart.cart_price },
+      } as Price,
     };
 
     try {
-      let working_areas = await workingAreas();
-      // TODO: API that can support glovo workingAreas
-      let valid_address = !!working_areas.find(
-        (value) => value.code === request.address.country
-      );
       let valid_parcel = await validateParcel(
         request.address,
         request.pickupDetails.address
       );
       if (valid_address && valid_parcel["validationResult"] === "EXECUTABLE") {
-        createParcel(request);
+        let response = await createParcel(request);
+        if (response === null || response === undefined)
+          throw new Error(
+            "Delivery Creation failed. Check your network connection"
+          );
         toast.set({
           icon: "😎",
           message: "Your Order was succesful!",
           type: "success",
         });
-      } else {
-        throw new Error(`Address: ${emailEl.value} is not Deliverable`);
       }
     } catch (error) {
       toast.set({
@@ -118,67 +135,72 @@
 
   onMount(async () => {
     // TODO: if cart change
-    console.log("CONFETTI: ", confetti())
+    // console.log("CONFETTI: ", confetti());
     updateCart($cart);
+    working_areas = await workingAreas();
+    console.log("Working Areas: \n", working_areas);
   });
 </script>
 
 {#if $user}
   <form on:submit|preventDefault={handleSubmit}>
-    <label for="name">Name</label>
-    <input
-      class="input"
-      type="text"
-      name="name"
-      bind:this={nameEl}
-      on:input={validate}
-      required
-    />
-    <label for="phone">Phone</label>
-    <input
-      class="input"
-      type="tel"
-      name="phone"
-      placeholder="254712345678"
-      bind:this={phoneEl}
-      on:input={validate}
-      required
-    />
-    <label for="email">Email</label>
-    <input
-      class="input"
-      type="email"
-      name="email"
-      value={$user.email}
-      bind:this={emailEl}
-      on:input={validate}
-      required
-    />
-    <label for="address">Address</label>
-    <input
-      class="input"
-      type="text"
-      name="address"
-      placeholder="Address"
-      bind:this={addressEl}
-      on:input={address}
-      required
-    />
+    <h2>Deilivery Details</h2>
+    <label for="name">
+      <span>Email</span>
+      <input
+        class="input-field"
+        type="text"
+        name="name"
+        bind:this={nameEl}
+        on:input={validate}
+        required
+      />
+    </label>
+    <label for="phone">
+      <span>Phone</span>
+      <input
+        class="input-field"
+        type="tel"
+        name="phone"
+        placeholder="254712345678"
+        bind:this={phoneEl}
+        on:input={validate}
+        required
+      />
+    </label>
+    <label for="email">
+      <span>Email</span>
+      <input
+        class="input-field"
+        type="email"
+        name="email"
+        value={$user.email}
+        bind:this={emailEl}
+        on:input={validate}
+        required
+      />
+    </label>
+    <label for="address">
+      <span>Address</span>
+      <input
+        class="input-field"
+        type="text"
+        name="address"
+        placeholder="Address"
+        bind:this={addressEl}
+        on:input={address}
+        required
+      />
+    </label>
     <div class="results">
       {#each results || [] as hit, i}
-        <a
-          class="hit"
-          class:active={i === activeHit}
-          on:mouseover={() => (activeHit = i)}
-          on:focus={() => (activeHit = i)}
-          on:click={(e) => handleSelect(e, i)}
-        >
+        <div class="hit" on:click={(e) => handleSelect(e, i)}>
           <span class="hit-title">📍 {hit.formatted}</span>
-        </a>
+        </div>
       {/each}
     </div>
     <input
-      class="btn"
+      class="send"
       type="submit"
       value={loading ? "sending..." : "send"}
       class:disabled={!emailValid ||
@@ -194,42 +216,43 @@
 
 <style lang="scss">
   form {
-    width: 100%;
-    @apply grid justify-center;
+    @apply grid gap-2 justify-center;
   }
-  .input {
-    // width: 80%;
-    @apply block bg-gray7 bg-opacity-30 text-white text-lg py-3 px-1 border-b-4 border-b-white border-t-0 border-r-0 border-l-0 rounded-none outline-none focus-visible:outline-none;
-  }
-  // @media screen and (min-width: 640px) {
-  //   .input {
-  //     width: 50%;
-  //   }
-  // }
+
   label {
-    @apply text-gray3 font-bold;
+    @apply input-group;
+
+    span {
+      width: 15%;
+      @apply bg-primary;
+    }
+    .input-field {
+      width: 100%;
+      @apply input input-bordered border-b-4 border-b-white border-t-0 border-r-0 border-l-0;
+    }
   }
   input[type="email"]:valid,
   input[type="tel"]:valid,
   input[type="text"]:valid {
     @apply border-b-green-500;
   }
-  .btn {
-    @apply bg-blue-500 font-sans text-white font-bold inline-block text-center shadow-md px-4 py-3 my-2 w-auto border-none cursor-pointer hover:bg-blue-500;
+  .send {
+    @apply btn btn-primary;
   }
   .disabled {
     @apply opacity-50 cursor-not-allowed;
   }
   .results {
-    @apply max-w-full float-left;
+    width: 100%;
+    @apply float-left;
   }
   .hit {
-    @apply block no-underline font-sans p-4 my-2 border bg-gray7 bg-opacity-50 shadow-md transition-all;
+    @apply btn btn-primary block m-2;
   }
   .hit-title {
     @apply text-lg font-bold;
   }
-  .active {
-    @apply bg-orange-500 text-white;
-  }
+  // .active {
+  //   @apply bg-orange-500 text-white;
+  // }
 </style>

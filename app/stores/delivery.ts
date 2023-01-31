@@ -61,16 +61,16 @@ interface PickupAddress {
 }
 
 interface Price {
-  delivery: Delivery;
-  parcel: Parcel;
+  delivery: DeliveryPrice;
+  parcel: ParcelPrice;
 }
 
-interface Delivery {
+interface DeliveryPrice {
   currencyCode: string;
   value: number;
 }
 
-interface Parcel {
+interface ParcelPrice {
   currencyCode: string;
   value: number;
 }

@@ -151,8 +151,8 @@ app.get("/parcels/working-areas", async (req, res) => {
           },
         },
         {
-          code: "JMC",
-          cityName: "Jamaica",
+          code: "MCH",
+          cityName: "Machakos",
           polygons: ["_rs{Fg{eL"],
           workingTime: {
             from: "07:00:00",
@@ -169,8 +169,8 @@ app.get("/parcels/working-areas", async (req, res) => {
           },
         },
         {
-          code: "BUR",
-          cityName: "Buruburu",
+          code: "NKR",
+          cityName: "Nakuru",
           polygons: ["_rs{Fg{eL"],
           workingTime: {
             from: "07:00:00",
