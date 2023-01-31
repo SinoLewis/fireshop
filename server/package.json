@@ -5,7 +5,7 @@
   "main": "sendy.js",
   "scripts": {
     "start": "nodemon glovo.js",
-    "dummy": "nodemon glovo.js",
+    "dummy": "nodemon dummy.js",
     "index": "node meilisearch.js",
     "products": "node products.js",
     "hugo": "node hugo.js"
