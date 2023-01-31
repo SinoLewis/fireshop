@@ -19,9 +19,13 @@
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
-  <textarea class="area" placeholder="Type your comment" bind:value />
+  <div class="area">
+    <textarea placeholder="Type your comment" bind:value />
+  </div>
   <div>
-    <button class="btn btn-lg btn-blue btn-display glow" type="submit">Submit</button>
+    <button class="btn btn-lg btn-blue btn-display glow" type="submit"
+      >Submit</button
+    >
   </div>
 </form>
 
@@ -29,8 +33,12 @@
   form {
     @apply grid gap-4;
   }
+
   .area {
-    @apply p-4 w-full h-24 min-w-full border border-base-content border-opacity-20 bg-base-100 rounded-btn;
+    @apply w-11/12;
+    textarea {
+      @apply p-4 h-24 min-w-max border border-base-content border-opacity-20 bg-base-100 rounded-btn;
+    }
   }
   .btn {
     @apply bg-white text-black uppercase font-bold inline-flex cursor-pointer text-center shadow-md no-underline px-5 py-2 transition-all duration-150 my-0.5;
