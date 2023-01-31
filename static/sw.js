@@ -3,13 +3,16 @@ importScripts(
 );
 
 if (workbox) {
-  workbox.setConfig({ debug: false });
+  workbox.setConfig({ debug: true });
   // workbox.core.setLogLevel(workbox.core.LOG_LEVELS.warn);
 
   // workbox.routing.setDefaultHandler(workbox.strategies.networkFirst({
   //   cacheName: 'fallback',
   // }))
-
+  self.addEventListener("install", (event) => {
+    self.skipWaiting();
+    console.log('SKIP WAITING SUCCESS')
+  });
   var defaultStrategy = workbox.strategies.networkFirst({
     cacheName: "fallback",
     plugins: [
@@ -23,14 +26,6 @@ if (workbox) {
       }),
     ],
   });
-  workbox.routing.setDefaultHandler((args) => {
-    if (args.event.request.method === "GET") {
-      return defaultStrategy.handle(args); // use default strategy
-    } else {
-      return null;
-    }
-    // return fetch(args.event.request);
-  });
 
   workbox.routing.registerRoute(
     new RegExp(/.*\.(?:js|css)/g),
@@ -41,6 +36,16 @@ if (workbox) {
     new RegExp(/.*\.(?:png|jpg|jpeg|svg|gif|webp)/g),
     workbox.strategies.cacheFirst()
   );
+
+  workbox.routing.setDefaultHandler((args) => {
+    // TODO: Post reqs. Check if its standard principle
+    if (args.event.request.method === "GET") {
+      return defaultStrategy.handle(args); // use default strategy
+    } else {
+      return null;
+    }
+    // return fetch(args.event.request);
+  });
 } else {
   console.log(`No workbox on this browser 😬`);
 }
