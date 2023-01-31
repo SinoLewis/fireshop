@@ -11,18 +11,13 @@
   {#if $cart.cart_products[item]}
     <div class="content">
       <div class="image-selector">
-        <img
-          src="https://assets.bitdegree.org/crypto/storage/media/pow-blockchain-infographics-5f572a4421ef9.o.jpg"
-          alt="Selected Image"
-        />
+        <img src={$cart.cart_products[item].image} alt={item} />
       </div>
       <span>
         <h4>{item}</h4>
       </span>
-      <!-- <p>
-        Many desktop publishing packages and web page editors now use Lorem
-        Ipsum as their default model text, and a search.
-      </p> -->
+      <!-- Render the slot content -->
+      <slot />
       <span class="price">
         <h4>Ksh {$cart.cart_products[item].total_price | 0}</h4>
       </span>

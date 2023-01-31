@@ -1,7 +1,7 @@
 import { products } from "./products";
 import { writable } from "svelte/store";
 import CryptoJS from "crypto-js";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const SELECTED_CART: any = import.meta.env.VITE_LOCAL_CART;
 const KEY: any = import.meta.env.VITE_LOCAL_KEY;
@@ -14,6 +14,7 @@ interface CartProducts {
     price: number;
     quantity: number;
     total_price: number;
+    image: string;
   };
 }
 
@@ -65,7 +66,7 @@ function getCart(): Cart {
 const cart = writable<Cart>(getCart());
 
 const add = async (name: string) => {
-  let { id, title, price } = products[name];
+  let { id, title, price, image } = products[name];
   cart.update((value) => {
     if (value.cart_products.hasOwnProperty(title)) {
       value.cart_products[title].quantity++;
@@ -75,6 +76,7 @@ const add = async (name: string) => {
         price,
         quantity: 1,
         total_price: price,
+        image
       };
     }
     return { ...value };
