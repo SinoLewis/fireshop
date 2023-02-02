@@ -17,4 +17,8 @@ RUN pnpm run build
 
 EXPOSE 6969
 
-CMD ["npm", "run", "hugo"]
+# DEV DEFAULT
+CMD ["npm", "start"]
+
+# PROD
+# CMD ["npm", "start"]

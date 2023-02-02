@@ -7,7 +7,7 @@
   import { onMount } from "svelte";
 
   const client = new MeiliSearch({
-    host: "http://172.18.0.2:7700",
+    host: "http://172.18.0.13:7700",
   });
   const index = client.index("products");
 

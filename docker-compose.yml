@@ -1,7 +1,7 @@
 version: "3"
 services:
   meilisearch:
-    container_name: meili-search-kuma-test
+    container_name: meili-search-kuma
     image: getmeili/meilisearch:latest
     networks:
       uptime-kuma_default:
@@ -12,24 +12,30 @@ services:
     # environment:
     #   - <environment_var1>
   fireshop:
-    container_name: fireshop-kuma-test
+    container_name: fireshop-kuma
     image: fireshop:1.0
     networks:
       uptime-kuma_default:
         ipv4_address: 172.18.0.17
     ports:
       - "6969:6969"
+    volumes:
+      - ../fireshop/:/app/
+    depends_on:
+      - meilisearch
+
   uptime:
-    container_name: uptime-kuma-test
+    container_name: uptime-kuma
     image: louislam/uptime-kuma:1
     networks:
       uptime-kuma_default:
         ipv4_address: 172.18.0.19
+    ports:
+      - "3001:3001"
     depends_on:
       - meilisearch
       - fireshop
-    ports:
-      - "3001:3001"
+
 networks:
   uptime-kuma_default:
     external: true
