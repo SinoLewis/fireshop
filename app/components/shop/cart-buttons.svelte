@@ -12,30 +12,29 @@
 <!-- TODO: Add favourite fuctionality -->
 {#if $cart.cart_products[product_title]}
   <div class="btns">
-    <button class="btn btn-red btn-sm glow" on:click={removeItem}> 🗑️ Remove </button>
+    <button class="button btn-red btn-sm glow" on:click={removeItem}> 🗑️ Remove </button>
     <span>
-      <button class="btn btn-red btn-sm glow" on:click={minusItem}> ➖ </button>
+      <button class="button btn-red btn-sm glow" on:click={minusItem}> ➖ </button>
       <div class="tag qty">
         {$cart.cart_products[product_title]?.quantity | 0}
       </div>
-      <button class="btn btn-blue btn-sm glow" on:click={addItem}> ➕ </button>
+      <button class="button btn-blue btn-sm glow" on:click={addItem}> ➕ </button>
     </span>
   </div>
 {:else}
-  <button class="btn btn-blue btn-sm glow" on:click={addItem}> 🛒 Add </button>
+  <button class="button btn-blue btn-sm glow" on:click={addItem}> 🛒 Add </button>
 {/if}
 
 <style lang="scss">
-  .btn {
-    @apply bg-white text-black uppercase font-bold inline-flex cursor-pointer text-center shadow-md no-underline px-5 py-2 transition-all duration-150 my-0.5;
-    &.glow {
-      @apply hover:drop-shadow-[0_0_4px_rgba(225,225,225,0.5)];
-    }
+  .button {
+    @apply btn btn-sm bg-white uppercase font-bold inline-flex cursor-pointer text-center shadow-md no-underline px-5 py-2 transition-all duration-150 my-0.5;
+    // &.glow {
+    //   @apply hover:drop-shadow-[0_0_4px_rgba(225,225,225,0.5)];
+    // }
   }
   .btn-sm {
     @apply px-3 py-1 text-xs font-sans uppercase font-bold;
   }
-
   .glow {
     @apply hover:translate-y-[-2px];
   }
@@ -46,7 +45,6 @@
       @apply hover:drop-shadow-[0_0_5px_rgba(239,68,68,0.5)];
     }
   }
-
   .btn-blue {
     @apply bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700;
     &.glow {

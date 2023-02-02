@@ -9,43 +9,44 @@
 <h2>Total Price: {$cart.cart_price}</h2>
 {#each items as item}
   {#if $cart.cart_products[item]}
-    <div class="content">
-      <div class="image-selector">
+    <div class="item">
+      <figure>
         <img src={$cart.cart_products[item].image} alt={item} />
+      </figure>
+      <div class="item-body">
+        <h2 class="item-title">{item}</h2>
+        <p>Ksh {$cart.cart_products[item].total_price | 0}</p>
+        <div class="item-btns">
+          <cart-buttons product_title={item} />
+        </div>
       </div>
-      <span>
-        <h4>{item}</h4>
-      </span>
-      <!-- Render the slot content -->
-      <slot />
-      <span class="price">
-        <h4>Ksh {$cart.cart_products[item].total_price | 0}</h4>
-      </span>
-      <cart-buttons class="btns" product_title={item} />
     </div>
   {/if}
 {/each}
 
 <style lang="scss">
-  .content {
-    // 4 elements in 2 rows: img, desc, price, btns
-    // sm: 1st row = 2 cols, 2nd row = btns
-    // md: 1st row = 3 cols, 2nd row = btns
-    @apply grid gap-x-4 grid-cols-3;
+  .item {
     border: 2px solid #ffffff;
     border-radius: 0.375rem;
     transition: border-color 0.15s ease-in-out;
     &:hover {
       border-color: #737373;
     }
-    img {
-      @apply rounded-l-md w-full object-cover;
+    @apply card card-side bg-base-100 shadow-xl;
+
+    figure {
+      width: 30%;
     }
-    .price {
-      @apply text-right px-2;
+
+    .item-body {
+      @apply card-body;
     }
-    .btns {
-      @apply col-start-2 col-end-4;
+
+    .item-title {
+      @apply card-title;
+    }
+    .item-btns {
+      @apply card-actions justify-end;
     }
   }
 </style>
