@@ -188,6 +188,7 @@ interface Bbox {
 const parcel = writable<Parcel>(null);
 const courier = writable<Courier>(null);
 const workAreas = writable<WorkingArea[]>(null);
+const valid_parcel = writable(false);
 // TODO: DEV ONLY
 const simulate = writable<Simulate>(null);
 
@@ -250,6 +251,7 @@ const validateParcel = async (
           address: data.address,
         };
       });
+      if (data["validationResult"] === "EXECUTABLE") valid_parcel.set(true);
       console.log("POST: ", data);
       return data;
     } else {
@@ -521,7 +523,7 @@ const simFail = async (trackingNumber: string) => {
 //     return ;
 //   }
 // };
-export { parcel, validateParcel, createParcel, workingAreas, cancelParcel };
+export { parcel, valid_parcel, validateParcel, createParcel, workingAreas, cancelParcel };
 
 export type {
   Parcel,

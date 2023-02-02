@@ -1,10 +1,9 @@
 <svelte:options tag="checkout-tracking" />
 
 <script lang="ts">
-  import { user, cancelParcel } from "../../stores";
+  import { user, cart, toast, valid_parcel, cancelParcel } from "../../stores";
   import jsPDF from "jspdf";
   import html2canvas from "html2canvas";
-  import { cart, toast } from "../../stores";
 
   let items = Object.keys($cart.cart_products);
 
@@ -54,12 +53,12 @@
     {#each items as item}
       {#if $cart.cart_products[item]}
         <div class="content">
-          <div class="image-selector">
+          <!-- <div class="image-selector">
             <img
               src="https://assets.bitdegree.org/crypto/storage/media/pow-blockchain-infographics-5f572a4421ef9.o.jpg"
               alt="Selected Image"
             />
-          </div>
+          </div> -->
           <span>
             <h4>{item}</h4>
           </span>
@@ -74,16 +73,21 @@
       {/if}
     {/each}
   </div>
-  <button class="btn btn-blue glow" on:click={printPDF}>Download PDF</button>
-  <modal-action type="open" name="cancel">
-    <button class="btn btn-blue btn-sm glow">Cancel Delivery 🚫</button>
-  </modal-action>
-  <modal-dialog name="cancel" esc="true">
-    <h2>Are you Sure you want to cancel the Delivery?</h2>
-    <button class="btn btn-red glow" on:click={cancelSubmit}
-      >Confirm Cancel</button
-    >
-  </modal-dialog>
+
+  {#if $valid_parcel}
+    <button class="btn btn-blue glow" on:click={printPDF}>Download PDF</button>
+    <modal-action type="open" name="cancel">
+      <button class="btn btn-blue btn-sm glow">Cancel Delivery 🚫</button>
+    </modal-action>
+    <modal-dialog name="cancel" esc="true">
+      <h2>Are you Sure you want to cancel the Delivery?</h2>
+      <button class="btn btn-red glow" on:click={cancelSubmit}
+        >Confirm Cancel</button
+      >
+    </modal-dialog>
+  {:else}
+    <h4>Package not EXECUTABLE</h4>
+  {/if}
 {:else}
   <no-user />
 {/if}
