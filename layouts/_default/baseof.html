@@ -25,14 +25,6 @@
 
   </head>
   <body>
-    <global-data 
-    permalink="{{ .Permalink }}" 
-    vimeo="{{ .Params.vimeo }}"
-    youtube="{{ .Params.youtube }}"
-    free="{{ .Params.free }}"
-    next="{{with .PrevInSection}}{{.Permalink}}{{end}}" 
-    prev="{{with .NextInSection}}{{.Permalink}}{{end}}">
-  </global-data>
 
     {{ block "header" . }}
     <!-- navbar -->
@@ -47,9 +39,6 @@
 
     <supa-signin></supa-signin>
     <meili-search></meili-search>
-    <hi-mom></hi-mom>
-
-    <email-handler></email-handler>
 
     <route-loader>
       <div class="fixed w-full top-0 left-0 h-1 gradient-loader"></div>

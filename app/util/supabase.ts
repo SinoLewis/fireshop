@@ -51,16 +51,19 @@ export async function supabaseSignOut() {
 
 export async function passwordlessSignin(email: string) {
   let res: any, serverError: any;
-  let { error } = await supabase.auth.signInWithOtp({
+  let { data, error } = await supabase.auth.signInWithOtp({
     email: email,
     options: {
       emailRedirectTo: window.location.href,
     },
   });
   serverError = error;
+  console.log("SERVER DATA: ", data)
+  console.log("SERVER ERROR: ", data)
   if (!error) {
+    console.log("SERVER ERROR: ", serverError)
     res = `Magic signin link sent to ${email}`;
-    sendMessageToWebhook("ERROR", error.message);
+    sendMessageToWebhook("Magic signin", email);
   }
   return { res, serverError };
 }

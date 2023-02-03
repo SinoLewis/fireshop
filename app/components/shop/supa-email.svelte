@@ -17,6 +17,7 @@
     // toLowerCase
     const email = emailEl.value;
     loading = true;
+    console.log("SUPA EMAIL: ", email)
     const { res, serverError } = await passwordlessSignin(email);
     loading = false;
     error = serverError;

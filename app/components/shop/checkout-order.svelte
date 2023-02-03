@@ -146,103 +146,151 @@
 </script>
 
 {#if $user}
-  <div>
-    <h2>Confirm Deilivery</h2>
-    <select bind:value={selectedOption} class="confirm">
-      <!-- <option disabled selected>Large</option> -->
-      <option value="glovo">Glovo Delivery</option>
-      <option value="no">No Delivery</option>
-    </select>
-  </div>
-  {#if selectedOption === "glovo"}
-    <form on:submit|preventDefault={handleSubmit}>
-      <h2>Deilivery Details</h2>
-      <label for="name">
-        <span>Name</span>
-        <input
-          class="input-field"
-          type="text"
-          name="name"
-          bind:this={nameEl}
-          on:input={validate}
-          required
-        />
-      </label>
-      <label for="phone">
-        <span>Phone</span>
-        <input
-          class="input-field"
-          type="tel"
-          name="phone"
-          placeholder="254712345678"
-          bind:this={phoneEl}
-          on:input={validate}
-          required
-        />
-      </label>
-      <label for="email">
-        <span>Email</span>
-        <input
-          class="input-field"
-          type="email"
-          name="email"
-          value={$user.email}
-          bind:this={emailEl}
-          on:input={validate}
-          required
-        />
-      </label>
-      <label for="address">
-        <span>Address</span>
-        <input
-          class="input-field"
-          type="text"
-          name="address"
-          placeholder="Address"
-          bind:this={addressEl}
-          on:input={address}
-          required
-        />
-      </label>
-      <div class="results">
-        {#each results || [] as hit, i}
-          <div class="hit" on:click={(e) => handleSelect(e, i)}>
-            <span class="hit-title">📍 {hit.formatted}</span>
+  <div class="box">
+    <div>
+      <h2>Confirm Deilivery</h2>
+      <select bind:value={selectedOption} class="confirm">
+        <!-- <option disabled selected>Large</option> -->
+        <option value="glovo">Glovo Delivery</option>
+        <option value="no">No Delivery</option>
+      </select>
+      {#if selectedOption === "glovo"}
+        <!--
+          <p>
+          Glovo offers a 'shop on your behalf' app that promises to let you
+          order anything
+        </p>
+         <div class="img">
+          <figure>
+            <img src="/img/glovo.webp" alt="glovo" />
+          </figure>  
+        </div> -->
+      {/if}
+    </div>
+    {#if selectedOption === "glovo"}
+      <form on:submit|preventDefault={handleSubmit}>
+        <h2>Deilivery Details</h2>
+        <label for="name">
+          <span>Name</span>
+          <input
+            class="input-field"
+            type="text"
+            name="name"
+            bind:this={nameEl}
+            on:input={validate}
+            required
+          />
+        </label>
+        <label for="phone">
+          <span>Phone</span>
+          <input
+            class="input-field"
+            type="tel"
+            name="phone"
+            placeholder="254712345678"
+            bind:this={phoneEl}
+            on:input={validate}
+            required
+          />
+        </label>
+        <label for="email">
+          <span>Email</span>
+          <input
+            class="input-field"
+            type="email"
+            name="email"
+            value={$user.email}
+            bind:this={emailEl}
+            on:input={validate}
+            required
+          />
+        </label>
+        <label for="address">
+          <span>Address</span>
+          <input
+            class="input-field"
+            type="text"
+            name="address"
+            placeholder="Address"
+            bind:this={addressEl}
+            on:input={address}
+            required
+          />
+        </label>
+        {#if results?.length}
+          <div class="results">
+            <div class="hit">
+              <table>
+                <!-- head -->
+                <thead>
+                  <tr>
+                    <th />
+                    <th>Pick Address</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {#each results || [] as hit, i}
+                    <tr>
+                      <th>📍</th>
+                      <td on:click={(e) => handleSelect(e, i)}
+                        >{hit.formatted}</td
+                      >
+                    </tr>
+                  {/each}
+                </tbody>
+              </table>
+            </div>
           </div>
-        {/each}
+        {/if}
+        <input
+          class="send"
+          type="submit"
+          value={loading ? "sending..." : "send"}
+          class:disabled={!emailValid ||
+            !phoneValid ||
+            !addressValid ||
+            !nameValid ||
+            loading}
+        />
+      </form>
+    {:else}
+      <div>
+        <h2>Pickup Details</h2>
+        <h4>Owner: Scott West</h4>
+        <h4>Address: {pickupDetails.address.rawAddress}</h4>
+        <h4>Phone: 0742021047</h4>
       </div>
-      <input
-        class="send"
-        type="submit"
-        value={loading ? "sending..." : "send"}
-        class:disabled={!emailValid ||
-          !phoneValid ||
-          !addressValid ||
-          !nameValid ||
-          loading}
-      />
-    </form>
-  {:else}
-    <h2>Pickup Details</h2>
-    <h4>Owner: Scott West</h4>
-    <h4>Address: {pickupDetails.address.rawAddress}</h4>
-    <h4>Phone: 0742021047</h4>
-  {/if}
+    {/if}
+  </div>
 {:else}
   <no-user />
 {/if}
 
 <style lang="scss">
+  .box {
+    @apply grid justify-items-start grid-cols-1 md:grid-cols-2;
+  }
+  .img {
+    max-height: 4rem;
+    figure {
+      width: 100%;
+      margin: 0px;
+      margin-right: 8px;
+
+      @apply object-cover;
+    }
+  }
   form {
     @apply grid gap-2 justify-center;
   }
 
   label {
+    width: 20rem;
     @apply input-group;
 
     span {
-      width: 15%;
-      @apply bg-primary;
+      // width: 15%;
+      @apply bg-info-content;
     }
     .input-field {
       width: 100%;
@@ -258,20 +306,37 @@
     @apply select select-bordered select-lg w-full max-w-xs;
   }
   .send {
-    @apply btn btn-primary;
+    @apply btn btn-info;
   }
   .disabled {
     @apply opacity-50 cursor-not-allowed;
   }
   .results {
-    width: 100%;
-    @apply float-left;
+    @apply max-w-lg;
   }
   .hit {
-    @apply btn btn-primary block m-2;
+    th {
+      @apply font-bold text-info;
+    }
+    td {
+      word-wrap: break-word;
+      max-width: 18rem;
+      background: linear-gradient(
+        176deg,
+        rgb(0, 56, 80) 50%,
+        rgba(32, 39, 55, 1) 100%
+      );
+      @apply text-lg font-bold cursor-pointer glow transition-all duration-150 my-0.5 hover:drop-shadow-[0_0_4px_rgba(225,225,225,0.5)];
+    }
+    // @apply overflow-x-auto;
+
+    table {
+      @apply table-auto text-left;
+    }
+    // @apply btn btn-primary block m-2;
   }
-  .hit-title {
-    @apply text-lg font-bold;
+  .glow {
+    @apply hover:translate-y-[-2px];
   }
   // .active {
   //   @apply bg-orange-500 text-white;

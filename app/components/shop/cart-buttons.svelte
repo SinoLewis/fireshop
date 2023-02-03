@@ -12,28 +12,26 @@
 <!-- TODO: Add favourite fuctionality -->
 {#if $cart.cart_products[product_title]}
   <div class="btns">
-    <button class="button btn-red btn-sm glow" on:click={removeItem}> 🗑️ Remove </button>
-    <span>
-      <button class="button btn-red btn-sm glow" on:click={minusItem}> ➖ </button>
+    <button class="button btn-red glow" on:click={removeItem}>Remove</button>
+    <div>
+      <button class="button btn-red glow" on:click={minusItem}>➖</button>
       <div class="tag qty">
         {$cart.cart_products[product_title]?.quantity | 0}
       </div>
-      <button class="button btn-blue btn-sm glow" on:click={addItem}> ➕ </button>
-    </span>
+      <button class="button btn-blue glow" on:click={addItem}>➕</button>
+    </div>
   </div>
 {:else}
-  <button class="button btn-blue btn-sm glow" on:click={addItem}> 🛒 Add </button>
+  <button class="button btn-blue glow" on:click={addItem}>🛒 Add</button>
 {/if}
 
 <style lang="scss">
-  .button {
-    @apply btn btn-sm bg-white uppercase font-bold inline-flex cursor-pointer text-center shadow-md no-underline px-5 py-2 transition-all duration-150 my-0.5;
-    // &.glow {
-    //   @apply hover:drop-shadow-[0_0_4px_rgba(225,225,225,0.5)];
-    // }
+  .btns {
+    @apply flex flex-wrap-reverse;
   }
-  .btn-sm {
-    @apply px-3 py-1 text-xs font-sans uppercase font-bold;
+  .button {
+    max-width: 4rem;
+    @apply btn btn-sm px-3 py-1 font-display font-normal bg-white uppercase cursor-pointer text-center transition-all duration-150 my-0.5;
   }
   .glow {
     @apply hover:translate-y-[-2px];
@@ -63,8 +61,5 @@
     &.glow {
       @apply hover:drop-shadow-[0_0_5px_rgba(168,85,247,0.5)];
     }
-  }
-  .btns {
-    @apply flex justify-between p-2;
   }
 </style>

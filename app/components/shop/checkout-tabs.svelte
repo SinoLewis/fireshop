@@ -9,9 +9,9 @@
 
 <div class="box">
   <div class="group">
-    <btn on:click={tab1} class="blue">🛒 1. Cart</btn>
-    <btn on:click={tab2} class="green">🖲️ 2. Order</btn>
-    <btn on:click={tab3} class="purple">🚚 3. Delivery</btn>
+    <btn on:click={tab1} class="blue">🛒 Cart</btn>
+    <btn on:click={tab2} class="green">🖲️ Order</btn>
+    <btn on:click={tab3} class="purple">🚚 Delivery</btn>
   </div>
 
   <div>
