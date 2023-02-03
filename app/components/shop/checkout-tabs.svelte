@@ -7,60 +7,51 @@
   const tab3 = () => (activeTab = 2);
 </script>
 
-<div>
-  <div class="box-btns">
-    <btn class="btn btn-lg btn-blue btn-display glow" on:click={tab1}
-      >🛒 Cart</btn
-    >
-    <btn class="btn btn-lg btn-purple btn-display glow" on:click={tab2}
-      >🚚 Delivery</btn
-    >
-    <btn class="btn btn-lg btn-green btn-display glow" on:click={tab3}
-      >🖲️ Tracking</btn
-    >
+<div class="box">
+  <div class="group">
+    <btn on:click={tab1} class="blue">🛒 1. Cart</btn>
+    <btn on:click={tab2} class="green">🖲️ 2. Order</btn>
+    <btn on:click={tab3} class="purple">🚚 3. Delivery</btn>
   </div>
-  <div class="box">
+
+  <div>
     {#if activeTab === 0}
       <checkout-cart />
     {/if}
     {#if activeTab === 1}
-      <checkout-delivery />
+      <checkout-order />
     {/if}
     {#if activeTab === 2}
-      <checkout-tracking />
+      <checkout-delivery />
     {/if}
   </div>
 </div>
 
 <style lang="scss">
-  // .box {
-  //   @apply bg-gray6 shadow-lg border-l-4 border-gray5 p-6 rounded-r-lg;
-  // }
-  .box-btns {
-    @apply flex justify-around p-4;
+  .box {
+    @apply grid justify-items-center;
   }
-  .btn {
-    @apply bg-white text-black uppercase font-bold inline-flex cursor-pointer text-center shadow-md no-underline px-5 py-2 transition-all duration-150 my-0.5;
-    &.glow {
-      @apply hover:drop-shadow-[0_0_4px_rgba(225,225,225,0.5)];
+  .group {
+    @apply btn-group btn-group-horizontal gap-1 justify-items-center;
+
+    btn {
+      @apply text-xs md:text-xl btn-display glow uppercase cursor-pointer shadow-md px-5 py-2 transition-all duration-150 my-0.5 hover:drop-shadow-[0_0_4px_rgba(225,225,225,0.5)];
     }
-  }
-  .btn-lg {
-    @apply text-xs md:text-xl;
+
+    .blue {
+      @apply bg-blue-500 text-white active:bg-blue-700;
+    }
+    .green {
+      @apply bg-green-500 text-white active:bg-green-700;
+    }
+    .purple {
+      @apply bg-purple-500 text-white active:bg-purple-700;
+    }
   }
   .glow {
     @apply hover:translate-y-[-2px];
   }
   .btn-display {
     @apply font-display font-normal;
-  }
-  .btn-purple {
-    @apply bg-purple-500 text-white active:bg-purple-700;
-  }
-  .btn-green {
-    @apply bg-green-500 text-white active:bg-green-700;
-  }
-  .btn-blue {
-    @apply bg-blue-500 text-white active:bg-blue-700;
   }
 </style>

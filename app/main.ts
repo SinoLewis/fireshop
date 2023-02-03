@@ -35,8 +35,8 @@ export * from "./components/shop/supa-google.svelte";
 export * from "./components/shop/no-user.svelte";
 export * from "./components/shop/checkout-tabs.svelte";
 export * from "./components/shop/checkout-cart.svelte";
+export * from "./components/shop/checkout-order.svelte";
 export * from "./components/shop/checkout-delivery.svelte";
-export * from "./components/shop/checkout-tracking.svelte";
 
 // UI
 export * from "./components/ui/modal-action.svelte";
