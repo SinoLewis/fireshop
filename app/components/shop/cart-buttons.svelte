@@ -22,7 +22,7 @@
     </div>
   </div>
 {:else}
-  <button class="button btn-blue glow" on:click={addItem}>🛒 Add</button>
+  <button class="button btn-blue glow" on:click={addItem}>Add</button>
 {/if}
 
 <style lang="scss">

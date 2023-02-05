@@ -21,7 +21,7 @@
       >
     </li>
     <li class="indicator mx-2 md:mx-4 hover:scale-105 transition-transform">
-      <span class="indicator-item badge badge-primary ">
+      <span class="indicator-item badge badge-primary">
         <cart-indicator></cart-indicator>
       </span>
       <a
@@ -53,7 +53,11 @@
     <li class="ml-2 mr-6 relative">
       <if-user>
         <a href="/dashboard">
-          <user-avatar></user-avatar>
+          <div class="avatar online">
+            <div class="w-12 rounded-full">
+              <img src="/img/ui/avatar.svg" />
+            </div>
+          </div>
         </a>
         <modal-action slot="signed-out" name="signin" type="open">
           <button

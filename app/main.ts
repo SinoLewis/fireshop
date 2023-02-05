@@ -30,6 +30,7 @@ export * from "./components/shop/item-comment.svelte";
 export * from "./components/shop/meili-search.svelte";
 // AUTH
 export * from "./components/shop/supa-email.svelte";
+export * from "./components/shop/if-user.svelte";
 export * from "./components/shop/supa-signin.svelte";
 export * from "./components/shop/supa-google.svelte";
 // CHECKOUT

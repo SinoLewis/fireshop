@@ -9,9 +9,9 @@
 
 <div class="box">
   <div class="group">
-    <btn on:click={tab1} class="blue">🛒 Cart</btn>
-    <btn on:click={tab2} class="green">🖲️ Order</btn>
-    <btn on:click={tab3} class="purple">🚚 Delivery</btn>
+    <btn on:click={tab1} class="blue">Cart 🛒</btn>
+    <btn on:click={tab2} class="green">Order 🖲️</btn>
+    <btn on:click={tab3} class="purple">Delivery 🚚</btn>
   </div>
 
   <div>
@@ -32,7 +32,7 @@
     @apply grid justify-items-center;
   }
   .group {
-    @apply btn-group btn-group-horizontal gap-1 justify-items-center;
+    @apply text-center btn-group btn-group-horizontal gap-1 justify-items-center;
 
     btn {
       @apply text-xs md:text-xl btn-display glow uppercase cursor-pointer shadow-md px-5 py-2 transition-all duration-150 my-0.5 hover:drop-shadow-[0_0_4px_rgba(225,225,225,0.5)];
