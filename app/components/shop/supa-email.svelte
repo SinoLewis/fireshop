@@ -17,11 +17,12 @@
     // toLowerCase
     const email = emailEl.value;
     loading = true;
-    console.log("SUPA EMAIL: ", email)
+    console.log("SUPA EMAIL: ", email);
     const { res, serverError } = await passwordlessSignin(email);
     loading = false;
     error = serverError;
     confirmation = res;
+    if (!serverError) emailEl.value = null;
     console.log("MAGIC LINK SENT");
   }
 </script>
