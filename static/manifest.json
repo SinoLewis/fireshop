@@ -1,16 +1,22 @@
 {
-    "name": "Fireship.io",
-    "short_name": "Fireship.io",
-    "description": "Awesome Content for App Developers",
-    "start_url": ".",
-    "display": "standalone",
-    "background_color": "#2a2e35",
-    "theme_color": "#454e56",
-    "icons": [
-      {
-        "src": "/img/favicon.png",
-        "sizes": "64x64",
-        "type": "image/png"
+  "name": "Fireshop",
+  "short_name": "Fireshop",
+  "description": "Elevate your style and upgrade your shopping experience - Shop now!",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#2a2e35",
+  "theme_color": "#454e56",
+  "icons": [
+    {
+      "src": "/img/favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/fire.png",
+      "sizes": "144x144",
+      "type": "image/png"
     }
+
   ]
 }

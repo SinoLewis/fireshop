@@ -26,7 +26,9 @@ async function shell(cmd) {
   });
 }
 
-async function getProducts() {
+// TODO: Change from shell to noShell perl regex
+// TODO: Fix regex string to new content dir
+async function getProductsShell() {
   const { data, error } = await supabase.from("products").select("*");
   // .eq("category", "Men's");
   let products = data;
@@ -56,9 +58,28 @@ async function getProducts() {
         `\"../content/categories/${title}\"/index.md`,
       ],
     ];
-    // console.log("PRODUCTS: ", `${title}`);
+    console.log(`${title.toLowerCase().replace(/ /g, "-")}`);
   });
   // console.log("PRODUCTS: ", data);
 }
+async function getProductsNoShell() {
+  const { data, error } = await supabase.from("products").select("*");
+  // .eq("category", "Men's");
+  let products = data;
+  products.forEach((item) => {
+    let description = item["description"];
+    let title = item["title"].toLowerCase().replace(/ /g, "-");
+    let category = item["category"].toLowerCase();
+    let lastmod = new Date(item["lastmod"]);
+    let publishdate = new Date(item["publish_date"]);
 
-getProducts();
+    let oldPath = `../content/${category}/${title}/img/featured.jpg`;
+    let newPath = `../static/img/categories/${category}/${title}.jpg`;
+    // noShell("mv", [oldPath, newPath]);
+    // console.log(`Moved file from ${oldPath} to ${newPath}`);
+
+    // TODO: Fix products.ts images with .jpg
+  });
+}
+// getProductsShell();
+getProductsNoShell();

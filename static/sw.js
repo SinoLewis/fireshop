@@ -3,7 +3,7 @@ importScripts(
 );
 
 if (workbox) {
-  workbox.setConfig({ debug: true });
+  workbox.setConfig({ debug: false });
   // workbox.core.setLogLevel(workbox.core.LOG_LEVELS.warn);
 
   // workbox.routing.setDefaultHandler(workbox.strategies.networkFirst({

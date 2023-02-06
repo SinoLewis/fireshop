@@ -29,16 +29,19 @@ export * from "./components/shop/cart-indicator.svelte";
 export * from "./components/shop/item-comment.svelte";
 export * from "./components/shop/meili-search.svelte";
 // AUTH
-export * from "./components/shop/supa-email.svelte";
-export * from "./components/shop/if-user.svelte";
-export * from "./components/shop/supa-signin.svelte";
-export * from "./components/shop/supa-google.svelte";
+export * from "./components/user/supa-email.svelte";
+export * from "./components/user/if-user.svelte";
+export * from "./components/user/user-data.svelte";
+export * from "./components/user/user-cred.svelte";
+export * from "./components/user/supa-signin.svelte";
+export * from "./components/user/supa-signout.svelte";
+export * from "./components/user/supa-google.svelte";
+export * from "./components/user/no-user.svelte";
 // CHECKOUT
-export * from "./components/shop/no-user.svelte";
-export * from "./components/shop/checkout-tabs.svelte";
-export * from "./components/shop/checkout-cart.svelte";
-export * from "./components/shop/checkout-order.svelte";
-export * from "./components/shop/checkout-delivery.svelte";
+export * from "./components/checkout/checkout-tabs.svelte";
+export * from "./components/checkout/checkout-cart.svelte";
+export * from "./components/checkout/checkout-order.svelte";
+export * from "./components/checkout/checkout-delivery.svelte";
 
 // UI
 export * from "./components/ui/modal-action.svelte";

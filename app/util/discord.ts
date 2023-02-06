@@ -54,7 +54,7 @@ export async function sendMessageToWebhook(type, message) {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      console.log("Successfully sent message to webhook");
+      console.log("Successfully sent message to webhook of type: ", type);
     });
   } catch (err) {
     console.error(`Error sending message to webhook: ${err}`);

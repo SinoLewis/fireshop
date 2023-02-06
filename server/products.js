@@ -23,12 +23,11 @@ const getProduct = async () => {
   console.log("FINAL PRODUCTS", file);
 };
 
+//TODO: Fix image_url
 const createIndex = async () => {
   try {
-    // TODO: Rerun script in PROD to change data.permalink
-    // TODO: Fix data.image_url
     const { data, error } = await supabase.from("products").select();
-    console.log(data)
+    console.log(data);
     const filt = [
       "price",
       "quantity",
@@ -38,6 +37,7 @@ const createIndex = async () => {
       "user_id",
       "discount",
     ];
+    if (error) throw error;
     data.forEach((product) => {
       filt.forEach((e) => delete product[e]);
       const title = product["title"].toLowerCase().replaceAll(" ", "-");
@@ -50,10 +50,46 @@ const createIndex = async () => {
     });
 
     console.log("MEILI PRODUCTS: ", data);
-    if (error) throw error;
   } catch (error) {
     console.log("MEILI ERROR: ", error.message);
   }
 };
 
-createIndex();
+// TODO: Dict for product.ts
+const createDict = async () => {
+  try {
+    const { data, error } = await supabase.from("products").select();
+    console.log(data);
+    const filt = [
+      "quantity",
+      "available",
+      "sku",
+      "rating",
+      "user_id",
+      "discount",
+      "image_url",
+      "description",
+      "lastmod",
+      "publish_date",
+    ];
+    if (error) throw error;
+    data.forEach((product) => {
+      filt.forEach((e) => delete product[e]);
+      const title = product["title"].toLowerCase().replaceAll(" ", "-");
+      const category = product["category"].toLowerCase();
+      product["image"] = `/img/categories/${category}/${title}.jpg`;
+      delete product['category']
+    });
+    fs.writeFile("app-products.json", JSON.stringify(data), function (err) {
+      if (err) throw err;
+      console.log("complete");
+    });
+
+    console.log("MEILI PRODUCTS: ", data);
+  } catch (error) {
+    console.log("MEILI ERROR: ", error.message);
+  }
+};
+
+// createIndex();
+createDict();
