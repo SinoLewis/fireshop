@@ -7,7 +7,8 @@ RUN curl -sSL https://github.com/gohugoio/hugo/releases/download/v0.109.0/hugo_0
     && dpkg -i hugo.deb \
     && rm -rf /var/lib/apt/lists/*
 
-COPY . /app
+RUN git clone https://github.com/SinoLewis/fireshop /app
+# COPY . /app
 
 WORKDIR /app
 
