@@ -8,7 +8,7 @@
     "start": "npm run dev",
     "hugo": "hugo server --forceSyncStatic --minify --bind=0.0.0.0 --port 6969",
     "svelte": "concurrently \"vite\" \"npm run glovo-test\"",
-    "dev": "concurrently \"npm run wbuild\" \"npm run hugo\" \"npm run glovo-test\" \"npm run meili\"",
+    "dev": "concurrently \"npm run wbuild\" \"npm run hugo\" \"npm run glovo\" \"npm run meili\"",
     "prod": "concurrently \"npm run build \" \"npm run hugo \" \"npm run glovo\" \"npm run meili\"",
     "build": "vite build && hugo",
     "wbuild": "vite build --watch",

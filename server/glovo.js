@@ -6,13 +6,13 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({ origin: "*" }));
-// axios.defaults.baseURL = "https://api.glovoapp.com/laas/parcels";
-axios.defaults.baseURL = "https://stageapi.glovoapp.com";
+axios.defaults.baseURL = "https://api.glovoapp.com";
+// axios.defaults.baseURL = "https://stageapi.glovoapp.com";
 
 app.post("/oauth/token", async (req, res) => {
   try {
     const cred = req.body;
-    console.log(`AUTH TOKEN: ${cred}`);
+    console.log('SERVER AUTH TOKEN: ', cred);
     const response = await axios.post("/oauth/token", cred);
     res.send(response.data);
   } catch (error) {
@@ -44,8 +44,9 @@ app.post("/parcels/validation", async (req, res) => {
 });
 app.get("/parcels/working-areas", async (req, res) => {
   try {
-    console.log(`TEST POST: working-areas`);
-    const response = await axios.get("/laas/parcels/working-areas");
+    // console.log('SERVER WORKING AREAS: ', req.headers.authentication);
+    const response = await axios.get("/laas/parcels/working-areas", { "Authorization": req.headers.authentication });
+    console.log('SERVER WORKING AREAS: ', response);
     res.send(response.data);
   } catch (error) {
     res.status(500).send(error);

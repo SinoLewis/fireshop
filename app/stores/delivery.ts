@@ -196,6 +196,37 @@ async function clearCart() {
   const SELECTED_CART: any = import.meta.env.VITE_LOCAL_CART;
   localStorage.removeItem(SELECTED_CART);
 }
+
+// TODO: Limit API call to 10 mins
+const authToken = async () => {
+  const VITE_GLOVO_KEY: any = import.meta.env.VITE_GLOVO_KEY;
+  const VITE_GLOVO_SEC: any = import.meta.env.VITE_GLOVO_SEC;
+  let body = {
+    grantType: "client_credentials",
+    clientId: VITE_GLOVO_KEY,
+    clientSecret: VITE_GLOVO_SEC,
+  };
+
+  try {
+    let response = await fetch("http://localhost:3000/oauth/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    let data = await response.json();
+    if (response.status === 200 || 201) {
+      return data;
+    } else {
+      console.log(`POST: ${response.status}: ${response.statusText}`);
+      return null;
+    }
+  } catch (error) {
+    console.error("POST: ", error.message);
+    return;
+  }
+};
 const createParcel = async (body: Parcel) => {
   try {
     let response = await fetch("http://localhost:3000/parcels", {
@@ -263,14 +294,15 @@ const validateParcel = async (
     return;
   }
 };
-const workingAreas = async (): Promise<WorkingArea[]> => {
+const workingAreas = async (token: string): Promise<WorkingArea[]> => {
   try {
     const response = await fetch(
-      `http://localhost:3000/parcels/working-areas`,
+      "http://localhost:3000/parcels/working-areas",
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authentication: `Bearer ${token}`,
         },
       }
     );
@@ -523,7 +555,15 @@ const simFail = async (trackingNumber: string) => {
 //     return ;
 //   }
 // };
-export { parcel, valid_parcel, validateParcel, createParcel, workingAreas, cancelParcel };
+export {
+  parcel,
+  authToken,
+  valid_parcel,
+  validateParcel,
+  createParcel,
+  workingAreas,
+  cancelParcel,
+};
 
 export type {
   Parcel,

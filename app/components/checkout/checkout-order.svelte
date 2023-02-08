@@ -5,6 +5,7 @@
     cart,
     user,
     parcel,
+    authToken,
     validateParcel,
     createParcel,
     workingAreas,
@@ -138,9 +139,10 @@
 
   onMount(async () => {
     // TODO: if cart change
-    console.log("SELECTED OPTION: ", selectedOption);
+    let token = await authToken();
+    console.log("GLOVO AUTH: ", token);
     updateCart($cart);
-    working_areas = await workingAreas();
+    working_areas = await workingAreas(token["accessToken"]);
     console.log("Working Areas: \n", working_areas);
   });
 </script>
