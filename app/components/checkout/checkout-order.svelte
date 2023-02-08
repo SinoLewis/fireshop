@@ -138,6 +138,7 @@
   }
 
   onMount(async () => {
+    console.log("GLOVO AUTH TEST ");
     // TODO: if cart change
     let token = await authToken();
     console.log("GLOVO AUTH: ", token);

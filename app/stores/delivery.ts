@@ -208,7 +208,7 @@ const authToken = async () => {
   };
 
   try {
-    let response = await fetch("http://localhost:3000/oauth/token", {
+    let response = await fetch("http://172.18.0.17:3000/oauth/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -229,7 +229,7 @@ const authToken = async () => {
 };
 const createParcel = async (body: Parcel) => {
   try {
-    let response = await fetch("http://localhost:3000/parcels", {
+    let response = await fetch("http://172.18.0.17:3000/parcels", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -266,7 +266,7 @@ const validateParcel = async (
   pickupDetails: PickupAddress
 ) => {
   try {
-    let response = await fetch("http://localhost:3000/parcels/validation", {
+    let response = await fetch("http://172.18.0.17:3000/parcels/validation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -297,12 +297,12 @@ const validateParcel = async (
 const workingAreas = async (token: string): Promise<WorkingArea[]> => {
   try {
     const response = await fetch(
-      "http://localhost:3000/parcels/working-areas",
+      "http://172.18.0.17:3000/parcels/working-areas",
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authentication: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -325,7 +325,7 @@ const workingAreas = async (token: string): Promise<WorkingArea[]> => {
 const cancelParcel = async (trackingNumber: string) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/parcels/${trackingNumber}`,
+      `http://172.18.0.17:3000/parcels/${trackingNumber}`,
       {
         method: "POST",
         headers: {
@@ -352,7 +352,7 @@ const statusParcel = async (
 ): Promise<StateChangeHistory> => {
   try {
     const response = await fetch(
-      `http://localhost:3000/parcels/${trackingNumber}`,
+      `http://172.18.0.17:3000/parcels/${trackingNumber}`,
       {
         method: "GET",
         headers: {
@@ -377,7 +377,7 @@ const statusParcel = async (
 const infoCourier = async (trackingNumber: string): Promise<Asignee> => {
   try {
     const response = await fetch(
-      `http://localhost:3000/courier/${trackingNumber}/info`,
+      `http://172.18.0.17:3000/courier/${trackingNumber}/info`,
       {
         method: "GET",
         headers: {
@@ -404,7 +404,7 @@ const infoCourier = async (trackingNumber: string): Promise<Asignee> => {
 const postionCourier = async (trackingNumber: string): Promise<Position> => {
   try {
     const response = await fetch(
-      `http://localhost:3000/courier/${trackingNumber}/position`,
+      `http://172.18.0.17:3000/courier/${trackingNumber}/position`,
       {
         method: "GET",
         headers: {
@@ -432,7 +432,7 @@ const postionCourier = async (trackingNumber: string): Promise<Position> => {
 const trackLink = async (trackingNumber: string): Promise<string> => {
   try {
     const response = await fetch(
-      `http://localhost:3000/courier/${trackingNumber}/link`,
+      `http://172.18.0.17:3000/courier/${trackingNumber}/link`,
       {
         method: "GET",
         headers: {
@@ -460,7 +460,7 @@ const trackLink = async (trackingNumber: string): Promise<string> => {
 const simSuccess = async (trackingNumber: string) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/sim/${trackingNumber}/success`,
+      `http://172.18.0.17:3000/sim/${trackingNumber}/success`,
       {
         method: "GET",
         headers: {
@@ -487,7 +487,7 @@ const simSuccess = async (trackingNumber: string) => {
 const simFail = async (trackingNumber: string) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/sim/${trackingNumber}/fail`,
+      `http://172.18.0.17:3000/sim/${trackingNumber}/fail`,
       {
         method: "GET",
         headers: {
@@ -514,7 +514,7 @@ const simFail = async (trackingNumber: string) => {
 
 // const testPost = async (user) => {
 //   try {
-//     const response = await fetch("http://localhost:3000/users/21", {
+//     const response = await fetch("http://172.18.0.17:3000/users/21", {
 //       method: "POST",
 //       headers: {
 //         "Content-Type": "application/json",
@@ -536,7 +536,7 @@ const simFail = async (trackingNumber: string) => {
 
 // const testGet = async () => {
 //   try {
-//     const response = await fetch("http://localhost:3000/users/21", {
+//     const response = await fetch("http://172.18.0.17:3000/users/21", {
 //       method: "GET",
 //       headers: {
 //         "Content-Type": "application/json",

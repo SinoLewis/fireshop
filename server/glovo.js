@@ -16,7 +16,7 @@ app.post("/oauth/token", async (req, res) => {
     const response = await axios.post("/oauth/token", cred);
     res.send(response.data);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(error.response.status || 400).send({ error: error.message });
   }
 });
 
@@ -28,7 +28,7 @@ app.post("/parcels", async (req, res) => {
     const response = await axios.post("/laas/parcels", parcel);
     res.status(201).send(response.data);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(error.response.status || 400).send({ error: error.message });
   }
 });
 
@@ -39,17 +39,22 @@ app.post("/parcels/validation", async (req, res) => {
     const response = await axios.post("/laas/parcels/validation", parcel);
     res.send(response.data);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(error.response.status || 400).send({ error: error.message });
   }
 });
 app.get("/parcels/working-areas", async (req, res) => {
   try {
-    // console.log('SERVER WORKING AREAS: ', req.headers.authentication);
-    const response = await axios.get("/laas/parcels/working-areas", { "Authorization": req.headers.authentication });
+    const token = req.headers.authorization.split(' ')[1];
+    console.log('SERVER WORKING AUTH: ', token);
+    const response = await axios.get("/laas/working-areas", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log('SERVER WORKING AREAS: ', response);
-    res.send(response.data);
+    res.status(200).send(response.data);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(error.response.status || 400).send({ error: error.message });
   }
 });
 
@@ -61,7 +66,7 @@ app.post("/parcels/:id", async (req, res) => {
     const response = await axios.post(`/laas/parcels/${id}`);
     res.send(response.data);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(error.response.status || 400).send({ error: error.message });
   }
 });
 
@@ -73,7 +78,7 @@ app.get("/parcels/:id", async (req, res) => {
     const response = await axios.get(`/laas/parcels/${id}`);
     res.send(response.data);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(error.response.status || 400).send({ error: error.message });
   }
 });
 
@@ -84,7 +89,7 @@ app.get("/parcels/:id/history", async (req, res) => {
     const response = await axios.get(`/laas/parcels/${id}/history`);
     res.send(response.data);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(error.response.status || 400).send({ error: error.message });
   }
 });
 
@@ -95,7 +100,7 @@ app.get("/courier/:id/info", async (req, res) => {
     const response = await axios.get(`/laas/parcels/${id}/courier-contact`);
     res.send(response.data);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(error.response.status || 400).send({ error: error.message });
   }
 });
 
@@ -106,7 +111,7 @@ app.get("/courier/:id/position", async (req, res) => {
     const response = await axios.get(`/laas/parcels/${id}/courier-position`);
     res.send(response.data);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(error.response.status || 400).send({ error: error.message });
   }
 });
 
@@ -117,7 +122,7 @@ app.get("/courier/:id/link", async (req, res) => {
     const response = await axios.get(`/laas/parcel_tracking_links/${id}`);
     res.send(response.data);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(error.response.status || 400).send({ error: error.message });
   }
 });
 
@@ -130,7 +135,7 @@ app.get("/sim/:id/success", async (req, res) => {
     );
     res.send(response.data);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(error.response.status || 400).send({ error: error.message });
   }
 });
 
@@ -143,7 +148,7 @@ app.get("/sim/:id/fail", async (req, res) => {
     );
     res.send(response.data);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(error.response.status || 400).send({ error: error.message });
   }
 });
 
