@@ -227,12 +227,13 @@ const authToken = async () => {
     return;
   }
 };
-const createParcel = async (body: Parcel) => {
+const createParcel = async (token: string, body: Parcel) => {
   try {
     let response = await fetch("http://172.18.0.17:3000/parcels", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ body }),
     });
@@ -262,16 +263,29 @@ const createParcel = async (body: Parcel) => {
   }
 };
 const validateParcel = async (
+  token: string,
   address: CustomerAddress,
-  pickupDetails: PickupAddress
+  pickupDetails: PickupDetails
 ) => {
   try {
     let response = await fetch("http://172.18.0.17:3000/parcels/validation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ address, pickupDetails }),
+      // body: JSON.stringify({ address, pickupDetails }),
+      body: JSON.stringify({
+        address: {
+          cityName: "Madrid",
+          rawAddress: "Madrid, Spain",
+        },
+        pickupDetails: {
+          address: {
+            rawAddress: "Prestige Plaza, Ngong Road, Nairobi, Kenya",
+          },
+        },
+      }),
     });
     let data = await response.json();
     if (response.status === 200) {
@@ -302,7 +316,7 @@ const workingAreas = async (token: string): Promise<WorkingArea[]> => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -322,7 +336,7 @@ const workingAreas = async (token: string): Promise<WorkingArea[]> => {
     return;
   }
 };
-const cancelParcel = async (trackingNumber: string) => {
+const cancelParcel = async (token: string, trackingNumber: string) => {
   try {
     const response = await fetch(
       `http://172.18.0.17:3000/parcels/${trackingNumber}`,
@@ -330,6 +344,7 @@ const cancelParcel = async (trackingNumber: string) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -348,6 +363,7 @@ const cancelParcel = async (trackingNumber: string) => {
   }
 };
 const statusParcel = async (
+  token: string,
   trackingNumber: string
 ): Promise<StateChangeHistory> => {
   try {
@@ -357,6 +373,7 @@ const statusParcel = async (
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -374,7 +391,10 @@ const statusParcel = async (
     return;
   }
 };
-const infoCourier = async (trackingNumber: string): Promise<Asignee> => {
+const infoCourier = async (
+  token: string,
+  trackingNumber: string
+): Promise<Asignee> => {
   try {
     const response = await fetch(
       `http://172.18.0.17:3000/courier/${trackingNumber}/info`,
@@ -382,6 +402,7 @@ const infoCourier = async (trackingNumber: string): Promise<Asignee> => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -401,7 +422,10 @@ const infoCourier = async (trackingNumber: string): Promise<Asignee> => {
     return;
   }
 };
-const postionCourier = async (trackingNumber: string): Promise<Position> => {
+const postionCourier = async (
+  token: string,
+  trackingNumber: string
+): Promise<Position> => {
   try {
     const response = await fetch(
       `http://172.18.0.17:3000/courier/${trackingNumber}/position`,
@@ -409,6 +433,7 @@ const postionCourier = async (trackingNumber: string): Promise<Position> => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -429,7 +454,10 @@ const postionCourier = async (trackingNumber: string): Promise<Position> => {
   }
 };
 
-const trackLink = async (trackingNumber: string): Promise<string> => {
+const trackLink = async (
+  token: string,
+  trackingNumber: string
+): Promise<string> => {
   try {
     const response = await fetch(
       `http://172.18.0.17:3000/courier/${trackingNumber}/link`,
@@ -437,6 +465,7 @@ const trackLink = async (trackingNumber: string): Promise<string> => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -457,7 +486,7 @@ const trackLink = async (trackingNumber: string): Promise<string> => {
   }
 };
 
-const simSuccess = async (trackingNumber: string) => {
+const simSuccess = async (token: string, trackingNumber: string) => {
   try {
     const response = await fetch(
       `http://172.18.0.17:3000/sim/${trackingNumber}/success`,
@@ -465,6 +494,7 @@ const simSuccess = async (trackingNumber: string) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -484,7 +514,7 @@ const simSuccess = async (trackingNumber: string) => {
     return;
   }
 };
-const simFail = async (trackingNumber: string) => {
+const simFail = async (token: string, trackingNumber: string) => {
   try {
     const response = await fetch(
       `http://172.18.0.17:3000/sim/${trackingNumber}/fail`,
@@ -492,6 +522,7 @@ const simFail = async (trackingNumber: string) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );

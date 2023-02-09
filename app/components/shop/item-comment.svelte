@@ -37,7 +37,7 @@
   .area {
     @apply w-11/12;
     textarea {
-      @apply p-4 h-24 min-w-max border border-base-content border-opacity-20 bg-base-100 rounded-btn;
+      @apply textarea textarea-bordered textarea-lg w-full max-w-xs;
     }
   }
   .btn {

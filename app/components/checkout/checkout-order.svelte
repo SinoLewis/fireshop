@@ -19,7 +19,6 @@
   import { onMount } from "svelte";
   import { updateCart } from "../../util/supabase";
   import { toast } from "../../stores";
-  import confetti from "../../util/confetti";
 
   let emailEl: HTMLInputElement;
   let nameEl: HTMLInputElement;
@@ -34,6 +33,7 @@
   let addressValid = false;
   // TODO: button default=blue, all_inputs_valid=green
 
+  let token;
   let selectedOption;
   let pickupDetails: PickupDetails = {
     address: { rawAddress: "Prestige Plaza, Ngong Road, Nairobi, Kenya" },
@@ -109,11 +109,12 @@
 
     try {
       let valid_parcel = await validateParcel(
+        token,
         request.address,
-        request.pickupDetails.address
+        request.pickupDetails
       );
       if (valid_address && valid_parcel["validationResult"] === "EXECUTABLE") {
-        let response = await createParcel(request);
+        let response = await createParcel(token, request);
         if (response === null || response === undefined)
           throw new Error(
             "Delivery Creation failed. Check your network connection"
@@ -140,7 +141,7 @@
   onMount(async () => {
     console.log("GLOVO AUTH TEST ");
     // TODO: if cart change
-    let token = await authToken();
+    token = await authToken();
     console.log("GLOVO AUTH: ", token);
     updateCart($cart);
     working_areas = await workingAreas(token["accessToken"]);

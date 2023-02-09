@@ -61,7 +61,6 @@ export async function passwordlessSignin(email: string) {
   console.log("SERVER DATA: ", data)
   console.log("SERVER ERROR: ", data)
   if (!error) {
-    console.log("SERVER ERROR: ", serverError)
     res = `Magic signin link sent to ${email}`;
     sendMessageToWebhook("Magic signin", email);
   }

@@ -1,10 +1,11 @@
 import { user } from "../stores";
 
 export async function sendMessageToWebhook(type, message) {
-  const webhook =
-    type === "ERROR"
-      ? import.meta.env.VITE_HOOK_SUPA
-      : import.meta.env.VITE_HOOK_REVIEW;
+  // const webhook =
+  //   type === "ERROR"
+  //     ? import.meta.env.VITE_HOOK_SUPA
+  //     : import.meta.env.VITE_HOOK_REVIEW;
+  const webhook = import.meta.env.VITE_HOOK_REVIEW
   try {
     user.subscribe(async (user) => {
       const response = await fetch(webhook, {
@@ -51,6 +52,7 @@ export async function sendMessageToWebhook(type, message) {
           ],
         }),
       });
+      console.log("START DISCORD WEBHOOK: ", webhook);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
