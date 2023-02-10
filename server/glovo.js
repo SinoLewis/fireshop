@@ -23,9 +23,15 @@ app.post("/oauth/token", async (req, res) => {
 // POST
 app.post("/parcels", async (req, res) => {
   try {
+    const token = req.headers.authorization.split(' ')[1];
     const parcel = req.body;
-    console.log(`TEST POST: ${parcel}`);
-    const response = await axios.post("/laas/parcels", parcel);
+    console.log('CREATE PARCEL: ', parcel);
+    const response = await axios.post("/laas/parcels", parcel, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('CREATE PARCEL RESP: ', response.data);
     res.status(201).send(response.data);
   } catch (error) {
     res.status(error.response.status || 400).send({ error: error.message });
@@ -34,9 +40,15 @@ app.post("/parcels", async (req, res) => {
 
 app.post("/parcels/validation", async (req, res) => {
   try {
+    const token = req.headers.authorization.split(' ')[1];
     const parcel = req.body;
-    console.log(`TEST POST: ${parcel}`);
-    const response = await axios.post("/laas/parcels/validation", parcel);
+    console.log('VALIDATE PARCEL: ', typeof (parcel));
+    const response = await axios.post("/laas/parcels/validation", parcel, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('VALIDATE PARCEL RESP: ', response.data);
     res.send(response.data);
   } catch (error) {
     res.status(error.response.status || 400).send({ error: error.message });
@@ -51,7 +63,7 @@ app.get("/parcels/working-areas", async (req, res) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('SERVER WORKING AREAS: ', response);
+    // console.log('SERVER WORKING AREAS: ', response);
     res.status(200).send(response.data);
   } catch (error) {
     res.status(error.response.status || 400).send({ error: error.message });
@@ -61,9 +73,14 @@ app.get("/parcels/working-areas", async (req, res) => {
 // CANCEL
 app.post("/parcels/:id", async (req, res) => {
   try {
+    const token = req.headers.authorization.split(' ')[1];
     const id = req.params.id;
     console.log(`TEST GET: ${id}`);
-    const response = await axios.post(`/laas/parcels/${id}`);
+    const response = await axios.post(`/laas/parcels/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     res.send(response.data);
   } catch (error) {
     res.status(error.response.status || 400).send({ error: error.message });
@@ -73,9 +90,14 @@ app.post("/parcels/:id", async (req, res) => {
 // GET
 app.get("/parcels/:id", async (req, res) => {
   try {
+    const token = req.headers.authorization.split(' ')[1];
     const id = req.params.id;
     console.log(`TEST GET: ${id}`);
-    const response = await axios.get(`/laas/parcels/${id}`);
+    const response = await axios.get(`/laas/parcels/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     res.send(response.data);
   } catch (error) {
     res.status(error.response.status || 400).send({ error: error.message });
@@ -84,9 +106,14 @@ app.get("/parcels/:id", async (req, res) => {
 
 app.get("/parcels/:id/history", async (req, res) => {
   try {
+    const token = req.headers.authorization.split(' ')[1];
     const id = req.params.id;
     console.log(`TEST GET: ${id}`);
-    const response = await axios.get(`/laas/parcels/${id}/history`);
+    const response = await axios.get(`/laas/parcels/${id}/history`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     res.send(response.data);
   } catch (error) {
     res.status(error.response.status || 400).send({ error: error.message });
@@ -95,9 +122,14 @@ app.get("/parcels/:id/history", async (req, res) => {
 
 app.get("/courier/:id/info", async (req, res) => {
   try {
+    const token = req.headers.authorization.split(' ')[1];
     const id = req.params.id;
     console.log(`TEST GET: ${id}`);
-    const response = await axios.get(`/laas/parcels/${id}/courier-contact`);
+    const response = await axios.get(`/laas/parcels/${id}/courier-contact`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     res.send(response.data);
   } catch (error) {
     res.status(error.response.status || 400).send({ error: error.message });
@@ -106,9 +138,14 @@ app.get("/courier/:id/info", async (req, res) => {
 
 app.get("/courier/:id/position", async (req, res) => {
   try {
+    const token = req.headers.authorization.split(' ')[1];
     const id = req.params.id;
     console.log(`TEST GET: ${id}`);
-    const response = await axios.get(`/laas/parcels/${id}/courier-position`);
+    const response = await axios.get(`/laas/parcels/${id}/courier-position`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     res.send(response.data);
   } catch (error) {
     res.status(error.response.status || 400).send({ error: error.message });
@@ -117,9 +154,14 @@ app.get("/courier/:id/position", async (req, res) => {
 
 app.get("/courier/:id/link", async (req, res) => {
   try {
+    const token = req.headers.authorization.split(' ')[1];
     const id = req.params.id;
     console.log(`TEST GET: ${id}`);
-    const response = await axios.get(`/laas/parcel_tracking_links/${id}`);
+    const response = await axios.get(`/laas/parcel_tracking_links/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     res.send(response.data);
   } catch (error) {
     res.status(error.response.status || 400).send({ error: error.message });
@@ -128,10 +170,15 @@ app.get("/courier/:id/link", async (req, res) => {
 
 app.get("/sim/:id/success", async (req, res) => {
   try {
+    const token = req.headers.authorization.split(' ')[1];
     const id = req.params.id;
     console.log(`TEST GET: ${id}`);
     const response = await axios.get(
-      `/laas/parcels/${id}/simulate/successful-attempt`
+      `/laas/parcels/${id}/simulate/successful-attempt`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
     );
     res.send(response.data);
   } catch (error) {
@@ -141,10 +188,15 @@ app.get("/sim/:id/success", async (req, res) => {
 
 app.get("/sim/:id/fail", async (req, res) => {
   try {
+    const token = req.headers.authorization.split(' ')[1];
     const id = req.params.id;
     console.log(`TEST GET: ${id}`);
     const response = await axios.get(
-      `/laas/parcels/${id}/simulate/exhausted-attempt`
+      `/laas/parcels/${id}/simulate/exhausted-attempt`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
     );
     res.send(response.data);
   } catch (error) {

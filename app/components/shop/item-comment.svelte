@@ -20,7 +20,7 @@
 
 <form on:submit|preventDefault={handleSubmit}>
   <div class="area">
-    <textarea placeholder="Type your comment" bind:value />
+    <div><textarea placeholder="Type your comment" bind:value /></div>
   </div>
   <div>
     <button class="btn btn-lg btn-blue btn-display glow" type="submit"
@@ -35,9 +35,10 @@
   }
 
   .area {
-    @apply w-11/12;
+    width: 100%;
     textarea {
-      @apply textarea textarea-bordered textarea-lg w-full max-w-xs;
+      width: 90%;
+      @apply textarea textarea-bordered textarea-lg w-full;
     }
   }
   .btn {

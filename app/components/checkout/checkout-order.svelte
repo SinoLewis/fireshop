@@ -143,7 +143,7 @@
     // TODO: if cart change
     token = await authToken();
     console.log("GLOVO AUTH: ", token);
-    updateCart($cart);
+    // updateCart($cart);
     working_areas = await workingAreas(token["accessToken"]);
     console.log("Working Areas: \n", working_areas);
   });
