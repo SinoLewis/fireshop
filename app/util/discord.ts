@@ -1,11 +1,12 @@
 import { user } from "../stores";
 
 export async function sendMessageToWebhook(type, message) {
-  const webhook =
-    type === "ERROR"
-      ? import.meta.env.VITE_HOOK_SUPA
-      : import.meta.env.VITE_HOOK_REVIEW;
-  // const webhook = import.meta.env.VITE_HOOK_REVIEW;
+  let webhook;
+  if (type === "ERROR") webhook = import.meta.env.VITE_HOOK_SUPA;
+  if (type === "AUTH") webhook = import.meta.env.VITE_HOOK_AUTH;
+  if (type === "ORDER") webhook = import.meta.env.VITE_HOOK_ORDER;
+  if (type === "REVIEW") webhook = import.meta.env.VITE_HOOK_REVIEW;
+
   try {
     user.subscribe(async (user) => {
       const response = await fetch(webhook, {
@@ -14,7 +15,7 @@ export async function sendMessageToWebhook(type, message) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: type === "MAGIC" ? "Magic Login" : undefined,
+          // username: type === "MAGIC" ? "Magic Login" : undefined,
           // avatar_url: "https://i.imgur.com/4M34hi2.png",
           // content: type,
           embeds: [
@@ -27,7 +28,7 @@ export async function sendMessageToWebhook(type, message) {
               },
               title: type,
               // url: "https://google.com/",
-              description: message,
+              description: JSON.stringify(message),
               color: 32441,
               fields: [
                 {

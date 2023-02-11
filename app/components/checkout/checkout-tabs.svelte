@@ -19,7 +19,8 @@
       <checkout-cart />
     {/if}
     {#if activeTab === 1}
-      <checkout-order />
+    <checkout-merchant />
+    <!-- <checkout-order /> -->
     {/if}
     {#if activeTab === 2}
       <checkout-delivery />
