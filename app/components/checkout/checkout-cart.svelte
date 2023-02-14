@@ -47,7 +47,7 @@
     );
     transition: border-color 0.15s ease-in-out;
     &:hover {
-      border-color: #1D4ED8;
+      border-color: #1d4ed8;
     }
     @apply card card-side shadow-xl;
 
