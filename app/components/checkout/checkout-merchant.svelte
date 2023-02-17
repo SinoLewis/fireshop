@@ -2,9 +2,10 @@
 
 <script lang="ts">
   import { onMount } from "svelte";
-  import { updateCart } from "../../util/supabase";
-  import { sendMessageToWebhook } from "../../util/discord";
-  import { toast, user } from "../../stores";
+  import { updateCart, updateMerchant } from "../../util/supabase";
+  import { sendMessageToWebhook, sendOrderToWebhook } from "../../util/discord";
+  import { toast, user, merchant, cart } from "../../stores";
+  import type { Address } from "../../stores/merchant";
 
   let emailEl: HTMLInputElement;
   let nameEl: HTMLInputElement;
@@ -13,36 +14,71 @@
 
   // TODO: default=white, valid=green, error_on_submit=red
   // let emailValid = () => emailEl.validity.valid;
-  let emailValid = false;
-  let phoneValid = false;
-  let nameValid = false;
-  let addressValid = false;
+  let emailValid = $merchant.email ? true : false;
+  let phoneValid = $merchant.phone ? true : false;
+  let nameValid = $merchant.name ? true : false;
+  let addressValid = $merchant.address.display_name ? true : false;
 
   let loading = false;
+  let hits: Address[];
+  let hit: Address;
+  console.log("BEFORE INIT MERCHANT STORE: ", window.origin);
 
+  onMount(async () => {
+    console.log("INIT MERCHANT STORE: ", $merchant);
+    $merchant.email = $user?.email;
+    $merchant.cart_products = $cart.cart_products;
+  });
   async function validate() {
     emailValid = emailEl.validity.valid;
     phoneValid = phoneEl.validity.valid;
     nameValid = nameEl.validity.valid;
+  }
+
+  async function getAddressHits(e: Event) {
+    try {
+      addressValid = false;
+      const q = (e.target as HTMLInputElement).value;
+      const url = `https://nominatim.openstreetmap.org/search?q=${q}&format=json`;
+      const response = await fetch(url);
+      hits = await response.json();
+      console.log("NOMINATIM HITS: ", hits);
+    } catch (error) {
+      console.log("NOMINATIM ERROR: ", error);
+      sendMessageToWebhook("ERROR", error.message);
+    }
+  }
+  async function setAddress(e, index) {
+    hit = hits[index];
+    addressEl.value = hits[index].display_name;
+    $merchant.address.display_name = addressEl.value;
+    // TODO: API that can support glovo workingAreas
+    toast.set({
+      icon: "👍",
+      message: `${addressEl.value} set as delivery location`,
+    });
     addressValid = addressEl.validity.valid;
+    hits.length = 0;
+    //
+    console.log("SELECTED: ", addressEl.value);
+    console.log("MERCHANT STORE: ", $merchant);
   }
 
   async function handleSubmit(e) {
     loading = true;
-    let request = {
-      name: nameEl.value,
-      email: emailEl.value,
-      phone: phoneEl.value,
-      address: addressEl.value
-    };
     try {
-      sendMessageToWebhook("ORDER", request);
-      toast.set({
-        icon: "😎",
-        message: "Your Order was succesful!",
-        type: "success",
-      });
-      console.log("DELIVERY STORE: ", request);
+      if (addressValid) {
+        sendOrderToWebhook($merchant);
+        updateMerchant($merchant);
+        toast.set({
+          icon: "😎",
+          message: "Your Order was succesful!",
+          type: "success",
+        });
+        console.log("MERCHANT STORE: ", $merchant);
+      } else {
+        throw new Error(`ADDRESS: ${addressEl.value} is unknown`);
+      }
     } catch (error) {
       toast.set({
         icon: "❌",
@@ -68,6 +104,7 @@
           type="text"
           name="name"
           bind:this={nameEl}
+          bind:value={$merchant.name}
           on:input={validate}
           required
         />
@@ -80,6 +117,7 @@
           name="phone"
           placeholder="254712345678"
           bind:this={phoneEl}
+          bind:value={$merchant.phone}
           on:input={validate}
           required
         />
@@ -90,8 +128,8 @@
           class="input-field"
           type="email"
           name="email"
-          value={$user.email}
           bind:this={emailEl}
+          bind:value={$merchant.email}
           on:input={validate}
           required
         />
@@ -104,9 +142,36 @@
           name="address"
           placeholder="Address"
           bind:this={addressEl}
+          bind:value={$merchant.address.display_name}
+          on:input={getAddressHits}
           required
         />
       </label>
+      {#if hits?.length}
+        <div class="results">
+          <div class="hit">
+            <table>
+              <!-- head -->
+              <thead>
+                <tr>
+                  <th />
+                  <th>Pick Address</th>
+                </tr>
+              </thead>
+              <tbody>
+                {#each hits || [] as hit, i}
+                  <tr>
+                    <th>📍</th>
+                    <td on:click={(e) => setAddress(e, i)}
+                      >{hit.display_name}</td
+                    >
+                  </tr>
+                {/each}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      {/if}
       <input
         class="send"
         type="submit"

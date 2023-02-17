@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { toast, Cart } from "../stores";
+import { toast, Cart, Merchant } from "../stores";
 import { sendMessageToWebhook } from "./discord";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -58,8 +58,8 @@ export async function passwordlessSignin(email: string) {
     },
   });
   serverError = error;
-  console.log("SERVER DATA: ", data)
-  console.log("SERVER ERROR: ", data)
+  console.log("SERVER DATA: ", data);
+  console.log("SERVER ERROR: ", data);
   if (!error) {
     res = `Magic signin link sent to ${email}`;
     sendMessageToWebhook("AUTH", `${email} requested a login link`);
@@ -130,4 +130,27 @@ async function updateProductQuantity(cart: Cart) {
       sendMessageToWebhook("ERROR", error.message);
     }
   });
+}
+
+export async function updateMerchant(merchant: Merchant) {
+  try {
+    const { data, error } = await supabase
+      .from("merchant")
+      .select("*")
+      .eq("id", merchant.id);
+    if (error) throw error;
+    if (data[0]["id"] === merchant.id) {
+      const { data, error } = await supabase
+        .from("merchant")
+        .update({ ...merchant })
+        .eq("id", merchant.id);
+      if (error) throw error;
+    } else {
+      const { data, error } = await supabase.from("merchant").insert(merchant);
+      if (error) throw error;
+    }
+  } catch (error) {
+    console.log("MERCHANT update ERROR: ", error);
+    sendMessageToWebhook("ERROR", error.message);
+  }
 }

@@ -1,10 +1,11 @@
 import { user } from "../stores";
+import type { Merchant } from "../stores";
+import { merchant } from "../stores";
 
 export async function sendMessageToWebhook(type, message) {
   let webhook;
   if (type === "ERROR") webhook = import.meta.env.VITE_HOOK_SUPA;
   if (type === "AUTH") webhook = import.meta.env.VITE_HOOK_AUTH;
-  if (type === "ORDER") webhook = import.meta.env.VITE_HOOK_ORDER;
   if (type === "REVIEW") webhook = import.meta.env.VITE_HOOK_REVIEW;
 
   try {
@@ -55,7 +56,6 @@ export async function sendMessageToWebhook(type, message) {
           ],
         }),
       });
-      console.log("START DISCORD WEBHOOK: ", webhook);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -65,3 +65,87 @@ export async function sendMessageToWebhook(type, message) {
     console.error(`Error sending message to webhook: ${err}`);
   }
 }
+
+export const sendOrderToWebhook = async (merchant: Merchant) => {
+  const webhook = import.meta.env.VITE_HOOK_ORDER;
+  let items = Object.values(merchant.cart_products).map((item) => {
+    return {
+      title: item.title,
+      description: `PRICE: ${item.price}`,
+      color: 32441,
+      image: {
+        url: item.image,
+      },
+      footer: {
+        text: `QUANTITY: ${item.quantity}`,
+      },
+    };
+  });
+
+  try {
+    const response = await fetch(webhook, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: merchant.name,
+        // avatar_url: "https://i.imgur.com/4M34hi2.png",
+        content: `ADDRESS: ${merchant.address.display_name} \nPHONE: ${merchant.phone}`,
+        embeds: items,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    console.log("Successfully sent message to webhook of type: ORDER");
+  } catch (error) {
+    console.error(`Error sending message to webhook: ${error}`);
+  }
+};
+
+// export const sendOrderToWebhook = async (merchant: Merchant) => {
+//   const webhook = import.meta.env.VITE_HOOK_ORDER;
+
+//   console.log(
+//     "DISCORD IMAGE: ",
+//     await getImage("/img/categories/shoals/perfume-oil.jpg")
+//   );
+//   let items = Object.values(merchant.cart_products).map((item) => {
+//     return {
+//       title: item.title,
+//       description: `PRICE: ${item.price}`,
+//       color: 32441,
+//       image: async () => await getImage(item.image),
+//       footer: {
+//         text: `QUANTITY: ${item.quantity}`,
+//       },
+//     };
+//   });
+//   let customer = {
+//     username: merchant.name,
+//     // avatar_url: "https://i.imgur.com/4M34hi2.png",
+//     content: `ADDRESS: ${merchant.address.display_name} \nPHONE: ${merchant.phone}`,
+//     embeds: JSON.stringify(items),
+//   };
+//   const formData = new FormData();
+//   Object.entries(customer).forEach((value) => {
+//     formData.append(value[0], value[1]);
+//   });
+
+//   try {
+//     const response = await fetch(webhook, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "multipart/form-data",
+//       },
+//       body: formData,
+//     });
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! status: ${response.status}`);
+//     }
+//     console.log("Successfully sent message to webhook of type: ORDER");
+//   } catch (error) {
+//     console.error(`Error sending message to webhook: ${error}`);
+//   }
+// };
