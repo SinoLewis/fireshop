@@ -53,18 +53,15 @@
 
   async function address(e: Event) {
     // TODO: Reduce API calls using setTimeOut
-    const KEY = import.meta.env.VITE_GEOAPIFY;
-    const q = (e.target as HTMLInputElement).value;
-    fetch(
-      `https://api.geoapify.com/v1/geocode/autocomplete?text=${q}&format=json&apiKey=${KEY}`
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        results = result.results;
-        console.log("GEOAPIFY OBJ:  \n", result);
-        console.log("GEOAPIFY RESULTS:  \n", results);
-      })
-      .catch((error) => console.log("error", error));
+    try {
+      const q = (e.target as HTMLInputElement).value;
+      const url = `https://nominatim.openstreetmap.org/search?q=${q}&format=json`;
+      const response = await fetch(url);
+      results = await response.json();
+      console.log("NOMINATIM HITS: ", results);
+    } catch (error) {
+      console.log("NOMINATIM ERROR: ", error);
+    }
   }
   async function handleSelect(e, index) {
     result = results[index];
