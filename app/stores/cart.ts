@@ -109,13 +109,22 @@ cart.subscribe((value) => {
   Object.values(value.cart_products).forEach(async (item) => {
     // TODO: item price, cart price, cart total
     item.total_price = item.price * item.quantity;
-    // TODO: Update Images
-    let { data } = await supabase.storage
-      .from("fireshop-images")
-      .getPublicUrl(
-        `${item.category}/${item.title.toLowerCase().replaceAll(" ", "-")}.jpg`
-      );
-    item["image"] = data.publicUrl;
+    // TODO: Update Images to reduce API request adter mutation
+    const URL: any = import.meta.env.VITE_SUPABASE_URL;
+    let publicUrl =
+      URL +
+      "/storage/v1/object/public/fireshop-images/" +
+      item.category +
+      "/" +
+      item.title.toLowerCase().replaceAll(" ", "-") +
+      ".jpg";
+
+    // let { data } = await supabase.storage
+    //   .from("fireshop-images")
+    //   .getPublicUrl(
+    //     `${item.category}/${item.title.toLowerCase().replaceAll(" ", "-")}.jpg`
+    //   );
+    item["image"] = publicUrl;
   });
   value.cart_price = Object.values(value.cart_products).reduce(
     (acc, item) => acc + item.total_price,
