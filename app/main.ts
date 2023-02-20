@@ -40,9 +40,9 @@ export * from "./components/user/no-user.svelte";
 // CHECKOUT
 export * from "./components/checkout/checkout-tabs.svelte";
 export * from "./components/checkout/checkout-cart.svelte";
-export * from "./components/checkout/checkout-order.svelte";
-export * from "./components/checkout/checkout-merchant.svelte";
+export * from "./components/checkout/checkout-glovo.svelte";
 export * from "./components/checkout/checkout-delivery.svelte";
+export * from "./components/checkout/checkout-order.svelte";
 
 // UI
 export * from "./components/ui/modal-action.svelte";
