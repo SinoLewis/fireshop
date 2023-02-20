@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jewelleries on Fireshop</title>
+    <link>https://fireshop.com/jewellery/</link>
+    <description>Recent content in Jewelleries on Fireshop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 22 Oct 2022 19:39:39 +0000</lastBuildDate><atom:link href="https://fireshop.com/jewellery/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Gulab Powder 50 Gram</title>
+      <link>https://fireshop.com/jewellery/gulab-powder-50-gram/</link>
+      <pubDate>Sat, 22 Oct 2022 19:39:39 +0000</pubDate>
+      
+      <guid>https://fireshop.com/jewellery/gulab-powder-50-gram/</guid>
+      <description>The following article discusses patterns that I have found exceptionally useful when implementing Firebase User Authentication and Firestore in Flutter. In particular, the Provider provides an excellent solution for sharing and managing streams with minimal boilerplate. However, to take full advantage of this package you must deserialize your raw data to a Dart class.
+If you are building a major project with Flutter &amp;amp; Firebase, consider enrolling in the Full Flutter Firebase Course.</description>
+    </item>
+    
+    <item>
+      <title>Infinix INBOOK</title>
+      <link>https://fireshop.com/jewellery/infinix-inbook/</link>
+      <pubDate>Sat, 22 Oct 2022 19:39:39 +0000</pubDate>
+      
+      <guid>https://fireshop.com/jewellery/infinix-inbook/</guid>
+      <description>Cloud providers and web application frameworks go to great lengths to protect you from writing insecure code. The Cloud provides secure defaults and monitoring for your infrastructure, while Angular and React automatically sanitize HTML to prevent the injection of malicious JavaScript. Despite these safeguards, no application is 100%, secure and clever new exploits will be discovered. The following lesson explains some of the most common hacking techniques and how to secure your app against them.</description>
+    </item>
+    
+    <item>
+      <title>MacBook Pro</title>
+      <link>https://fireshop.com/jewellery/macbook-pro/</link>
+      <pubDate>Sat, 22 Oct 2022 19:39:39 +0000</pubDate>
+      
+      <guid>https://fireshop.com/jewellery/macbook-pro/</guid>
+      <description>One of the most commonly encountered limitations of Cloud Firestore (and GCP) is full-text search. This functionality is essential if you need to query complex text patterns in a database or filter results by multiple dynamic properties. My favorite solution to this limitation is Algolia, which provides a powerful, developer-friendly, search &amp;amp; discovery API. In the following lesson you will learn how to sync your Firestore data to an Algolia index via Cloud Functions.</description>
+    </item>
+    
+    <item>
+      <title>Non-Alcoholic Concentrated Perfume Oil</title>
+      <link>https://fireshop.com/jewellery/non-alcoholic-concentrated-perfume-oil/</link>
+      <pubDate>Mon, 05 Feb 2018 15:31:37 -0700</pubDate>
+      
+      <guid>https://fireshop.com/jewellery/non-alcoholic-concentrated-perfume-oil/</guid>
+      <description>In the previous lesson, we learned the fundamentals of relational data modeling with Firestore. Today I want to push further and look at several more practical examples. In addition to data modeling, we will look at techniques like duplication, aggregation, composite keys, bucketing, and more.
+Keep in mind, Firestore is still in beta. Firebase engineers hinted at some really cool features on the roadmap (geo queries, query by array of ids) - I&#39;ll be sure to keep you posted :)</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dashiki on Fireshop</title>
+    <link>https://fireshop.com/tags/dashiki/</link>
+    <description>Recent content in Dashiki on Fireshop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 22 Oct 2022 19:39:39 +0000</lastBuildDate><atom:link href="https://fireshop.com/tags/dashiki/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>3D Embellishment Art Lamp</title>
+      <link>https://fireshop.com/ladys/3d-embellishment-art-lamp/</link>
+      <pubDate>Sat, 22 Oct 2022 19:39:39 +0000</pubDate>
+      
+      <guid>https://fireshop.com/ladys/3d-embellishment-art-lamp/</guid>
+      <description>The following article discusses patterns that I have found exceptionally useful when implementing Firebase User Authentication and Firestore in Flutter. In particular, the Provider provides an excellent solution for sharing and managing streams with minimal boilerplate. However, to take full advantage of this package you must deserialize your raw data to a Dart class.
+If you are building a major project with Flutter &amp;amp; Firebase, consider enrolling in the Full Flutter Firebase Course.</description>
+    </item>
+    
+    <item>
+      <title>Elbow Macaroni - 400 gm</title>
+      <link>https://fireshop.com/mens/elbow-macaroni-400-gm/</link>
+      <pubDate>Sun, 25 Aug 2019 10:43:13 -0700</pubDate>
+      
+      <guid>https://fireshop.com/mens/elbow-macaroni-400-gm/</guid>
+      <description>One of the most commonly encountered limitations of Cloud Firestore (and GCP) is full-text search. This functionality is essential if you need to query complex text patterns in a database or filter results by multiple dynamic properties. My favorite solution to this limitation is Algolia, which provides a powerful, developer-friendly, search &amp;amp; discovery API. In the following lesson you will learn how to sync your Firestore data to an Algolia index via Cloud Functions.</description>
+    </item>
+    
+  </channel>
+</rss>
