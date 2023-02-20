@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   import { updateCart, updateMerchant } from "../../util/supabase";
   import { sendMessageToWebhook, sendOrderToWebhook } from "../../util/discord";
-  import { toast, user, merchant, cart } from "../../stores";
+  import { toast, user, merchant, destination, cart } from "../../stores";
   import type { Address } from "../../stores/merchant";
 
   let emailEl: HTMLInputElement;
@@ -22,8 +22,7 @@
   let loading = false;
   let hits: Address[];
   let hit: Address;
-  let details = {};
-  let destination = {
+  let pickup = {
     place_id: 129591613,
     licence:
       "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
@@ -109,11 +108,11 @@
       let response = await fetch(
         `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${
           import.meta.env.VITE_OPEN_ROUTE
-        }&start=${8.681495},${49.41461}&end=${8.687872},${49.420318}`
+        }&start=${pickup.lat},${pickup.lon}&end=${$merchant.address.lat},${$merchant.address.lon}`
       );
       let data = await response.json();
-      details = data["features"][0];
-      console.log("CALC OPENROUTE: ", details);
+      $destination = data;
+      console.log("CALC OPENROUTE: ", $destination);
     } catch (error) {
       console.log("CALC ERROR: ", error.message);
     }
@@ -212,10 +211,16 @@
     </form>
     <div>
       <h2>Deilivery Details</h2>
-      <p class="details">Pickup Address: {destination.display_name}</p>
+      <p class="details">Pickup Address: {pickup.display_name}</p>
       <p>Your Address: {$merchant.address.display_name}</p>
-      <!-- <p>Distance: {details?.["distance"] | 0}KM</p> -->
-      <p>Distance: {details["properties"]["summary"]["distance"] | 0} KM</p>
+      {#if $destination?.features.length}
+        <p>
+          Delivery Distance: {$destination.features[0].properties.summary
+            .distance}
+          KM
+        </p>
+      {/if}
+      <!-- <p>Distance: {details["properties"]["summary"]["distance"] | 0} KM</p> -->
     </div>
   </div>
 {:else}
