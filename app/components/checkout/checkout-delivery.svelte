@@ -6,6 +6,7 @@
   import { sendMessageToWebhook, sendOrderToWebhook } from "../../util/discord";
   import { toast, user, merchant, destination, cart } from "../../stores";
   import type { Address } from "../../stores/merchant";
+  import Openrouteservice from "openrouteservice-js";
 
   let emailEl: HTMLInputElement;
   let nameEl: HTMLInputElement;
@@ -100,19 +101,48 @@
         type: "error",
       });
     }
+    // TODO: Router to /order
     loading = false;
   }
 
   async function calculateDirections() {
     try {
-      let response = await fetch(
-        `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${
-          import.meta.env.VITE_OPEN_ROUTE
-        }&start=${pickup.lat},${pickup.lon}&end=${$merchant.address.lat},${
-          $merchant.address.lon
-        }`
-      );
-      let data = await response.json();
+      // pickup to add1
+      // -1.3009044,36.78706018120445
+      // -1.2778674,36.8880893
+      // add1 to add2
+      // -1.2778674,36.8880893
+      // -1.3156695, 36.8984952
+      const KEY = import.meta.env.VITE_OPEN_ROUTE;
+      let orsDirections = new Openrouteservice.Directions({ api_key: KEY });
+      let data = await orsDirections.calculate({
+        coordinates: [
+          [8.690958, 49.404662],
+          [8.687868, 49.390139],
+        ],
+        profile: "driving-hgv",
+        extra_info: ["waytype", "steepness"],
+        avoidables: ["highways", "tollways", "ferries", "fords"],
+        // avoid_polygons: {
+        //   type: "Polygon",
+        //   coordinates: [
+        //     [
+        //       [8.683533668518066, 49.41987949639816],
+        //       [8.680272102355957, 49.41812070066643],
+        //       [8.683919906616211, 49.4132348262363],
+        //       [8.689756393432617, 49.41806486484901],
+        //       [8.683533668518066, 49.41987949639816],
+        //     ],
+        //   ],
+        // },
+        format: "json",
+      });
+      // let response = await fetch(
+      //   // `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${KEY}&start=${pickup.lat},${pickup.lon}&end=${$merchant.address.lat},${$merchant.address.lon}`
+      //   `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${KEY}&start=8.681495,49.41461&end=8.687872,49.420318`
+      // );
+      // let data = await response.json();
+      // $destination = { ...data, features: data["features"][0] };
       $destination = data;
       console.log("CALC OPENROUTE: ", $destination);
     } catch (error) {
@@ -202,7 +232,7 @@
       {/if}
     </form>
     <div>
-      <h2>Total Cost</h2>
+      <h2 class="mg">Total Cost</h2>
       <user-data />
       <div />
       <button
@@ -211,7 +241,7 @@
           !phoneValid ||
           !addressValid ||
           !nameValid ||
-          loading}>{loading ? "ordering..." : "order"}</button
+          loading}>{loading ? "proceeding..." : "proceed to order"}</button
       >
     </div>
   </div>
@@ -220,6 +250,9 @@
 {/if}
 
 <style lang="scss">
+  .mg {
+    @apply mx-4;
+  }
   .box {
     @apply grid justify-items-start grid-cols-1 md:grid-cols-2;
   }
