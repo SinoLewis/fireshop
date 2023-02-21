@@ -36,7 +36,7 @@
 
 <style lang="scss">
   .container {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-3;
+    @apply grid grid-cols-1 gap-3;
   }
   .box {
     overflow: hidden;
@@ -45,7 +45,7 @@
     //   rgb(0, 56, 80) 50%,
     //   rgb(8, 10, 15) 100%
     // );
-    @apply stats bg-primary m-4 text-white;
+    @apply stats bg-info-content m-4 text-white;
   }
   .item {
     overflow: hidden;

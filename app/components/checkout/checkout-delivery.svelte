@@ -108,7 +108,9 @@
       let response = await fetch(
         `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${
           import.meta.env.VITE_OPEN_ROUTE
-        }&start=${pickup.lat},${pickup.lon}&end=${$merchant.address.lat},${$merchant.address.lon}`
+        }&start=${pickup.lat},${pickup.lon}&end=${$merchant.address.lat},${
+          $merchant.address.lon
+        }`
       );
       let data = await response.json();
       $destination = data;
@@ -121,7 +123,7 @@
 
 {#if $user}
   <div class="box">
-    <form on:submit|preventDefault={handleSubmit}>
+    <form on:submit|preventDefault>
       <h2>Deilivery Details</h2>
       <label for="name">
         <span>Name</span>
@@ -198,29 +200,19 @@
           </div>
         </div>
       {/if}
-      <input
+    </form>
+    <div>
+      <h2>Total Cost</h2>
+      <user-data />
+      <div />
+      <button
         class="send"
-        type="submit"
-        value={loading ? "sending..." : "send"}
         class:disabled={!emailValid ||
           !phoneValid ||
           !addressValid ||
           !nameValid ||
-          loading}
-      />
-    </form>
-    <div>
-      <h2>Deilivery Details</h2>
-      <p class="details">Pickup Address: {pickup.display_name}</p>
-      <p>Your Address: {$merchant.address.display_name}</p>
-      {#if $destination?.features.length}
-        <p>
-          Delivery Distance: {$destination.features[0].properties.summary
-            .distance}
-          KM
-        </p>
-      {/if}
-      <!-- <p>Distance: {details["properties"]["summary"]["distance"] | 0} KM</p> -->
+          loading}>{loading ? "ordering..." : "order"}</button
+      >
     </div>
   </div>
 {:else}
@@ -240,7 +232,7 @@
     @apply input-group;
 
     span {
-      // width: 15%;
+      height: 3.5rem;
       @apply bg-info-content;
     }
     .input-field {
@@ -248,6 +240,9 @@
       @apply input input-bordered border-b-4 border-b-white border-t-0 border-r-0 border-l-0;
     }
   }
+  // input {
+  //   height: 56px;
+  // }
   input[type="email"]:valid,
   input[type="tel"]:valid,
   input[type="text"]:valid {
@@ -257,7 +252,7 @@
     @apply select select-bordered select-lg w-full max-w-xs;
   }
   .send {
-    @apply btn btn-info;
+    @apply btn bg-green-500 mx-4;
   }
   .disabled {
     @apply opacity-50 cursor-not-allowed;
@@ -288,8 +283,5 @@
   }
   .glow {
     @apply hover:translate-y-[-2px];
-  }
-  .details {
-    @apply break-words;
   }
 </style>
