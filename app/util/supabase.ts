@@ -54,7 +54,7 @@ export async function passwordlessSignin(email: string) {
   let { data, error } = await supabase.auth.signInWithOtp({
     email: email,
     options: {
-      emailRedirectTo: window.location.href,
+      emailRedirectTo: `${window.location.href}/dashboard`,
     },
   });
   serverError = error;
