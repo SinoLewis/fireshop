@@ -7,6 +7,18 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_LOCAL: ${{ secrets.VITE_SUPABASE_LOCAL }}
+      VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+      VITE_LOCAL_CART: ${{ secrets.VITE_LOCAL_CART }}
+      VITE_LOCAL_MERCHANT: ${{ secrets.VITE_LOCAL_MERCHANT }}
+      VITE_LOCAL_KEY: ${{ secrets.VITE_LOCAL_KEY }}
+      VITE_HOOK_SUPA: ${{ secrets.VITE_HOOK_SUPA }}
+      VITE_HOOK_REVIEW: ${{ secrets.VITE_HOOK_REVIEW }}
+      VITE_HOOK_ORDER: ${{ secrets.VITE_HOOK_ORDER }}
+      VITE_HOOK_AUTH: ${{ secrets.VITE_HOOK_AUTH }}
+      VITE_OPEN_ROUTE: ${{ secrets.VITE_OPEN_ROUTE }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
