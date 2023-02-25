@@ -6,4 +6,4 @@ export * from "./loading";
 export * from "./modal";
 export * from "./settings";
 export * from "./toast";
-export * from "./merchant";
+export * from "./order";

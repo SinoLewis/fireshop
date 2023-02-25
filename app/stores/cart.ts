@@ -2,7 +2,6 @@ import { products } from "./products";
 import { writable } from "svelte/store";
 import CryptoJS from "crypto-js";
 import { v4 as uuidv4 } from "uuid";
-import { supabase } from "../util/supabase";
 
 const SELECTED_CART: any = import.meta.env.VITE_LOCAL_CART;
 const KEY: any = import.meta.env.VITE_LOCAL_KEY;

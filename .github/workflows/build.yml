@@ -13,7 +13,7 @@ jobs:
       VITE_SUPABASE_LOCAL: ${{ secrets.VITE_SUPABASE_LOCAL }}
       VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
       VITE_LOCAL_CART: ${{ secrets.VITE_LOCAL_CART }}
-      VITE_LOCAL_MERCHANT: ${{ secrets.VITE_LOCAL_MERCHANT }}
+      VITE_LOCAL_ORDER: ${{ secrets.VITE_LOCAL_ORDER }}
       VITE_LOCAL_KEY: ${{ secrets.VITE_LOCAL_KEY }}
       VITE_HOOK_SUPA: ${{ secrets.VITE_HOOK_SUPA }}
       VITE_HOOK_REVIEW: ${{ secrets.VITE_HOOK_REVIEW }}

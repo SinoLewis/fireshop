@@ -1,6 +1,6 @@
 import { user } from "../stores";
-import type { Merchant } from "../stores";
-import { merchant } from "../stores";
+import type { Order } from "../stores";
+import { order } from "../stores";
 
 export async function sendMessageToWebhook(type, message) {
   let webhook;
@@ -66,9 +66,9 @@ export async function sendMessageToWebhook(type, message) {
   }
 }
 
-export const sendOrderToWebhook = async (merchant: Merchant) => {
+export const sendOrderToWebhook = async (order: Order) => {
   const webhook = import.meta.env.VITE_HOOK_ORDER;
-  let items = Object.values(merchant.cart_products).map((item) => {
+  let items = Object.values(order.cart_products).map((item) => {
     return {
       title: item.title,
       description: `PRICE: ${item.price}`,
@@ -89,9 +89,9 @@ export const sendOrderToWebhook = async (merchant: Merchant) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: merchant.name,
+        username: order.name,
         // avatar_url: "https://i.imgur.com/4M34hi2.png",
-        content: `ADDRESS: ${merchant.address.display_name} \nPHONE: ${merchant.phone}`,
+        content: `ORDER ID: **${order.id}** \n ADDRESS: **${order.address.display_name}** \nPHONE: **${order.phone}**`,
         embeds: items,
       }),
     });
@@ -104,14 +104,14 @@ export const sendOrderToWebhook = async (merchant: Merchant) => {
   }
 };
 
-// export const sendOrderToWebhook = async (merchant: Merchant) => {
+// export const sendOrderToWebhook = async (order: Order) => {
 //   const webhook = import.meta.env.VITE_HOOK_ORDER;
 
 //   console.log(
 //     "DISCORD IMAGE: ",
 //     await getImage("/img/categories/shoals/perfume-oil.jpg")
 //   );
-//   let items = Object.values(merchant.cart_products).map((item) => {
+//   let items = Object.values(order.cart_products).map((item) => {
 //     return {
 //       title: item.title,
 //       description: `PRICE: ${item.price}`,
@@ -123,9 +123,9 @@ export const sendOrderToWebhook = async (merchant: Merchant) => {
 //     };
 //   });
 //   let customer = {
-//     username: merchant.name,
+//     username: order.name,
 //     // avatar_url: "https://i.imgur.com/4M34hi2.png",
-//     content: `ADDRESS: ${merchant.address.display_name} \nPHONE: ${merchant.phone}`,
+//     content: `ADDRESS: ${order.address.display_name} \nPHONE: ${order.phone}`,
 //     embeds: JSON.stringify(items),
 //   };
 //   const formData = new FormData();

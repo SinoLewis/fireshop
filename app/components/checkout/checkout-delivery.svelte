@@ -2,10 +2,10 @@
 
 <script lang="ts">
   import { onMount } from "svelte";
-  import { updateCart, updateMerchant } from "../../util/supabase";
+  import { updateCart, updateOrder } from "../../util/supabase";
   import { sendMessageToWebhook, sendOrderToWebhook } from "../../util/discord";
-  import { toast, user, merchant, destination, cart } from "../../stores";
-  import type { Address } from "../../stores/merchant";
+  import { toast, user, order, destination, cart } from "../../stores";
+  import type { Address } from "../../stores/order";
   import Openrouteservice from "openrouteservice-js";
 
   let emailEl: HTMLInputElement;
@@ -15,10 +15,10 @@
 
   // TODO: default=white, valid=green, error_on_submit=red
   // let emailValid = () => emailEl.validity.valid;
-  let emailValid = $merchant.email ? true : false;
-  let phoneValid = $merchant.phone ? true : false;
-  let nameValid = $merchant.name ? true : false;
-  let addressValid = $merchant.address.display_name ? true : false;
+  let emailValid = $order.email ? true : false;
+  let phoneValid = $order.phone ? true : false;
+  let nameValid = $order.name ? true : false;
+  let addressValid = $order.address.display_name ? true : false;
 
   let loading = false;
   let hits: Address[];
@@ -40,9 +40,10 @@
   };
 
   onMount(async () => {
-    console.log("INIT MERCHANT STORE: ", $merchant, "");
-    $merchant.email = $user?.email;
-    $merchant.cart_products = $cart.cart_products;
+    console.log("INIT ORDER STORE: ", $order);
+    $order.email = $user?.email;
+    $order.cart_price = $cart?.cart_price;
+    $order.cart_products = $cart?.cart_products;
   });
   async function validate() {
     emailValid = emailEl.validity.valid;
@@ -66,7 +67,7 @@
   async function setAddress(e, index) {
     hit = hits[index];
     addressEl.value = hits[index].display_name;
-    $merchant.address = hits[index];
+    $order.address = hits[index];
     // TODO: API that can support glovo workingAreas
     toast.set({
       icon: "👍",
@@ -76,21 +77,27 @@
     hits.length = 0;
     calculateDirections();
     console.log("SELECTED: ", addressEl.value);
-    console.log("MERCHANT STORE: ", $merchant);
+    console.log("ORDER STORE: ", $order);
   }
 
   async function handleSubmit(e) {
     loading = true;
     try {
       if (addressValid) {
-        sendOrderToWebhook($merchant);
-        updateMerchant($merchant);
+        updateCart($cart);
+        console.log("CART STORE: ", $cart);
+        updateOrder($order);
+        console.log("ORDER STORE BEFORE: ", $order);
+        sendOrderToWebhook($order).then(
+          () => ($order.name = $order.phone = "")
+        );
+
         toast.set({
           icon: "😎",
           message: "Your Order was succesful!",
           type: "success",
         });
-        console.log("MERCHANT STORE: ", $merchant);
+        console.log("ORDER STORE AFTER: ", $order);
       } else {
         throw new Error(`ADDRESS: ${addressEl.value} is unknown`);
       }
@@ -138,7 +145,7 @@
         format: "json",
       });
       // let response = await fetch(
-      //   // `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${KEY}&start=${pickup.lat},${pickup.lon}&end=${$merchant.address.lat},${$merchant.address.lon}`
+      //   // `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${KEY}&start=${pickup.lat},${pickup.lon}&end=${$order.address.lat},${$order.address.lon}`
       //   `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${KEY}&start=8.681495,49.41461&end=8.687872,49.420318`
       // );
       // let data = await response.json();
@@ -162,7 +169,7 @@
           type="text"
           name="name"
           bind:this={nameEl}
-          bind:value={$merchant.name}
+          bind:value={$order.name}
           on:input={validate}
           required
         />
@@ -175,7 +182,7 @@
           name="phone"
           placeholder="254712345678"
           bind:this={phoneEl}
-          bind:value={$merchant.phone}
+          bind:value={$order.phone}
           on:input={validate}
           required
         />
@@ -187,7 +194,7 @@
           type="email"
           name="email"
           bind:this={emailEl}
-          bind:value={$merchant.email}
+          bind:value={$order.email}
           on:input={validate}
           required
         />
@@ -200,7 +207,7 @@
           name="address"
           placeholder="Address"
           bind:this={addressEl}
-          bind:value={$merchant.address.display_name}
+          bind:value={$order.address.display_name}
           on:input={getAddressHits}
           required
         />
@@ -236,6 +243,7 @@
       <user-data />
       <div />
       <button
+        on:click={handleSubmit}
         class="send"
         class:disabled={!emailValid ||
           !phoneValid ||

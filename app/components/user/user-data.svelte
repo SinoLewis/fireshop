@@ -1,7 +1,7 @@
 <svelte:options tag="user-data" />
 
 <script lang="ts">
-  import { cart, user } from "../../stores";
+  import { cart, destination } from "../../stores";
 </script>
 
 <div class="container">
@@ -15,8 +15,12 @@
   <div class="box">
     <div class="item">
       <div class="title">Delivery 🚚</div>
-      <div class="value">2.6 KM</div>
-      <div class="desc">21% delivery completion</div>
+      <div class="value">
+        {$destination?.features?.properties?.summary?.distance | 0} KM
+      </div>
+      <div class="desc">
+        {$destination?.features?.properties?.summary?.duration | 0} mins delivery time
+      </div>
     </div>
   </div>
   <!-- <div class="box">

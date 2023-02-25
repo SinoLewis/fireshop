@@ -3,16 +3,21 @@ import type { CartProducts } from "./cart";
 import { encrypt, decrypt } from "./cart";
 import { v4 as uuidv4 } from "uuid";
 
-const SELECTED_MERCHANT: any = import.meta.env.VITE_LOCAL_MERCHANT;
-let initMerchant = localStorage.getItem(SELECTED_MERCHANT);
+const SELECTED_ORDER: any = import.meta.env.VITE_LOCAL_ORDER;
+let initOrder = localStorage.getItem(SELECTED_ORDER);
 
-type Merchant = {
+type Order = {
   id?: string;
   name: string;
   phone: string;
   email: string;
   address: Address;
   cart_products: CartProducts;
+  delivery_price: number;
+  cart_price: number;
+  total_price: number;
+  paid: string;
+  aproved: string;
   created_at: string;
   updated_at: string;
 };
@@ -34,7 +39,7 @@ interface Address {
 
 interface Destination {
   type: string;
-  features: Feature[];
+  features: Feature;
   bbox: number[];
   metadata: Metadata;
 }
@@ -97,8 +102,8 @@ interface Engine {
   graph_date: string;
 }
 
-function getMerchant(): Merchant {
-  if (!initMerchant) {
+function getOrder(): Order {
+  if (!initOrder) {
     const date = new Date();
     const dateNow = date.toLocaleString("en-US", {
       dateStyle: "full",
@@ -114,20 +119,20 @@ function getMerchant(): Merchant {
       },
       created_at: dateNow,
       updated_at: dateNow,
-    } as Merchant;
+    } as Order;
 
-    console.log("STORE INIT MERCHANT: ", data);
+    console.log("STORE INIT Order: ", data);
     // TODO: encrypt cart
-    localStorage.setItem(SELECTED_MERCHANT, encrypt(JSON.stringify(data)));
+    localStorage.setItem(SELECTED_ORDER, encrypt(JSON.stringify(data)));
   }
   // TODO: decrypt cart
-  return JSON.parse(decrypt(localStorage.getItem(SELECTED_MERCHANT)));
+  return JSON.parse(decrypt(localStorage.getItem(SELECTED_ORDER)));
 }
-const merchant = writable<Merchant>(getMerchant());
-const destination = writable({ features: [] } as Destination);
+const order = writable<Order>(getOrder());
+const destination = writable({} as Destination);
 
-merchant.subscribe((value) => {
-  localStorage.setItem(SELECTED_MERCHANT, encrypt(JSON.stringify(value)));
+order.subscribe((value) => {
+  localStorage.setItem(SELECTED_ORDER, encrypt(JSON.stringify(value)));
 });
-export { merchant, destination };
-export type { Merchant, Address };
+export { order, destination };
+export type { Order, Address };

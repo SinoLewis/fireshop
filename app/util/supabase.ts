@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { toast, Cart, Merchant } from "../stores";
+import { toast, Cart, Order } from "../stores";
 import { sendMessageToWebhook } from "./discord";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -34,7 +34,7 @@ export async function signInWithApple() {
   let { error } = await supabase.auth.signInWithOAuth({
     provider: "apple",
     options: {
-      redirectTo: window.location.href,
+      redirectTo: `${window.location.href}/dashboard`,
     },
   });
   loginHandler(error);
@@ -82,7 +82,7 @@ async function getPriceById(id) {
   }
 }
 
-export async function updateCart(cart: Cart) {
+export async function updateCart(cart: Cart): Promise<Cart> {
   Object.values(cart.cart_products).forEach(
     async (item) => (item.price = await getPriceById(item.id))
   );
@@ -93,17 +93,25 @@ export async function updateCart(cart: Cart) {
       .select("*")
       .eq("id", cart.id);
     if (error) throw error;
-    if (data[0]["id"] === cart.id) {
-      const { data, error } = await supabase
+    console.log("CART get DB: ", data);
+    if (data[0]?.id === cart.id) {
+      const { data, error }: { data: any; error: any } = await supabase
         .from("carts")
-        .update({ ...cart })
-        .eq("user_id", cart.user_id);
+        .update({ ...cart, id: undefined })
+        .eq("user_id", cart.user_id)
+        .select();
       if (error) throw error;
+      console.log("CART update DB: ", data);
+      return data[0];
     } else {
-      const { data, error } = await supabase.from("carts").insert(cart);
+      const { data, error }: { data: any; error: any } = await supabase
+        .from("carts")
+        .insert(cart)
+        .select();
       if (error) throw error;
+      console.log("CART insert DB: ", data);
+      return data[0];
     }
-    console.log("CART update DB: ", data);
   } catch (error) {
     console.log("CART update ERROR: ", error);
     sendMessageToWebhook("ERROR", error.message);
@@ -132,25 +140,34 @@ async function updateProductQuantity(cart: Cart) {
   });
 }
 
-export async function updateMerchant(merchant: Merchant) {
+export async function updateOrder(order: Order): Promise<Order> {
   try {
     const { data, error } = await supabase
-      .from("merchant")
+      .from("orders")
       .select("*")
-      .eq("id", merchant.id);
+      .eq("id", order.id);
     if (error) throw error;
-    if (data[0]["id"] === merchant.id) {
-      const { data, error } = await supabase
-        .from("merchant")
-        .update({ ...merchant })
-        .eq("id", merchant.id);
+    console.log("ORDER get DB: ", data);
+    if (data[0]?.id === order.id) {
+      const { data, error }: { data: any; error: any } = await supabase
+        .from("orders")
+        .update({ ...order, id: undefined })
+        .eq("id", order.id)
+        .select();
       if (error) throw error;
+      console.log("ORDER update DB: ", data);
+      return data[0];
     } else {
-      const { data, error } = await supabase.from("merchant").insert(merchant);
+      const { data, error }: { data: any; error: any } = await supabase
+        .from("orders")
+        .insert(order)
+        .select();
       if (error) throw error;
+      console.log("ORDER insert DB: ", data);
+      return data[0];
     }
   } catch (error) {
-    console.log("MERCHANT update ERROR: ", error);
+    console.log("ORDER update ERROR: ", error);
     sendMessageToWebhook("ERROR", error.message);
   }
 }
