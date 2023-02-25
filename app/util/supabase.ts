@@ -83,6 +83,11 @@ async function getPriceById(id) {
 }
 
 export async function updateCart(cart: Cart): Promise<Cart> {
+  const date = new Date();
+  const dateNow = date.toLocaleString("en-US", {
+    dateStyle: "full",
+    timeStyle: "full",
+  });
   Object.values(cart.cart_products).forEach(
     async (item) => (item.price = await getPriceById(item.id))
   );
@@ -97,7 +102,7 @@ export async function updateCart(cart: Cart): Promise<Cart> {
     if (data[0]?.id === cart.id) {
       const { data, error }: { data: any; error: any } = await supabase
         .from("carts")
-        .update({ ...cart, id: undefined })
+        .update({ ...cart, id: undefined, updated_at: dateNow })
         .eq("user_id", cart.user_id)
         .select();
       if (error) throw error;
@@ -141,6 +146,11 @@ async function updateProductQuantity(cart: Cart) {
 }
 
 export async function updateOrder(order: Order): Promise<Order> {
+  const date = new Date();
+  const dateNow = date.toLocaleString("en-US", {
+    dateStyle: "full",
+    timeStyle: "full",
+  });
   try {
     const { data, error } = await supabase
       .from("orders")
@@ -151,7 +161,7 @@ export async function updateOrder(order: Order): Promise<Order> {
     if (data[0]?.id === order.id) {
       const { data, error }: { data: any; error: any } = await supabase
         .from("orders")
-        .update({ ...order, id: undefined })
+        .update({ ...order, id: undefined, updated_at: dateNow })
         .eq("id", order.id)
         .select();
       if (error) throw error;
