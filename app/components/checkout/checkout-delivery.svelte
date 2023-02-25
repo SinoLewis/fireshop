@@ -86,11 +86,9 @@
       if (addressValid) {
         updateCart($cart);
         console.log("CART STORE: ", $cart);
-        updateOrder($order);
+        updateOrder($order).then(() => ($order.name = $order.phone = ""));
         console.log("ORDER STORE BEFORE: ", $order);
-        sendOrderToWebhook($order).then(
-          () => ($order.name = $order.phone = "")
-        );
+        sendOrderToWebhook($order);
 
         toast.set({
           icon: "😎",
