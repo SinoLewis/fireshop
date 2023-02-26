@@ -16,8 +16,8 @@ type Order = {
   delivery_price: number;
   cart_price: number;
   total_price: number;
-  paid: string;
-  aproved: string;
+  paid: boolean;
+  approved: boolean;
   created_at: string;
   updated_at: string;
 };

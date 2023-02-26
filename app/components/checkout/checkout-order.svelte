@@ -1,7 +1,7 @@
 <svelte:options tag="checkout-order" />
 
 <script lang="ts">
-  import { user, cart, toast, valid_parcel, cancelParcel } from "../../stores";
+  import { user, cart, toast, order } from "../../stores";
   import jsPDF from "jspdf";
   import html2canvas from "html2canvas";
 
@@ -28,21 +28,21 @@
   const cancelSubmit = async () => {
     // TODO: Check with glovo when to cancel parcel
     // TODO: If cancel is valid; re-update products.quantity db
-    let status: any = await cancelParcel("tracking-number");
-    if (status === "SUCCESS") {
-      toast.set({
-        icon: "😎",
-        message: "Cancel Order was succesful!",
-        type: "success",
-      });
-    }
-    if (status?.code) {
-      toast.set({
-        icon: "❌",
-        message: status.description,
-        type: "error",
-      });
-    }
+    // let status: any = await cancelParcel("tracking-number");
+    // if (status === "SUCCESS") {
+    //   toast.set({
+    //     icon: "😎",
+    //     message: "Cancel Order was succesful!",
+    //     type: "success",
+    //   });
+    // }
+    // if (status?.code) {
+    //   toast.set({
+    //     icon: "❌",
+    //     message: status.description,
+    //     type: "error",
+    //   });
+    // }
     // TODO: if(status === undefined) Network conn posibly
   };
 </script>
@@ -74,7 +74,8 @@
     {/each}
   </div>
 
-  {#if $valid_parcel}
+  {#if $order?.approved === true}
+    <h4>Delivery EXECUTABLE</h4>
     <button class="btn btn-blue glow" on:click={printPDF}>Download PDF</button>
     <modal-action type="open" name="cancel">
       <button class="btn btn-blue btn-sm glow">Cancel Delivery 🚫</button>
@@ -86,7 +87,7 @@
       >
     </modal-dialog>
   {:else}
-    <h4>Package not EXECUTABLE</h4>
+    <h4>Delivery not EXECUTABLE</h4>
   {/if}
 {:else}
   <no-user />

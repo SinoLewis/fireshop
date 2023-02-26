@@ -3,7 +3,7 @@
 <script lang="ts">
   import { supabase } from "../../util/supabase";
   // import { sendMessageToWebhook } from "../../util/discord";
-  import { cart, user } from "../../stores";
+  import { cart, user, order } from "../../stores";
   import { onMount } from "svelte";
 
   async function getUser() {
@@ -19,6 +19,19 @@
       // sendMessageToWebhook("ERROR", error.message)
     }
   }
+  supabase
+    .channel("any")
+    .on(
+      "postgres_changes",
+      { event: "UPDATE", schema: "public", table: "orders" },
+      (payload: any) => {
+        if (payload.new?.id === $order.id) {
+          $order = payload.new;
+          console.log("ORDERS DB APPROVED: ", $order);
+        }
+      }
+    )
+    .subscribe();
 
   onMount(getUser);
 </script>
