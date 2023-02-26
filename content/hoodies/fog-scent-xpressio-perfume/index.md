@@ -1,15 +1,16 @@
 ---
-title: Daal Masoor 500 grams
-lastmod: 2022-10-22T19:39:39.541Z
-publishdate: 2022-10-22T19:39:39.541Z
+title: Fog Scent Xpressio Perfume
+lastmod: 2018-02-05T15:31:37-07:00
+publishdate: 2022-10-22T19:39:39.492Z
 category: Hoodies
 author: Lee Sino
 draft: false
-description: Fine quality Branded Product Keep in a cool and dry place
+description: Product details of Best Fog Scent Xpressio Perfume 100ml For Men cool long lasting perfumes for Men
 tags:
   - jewellery
+  - kids
 
-pro: true
+# pro: true
 # disable_toc: true
 # disable_qna: true
 

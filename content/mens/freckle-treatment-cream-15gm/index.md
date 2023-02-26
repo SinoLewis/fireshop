@@ -1,20 +1,13 @@
 ---
-title: cereals muesli fruit nuts
-lastmod: 2020-02-13T09:37:39-07:00
-publishdate: 2022-10-22T19:39:39.398Z
+title: Freckle Treatment Cream- 15gm
+lastmod: 2022-10-22T19:39:39.467Z
+publishdate: 2019-05-11T13:59:08-07:00
 category: Mens
 author: Lee Sino
-description: original fauji cereal muesli 250gm box pack original fauji cereals muesli fruit nuts flakes breakfast cereal break fast faujicereals cerels cerel foji fouji
+description: Fair & Clear is Pakistan's only pure Freckle cream which helpsfade Freckles, Darkspots and pigments. Mercury level is 0%, so there are no side effects.
 tags:
+  - jewellery
   - kids
-# disable_toc: true
-# disable_qna: true
-
-# courses
-# step: 0
-
-# versions:
-#    rxdart: 0.20
 ---
 
 ## Classic and Versatile Men's Wear

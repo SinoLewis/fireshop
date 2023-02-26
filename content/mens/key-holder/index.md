@@ -1,20 +1,13 @@
 ---
-title: cereals muesli fruit nuts
-lastmod: 2020-02-13T09:37:39-07:00
-publishdate: 2022-10-22T19:39:39.398Z
+title: Key Holder
+lastmod: 2018-02-05T15:31:37-07:00
+publishdate: 2022-10-22T19:39:39.411Z
 category: Mens
 author: Lee Sino
-description: original fauji cereal muesli 250gm box pack original fauji cereals muesli fruit nuts flakes breakfast cereal break fast faujicereals cerels cerel foji fouji
+description: Attractive DesignMetallic materialFour key hooksReliable & DurablePremium Quality
 tags:
+  - mens
   - kids
-# disable_toc: true
-# disable_qna: true
-
-# courses
-# step: 0
-
-# versions:
-#    rxdart: 0.20
 ---
 
 ## Classic and Versatile Men's Wear

@@ -1,15 +1,15 @@
 ---
-title: Daal Masoor 500 grams
-lastmod: 2022-10-22T19:39:39.541Z
-publishdate: 2022-10-22T19:39:39.541Z
+title: Oil Free Moisturizer 100ml
+lastmod: 2022-10-22T19:39:39.527Z
+publishdate: 2022-10-22T19:39:39.527Z
 category: Hoodies
 author: Lee Sino
 draft: false
-description: Fine quality Branded Product Keep in a cool and dry place
+description: Dermive Oil Free Moisturizer with SPF 20 is specifically formulated with ceramides, hyaluronic acid & sunscreen.
 tags:
-  - jewellery
+  - hoody
 
-pro: true
+# pro: true
 # disable_toc: true
 # disable_qna: true
 

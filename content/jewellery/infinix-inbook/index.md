@@ -1,13 +1,14 @@
 ---
-title: Gulab Powder 50 Gram
-lastmod: 2019-05-11T13:59:08-07:00
-publishdate: 2022-10-22T19:39:39.395Z
+title: Infinix INBOOK
+lastmod: 2020-02-13T09:37:39-07:00
+publishdate: 2022-10-22T19:39:39.478Z
 category: Jewellery
 author: Lee Sino
 draft: false
-description: Dry Rose Flower Powder Gulab Powder 50 Gram • Treats Wounds
+description: Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey – 1 Year Warranty
 tags:
-  - shoals
+  - mens
+  - ladys
 # disable_toc: true
 # disable_qna: true
 

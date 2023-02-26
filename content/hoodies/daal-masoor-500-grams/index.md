@@ -9,7 +9,7 @@ description: Fine quality Branded Product Keep in a cool and dry place
 tags:
   - jewellery
 
-pro: true
+# pro: true
 # disable_toc: true
 # disable_qna: true
 

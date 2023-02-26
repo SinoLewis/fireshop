@@ -1,21 +1,13 @@
 ---
-title: Brown Perfume
-lastmod: 2020-02-13T09:37:39-07:00
-publishdate: 2022-10-22T19:39:39.507Z
+title: HP Pavilion 15-DK1056WM
+lastmod: 2018-02-02T15:08:13-07:00
+publishdate: 2022-10-22T19:39:39.351Z
 category: Shoals
 author: Lee Sino
 draft: false
-description: Royal_Mirage Sport Brown Perfume for Men & Women - 120ml
+description: HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10
 tags:
-  - ladys
-# disable_toc: true
-# disable_qna: true
-
-# courses
-# step: 0
-
-# versions:
-#    rxdart: 0.20
+  - shoals
 ---
 
 ## Innovative and High-Quality Shoal
