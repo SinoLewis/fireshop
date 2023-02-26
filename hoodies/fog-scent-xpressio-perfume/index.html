@@ -2,7 +2,7 @@
 <html class="dark">
   <head>
     <meta charset="utf-8">
-    <title>Fog Scent Xpressio Perfume</title>
+    <title>Daal Masoor 500 grams</title>
     <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="/svelte/index.61570f7e.css" />
     <script type="module" defer src="/svelte/index.2d588a70.js" /></script>
@@ -22,19 +22,19 @@
 
     <link rel="canonical" href="https://fireshop.com/hoodies/fog-scent-xpressio-perfume/" />
 
-    <meta name="description" content="Product details of Best Fog Scent Xpressio Perfume 100ml For Men cool long lasting perfumes for Men">
+    <meta name="description" content="Fine quality Branded Product Keep in a cool and dry place">
     <meta name="image" content="https://fireshop.com/hoodies/fog-scent-xpressio-perfume/img/featured.png">
 
-    <meta property="og:title" content="Fog Scent Xpressio Perfume" />
+    <meta property="og:title" content="Daal Masoor 500 grams" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://fireshop.com/hoodies/fog-scent-xpressio-perfume/" />
     <meta property="og:image" content="https://fireshop.com/hoodies/fog-scent-xpressio-perfume/img/featured.png" />
-    <meta property="og:description" content="Product details of Best Fog Scent Xpressio Perfume 100ml For Men cool long lasting perfumes for Men" />
+    <meta property="og:description" content="Fine quality Branded Product Keep in a cool and dry place" />
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@fireship_dev">
-    <meta name="twitter:title" content="Fog Scent Xpressio Perfume">
-    <meta name="twitter:description" content="Product details of Best Fog Scent Xpressio Perfume 100ml For Men cool long lasting perfumes for Men">
+    <meta name="twitter:title" content="Daal Masoor 500 grams">
+    <meta name="twitter:description" content="Fine quality Branded Product Keep in a cool and dry place">
     <meta name="twitter:image" content="https://fireshop.com/hoodies/fog-scent-xpressio-perfume/img/featured.png">
     
     <script>
@@ -143,15 +143,15 @@
 
 
 		<article itemscope itemtype="http://schema.org/Article" class="w-full">
-			<meta itemprop="datePublished" content="2022-10-22 19:39:39.492 &#43;0000 UTC" />
-			<meta itemprop="dateModified" content="2018-02-05 15:31:37 -0700 -0700" />
+			<meta itemprop="datePublished" content="2022-10-22 19:39:39.541 &#43;0000 UTC" />
+			<meta itemprop="dateModified" content="2022-10-22 19:39:39.541 &#43;0000 UTC" />
 			<meta itemprop="image" content="img/featured.png" />
 			<meta itemprop="publisher" content="fireshop.shop" />
 
 
 			<header>
 				
-				<img src="/hoodies/fog-scent-xpressio-perfume/img/featured.png" alt="Fog Scent Xpressio Perfume">
+				<img src="/hoodies/daal-masoor-500-grams/img/featured.png" alt="Daal Masoor 500 grams">
 
 				<div class="bg-gray6 py-5 px-3 rounded-lg mb-4 flex justify-between mt-3">
 		
@@ -161,7 +161,7 @@
 						<img class="w-10 h-10 rounded-full block" src="/contributors/img/lee-sino.webp" alt="Lee Sino avatar">
 						<span class="flex flex-col ml-2">
 							<span class="no-underline">By Lee Sino</span>
-							<span class="text-xs text-gray4">Posted <time itemprop="dateModified">Feb 5, 2018</time>
+							<span class="text-xs text-gray4">Posted <time itemprop="dateModified">Oct 22, 2022</time>
 						</span>
 	
 					</a>
@@ -170,8 +170,6 @@
 					<span>
 						
 							<a href="/tags/jewellery"><span class="tag tag-jewellery">#jewellery</span></a>
-						
-							<a href="/tags/kids"><span class="tag tag-kids">#kids</span></a>
 						
 
 						
@@ -186,193 +184,29 @@
 
 			
 			<section class="prose dark:prose-invert max-w-full lesson-content" itemprop="articleBody">
-				<h1 itemprop="name headline" id="fog-scent-xpressio-perfume" class="gradient-text">
-					Fog Scent Xpressio Perfume
+				<h1 itemprop="name headline" id="daal-masoor-500-grams" class="gradient-text">
+					Daal Masoor 500 grams
 				</h1>
 
 
-				<p>In the previous lesson, we learned the <a href="/lessons/firestore-nosql-data-modeling-by-example/">fundamentals of relational data modeling with Firestore</a>. Today I want to push further and look at several more practical examples. In addition to data modeling, we will look at techniques like duplication, aggregation, composite keys, bucketing, and more.</p>
-<p class="tip">Keep in mind, Firestore is still in beta. Firebase engineers hinted at some really cool features on the roadmap (geo queries, query by array of ids) - I'll be sure to keep you posted :)</p>
-<h2 id="advanced-techniques-in-nosql">Advanced Techniques in NoSQL</h2>
-<p>There are several <a href="https://highlyscalable.wordpress.com/2012/03/01/nosql-data-modeling-techniques/">fundamental techniques</a> at your disposal for managing complex NoSQL structures. Let&rsquo;s talk briefly about each one of them.</p>
-<h3 id="duplication">Duplication</h3>
-<p>Data duplication is a very common technique to eliminate the need to read multiple documents. Simple example - we might duplicate or embed a username on every tweet doc to avoid making secondary query to the user doc. Or we might duplicate <em>20 recent tweets</em> on the user document to show on the user profile. This strategy results in <strong>faster reads, but slower writes</strong>. Think about it - we can read all data in a single document, but may need to update multiple documents when the embedded data changes.</p>
-<h3 id="aggregation">Aggregation</h3>
-<p>Data aggregation is the process of analyzing a collection of data, then saving the results on some other document. The simplest example would be saving a <em>count</em> of the total documents in a collection. Normally, <a href="https://angularfirebase.com/lessons/firestore-cloud-functions-data-aggregation/">Firestore aggregation</a> is done server side via Cloud Functions.</p>
-<h3 id="composite-keys">Composite Keys</h3>
-<p>A composite key is simply the combination of two or more unique document ids, for example <code>userXYZ_postABC</code>. This is especially useful for modeling relationships in denormalized structures because it can enforce a unique relationship between the two documents.</p>
-<h3 id="bucketing">Bucketing</h3>
-<p><a href="https://www.mongodb.com/blog/post/designing-mongodb-schemas-with-embedded">Bucketing</a> is a form of duplication/aggregation that breaks collections into single documents. Using Twitter as an example, let&rsquo;s imagine we have a collection of tweets, but want to bucket a certain user&rsquo;s tweets month-by-month. This would allow us to read tweets for a given month very efficiently, but the drawback is some additional bookkeeping to ensure all data stays in sync when updates occur on the source document (Twitter probably has good technical reasons for not allowing you to update tweets).</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">tweets/{tweetId}
-</span></span><span class="line"><span class="cl">  tweetData (any)
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">februaryTweets/{userId}
-</span></span><span class="line"><span class="cl">  userId
-</span></span><span class="line"><span class="cl">  tweets [
-</span></span><span class="line"><span class="cl">    { tweetData }
-</span></span><span class="line"><span class="cl">  ]
-</span></span></code></pre></div><h3 id="sharding">Sharding</h3>
-<p>In many NoSQL databases, you must <a href="https://medium.com/@jeeyoungk/how-sharding-works-b4dec46b3f6">shard</a> to scale. Sharding is just the process of breaking the database down into smaller chunks (horizontal partitioning) to increase performance.</p>
-<p>In Firestore, sharding is handled automatically. The the only <a href="https://firebase.google.com/docs/firestore/solutions/counters">scenario</a> where you may need to control sharding is when you consistently have many write operations occurring at intervals of less than 1s. Imagine the compute requirements of updating the like count on a new tweet from Selena Gomez.</p>
-<h3 id="pipelining-unique-firebase-feature">Pipelining (Unique Firebase Feature)</h3>
-<p>Another cool feature in the Firebase SDK is the ability to make read requests in a non-blocking manner called <a href="https://stackoverflow.com/questions/35931526/speed-up-fetching-posts-for-my-social-network-app-by-using-query-instead-of-obse/35932786#35932786">pipelining as explained by Frank van Puffelen</a>. When you query Firestore, you don&rsquo;t need to wait for response A to send request B. You can send all requests individually and Firebase will respond with data as soon as it becomes ready.</p>
-<p class="tip">Pipelining isn't a data structuring technique, but it drives our decision-making process.</p>
-<p>Let&rsquo;s imagine you have an array of document ids. You can pipeline each request from a child component by looping over the ids, then performing a document read from the child component, i.e <code>afs.doc('items/' + id)</code>. Because the requests are non-blocking, there&rsquo;s no major performance hit for structuring your app this way.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">parent-comp</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">child-comp</span> <span class="err">*</span><span class="na">ngFor</span><span class="o">=</span><span class="s">&#34;let id of documentIds&#34;</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="c">&lt;!-- afs.doc(&#39;items/&#39; + id) --&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">child-comp</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">parent-comp</span><span class="p">&gt;</span>
-</span></span></code></pre></div><h2 id="group-collection-query">Group Collection Query</h2>
-<p>A group collection query occurs when you want to query a common subcollection across its parent owners. For example, you might to get blog posts for all users who wrote a post categorized as <em>Angular</em>.</p>
-<p>It is not possible to make this query via the subcollection. The easy solution is to denormalize posts to a root collection, but if that&rsquo;s not possible here&rsquo;s plan B&hellip;</p>
-<p>First, embed some duplicated data on the parent. When a new post is created in the subcollection, we update the <code>categoriesUsed</code> object on the parent doc where the category is the key.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">users
-</span></span><span class="line"><span class="cl">  - userData (any)
-</span></span><span class="line"><span class="cl">  - categoriesUsed {
-</span></span><span class="line"><span class="cl">     angular: true
-</span></span><span class="line"><span class="cl">     vuejs: true
-</span></span><span class="line"><span class="cl">   }
-</span></span><span class="line"><span class="cl">  ++ posts/{postID}
-</span></span><span class="line"><span class="cl">    -- content
-</span></span><span class="line"><span class="cl">    -- category: angular
-</span></span></code></pre></div><p>This opens the door to make a query like so:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">users</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;categoriesUsed.angular&#39;</span><span class="p">,</span> <span class="s1">&#39;==&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-</span></span></code></pre></div><p>At this point we have all the users who posted to Angular, then we can query each user&rsquo;s posts subcollection individually and join the data client-side.</p>
-<h2 id="shopping-cart--ecommerce-nosql-model">Shopping Cart + Ecommerce NoSQL Model</h2>
-<p>Building an ecommerce solution is no simple task - that goes for both SQL and NoSQL. In this example, I show you how to model a shopping cart with basic inventory management. Keep in mind, you are likely to have other concerns, such as payments, returns, etc.</p>
-<ul>
-<li><em>One-to-One</em>: User to Cart</li>
-<li><em>Many-to-Many</em>: Products to Users (via Cart)</li>
-<li><em>One-to-Many</em>: User to Orders</li>
-</ul>
-<p class="success">Shopping carts work great with Firebase Anonymous auth when your users can checkout as a guest.</p>
-<h3 id="data-model">Data Model</h3>
-<p>The challenges are as follows:</p>
-<p>Product prices may change and should be reflected in the cart.
-Product inventory stock is limited.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">products/{productID}
-</span></span><span class="line"><span class="cl">  -productInfo (any)
-</span></span><span class="line"><span class="cl">  -- amountInStock (number)
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">users/{userID}
-</span></span><span class="line"><span class="cl">  -- userInfo (any)
-</span></span><span class="line"><span class="cl">  ++ orders
-</span></span><span class="line"><span class="cl">     -- items [
-</span></span><span class="line"><span class="cl">       { product: productID, qty: 23 }
-</span></span><span class="line"><span class="cl">     ]
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">carts/{userID}
-</span></span><span class="line"><span class="cl">  -- total (number)
-</span></span><span class="line"><span class="cl">  -products {
-</span></span><span class="line"><span class="cl">      productId: quantity
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">  ]
-</span></span></code></pre></div><p><strong>Users (root collection):</strong> Basic user data</p>
-<p><strong>Products (root collection):</strong> Product data and current inventory.</p>
-<p><strong>Carts (root collection):</strong> A one-to-one relationship is created by setting the <code>userID === cartID</code> for documents in either collection. When an order placed, the cart data can be cleared out because there is no need for a user to have multiple carts.</p>
-<p><strong>Orders (user subcollection):</strong> When an order is created and confirmed, you can run a cloud function to decrement the product availability.</p>
-<h2 id="user-followunfollow-system">User Follow/Unfollow System</h2>
-<p>Naturally, let&rsquo;s use Twitter as our example here. We can take advantage of composite keys to manage the relationship in its own collection. Using a unique ID of <code>followerID_followedID</code> is like saying <em>userFoo follows userBar</em>.</p>
-<h3 id="data-model-1">Data Model</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">users/{userID}
-</span></span><span class="line"><span class="cl">  -- userInfo (any)
-</span></span><span class="line"><span class="cl">  -- followerCount (number)
-</span></span><span class="line"><span class="cl">  -- followedCount (number)
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">relationships/{followerID_followedID}
-</span></span><span class="line"><span class="cl">  -- followerId (string)
-</span></span><span class="line"><span class="cl">  -- followedId (string)
-</span></span><span class="line"><span class="cl">  -- createdAt  (timestamp)
-</span></span></code></pre></div><p><strong>Users (root collection):</strong> Basic user data with aggregated follow counts.</p>
-<p><strong>Relationships (root collection):</strong> This works similar to a intermediate table in SQL, with a composite key to enforce uniqueness for each user to user relationship.</p>
-<h3 id="sample-queries">Sample Queries</h3>
-<p><em>Does UserA follow UserB:</em></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;relationships&#39;</span><span class="p">).</span><span class="nx">doc</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">followerId</span><span class="si">}</span><span class="sb">_</span><span class="si">${</span><span class="nx">followedId</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-</span></span></code></pre></div><p><em>Get a user&rsquo;s 50 most recent followers:</em></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;relationships&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;followedId&#39;</span><span class="p">,</span> <span class="s1">&#39;==&#39;</span><span class="p">,</span> <span class="nx">userId</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="p">.</span><span class="nx">orderBy</span><span class="p">(</span><span class="s1">&#39;createdAt&#39;</span><span class="p">,</span> <span class="s1">&#39;desc&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="p">.</span><span class="nx">limit</span><span class="p">(</span><span class="mi">50</span><span class="p">);</span>
-</span></span></code></pre></div><p><em>Get all users that are being followed</em></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;relationships&#39;</span><span class="p">).</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;followerId&#39;</span><span class="p">,</span> <span class="s1">&#39;==&#39;</span><span class="p">,</span> <span class="nx">userId</span><span class="p">);</span>
-</span></span></code></pre></div><h2 id="threaded-comments-or-hierarchy-tree-structure">Threaded Comments or Hierarchy Tree Structure</h2>
-<p>Let&rsquo;s look at how we might model a tree structure that goes multiple levels deep - think threaded comments on Hacker News or a directory of subcategories. In fact, I am modeling my data after Hacker News which is hosted on Firebase RTDB.</p>
-<p>This implementation is designed to take advantage of <em>pipelining</em> in Firebase - instead of requesting a single collection, we will request a bunch of documents individually.</p>
-<figure><img src="img/firestore-threaded-comments.gif"
-         alt="Threaded comments hierarchy structure in Firestore"/><figcaption>
-            <p>Threaded comments hierarchy structure in Firestore</p>
-        </figcaption>
-</figure>
-
-<p>In the future, Firestore may <a href="https://stackoverflow.com/a/46850943/3808414">support a queries based on an array of doc IDs</a></p>
-<h3 id="data-model-2">Data Model</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">posts/{postId}
-</span></span><span class="line"><span class="cl">  ++ comments/{commentB}
-</span></span><span class="line"><span class="cl">    -- createdAt (date)
-</span></span><span class="line"><span class="cl">    parent: commentA
-</span></span><span class="line"><span class="cl">    children: [ commentC, commentD ]
-</span></span></code></pre></div><h3 id="recursive-query-structure-in-angular">Recursive Query Structure in Angular</h3>
-<p>First start by querying the root comments with <code>comments.where('parent', '==', null)</code>, then pass them to our comment component.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">app-comment</span> <span class="err">*</span><span class="na">ngFor</span><span class="o">=</span><span class="s">&#34;let comment of comments | async&#34;</span>
-</span></span><span class="line"><span class="cl">                <span class="err">[</span><span class="na">commentId</span><span class="err">]=&#34;</span><span class="na">comment</span><span class="err">.</span><span class="na">id</span><span class="err">&#34;</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">app-comment</span><span class="p">&gt;</span>
-</span></span></code></pre></div><p>This allows us to build a recursive component (a component that calls itself) to render out a tree. In other words, while the comment document has children, it will continue rendering new branches of the threaded comment tree. It would also be easy to lazy load each branch by adding &ldquo;view replies&rdquo; button before loading the children.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kd">@Component</span><span class="p">({</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">selector</span><span class="o">:</span> <span class="s1">&#39;app-comment&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">template</span><span class="o">:</span> <span class="sb">`
-</span></span></span><span class="line"><span class="cl"><span class="sb">    &lt;div *ngIf=&#34;comment | async as c&#34; class=&#34;indent&#34;&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">      {{ c.text }}
-</span></span></span><span class="line"><span class="cl"><span class="sb">
-</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;div *ngIf=&#34;c.children&#34;&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">
-</span></span></span><span class="line"><span class="cl"><span class="sb">        &lt;app-comment *ngFor=&#34;let kid of c.children&#34; 
-</span></span></span><span class="line"><span class="cl"><span class="sb">          [commentId]=&#34;kid&#34;&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">        &lt;/app-comment&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">      &lt;/div&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">    &lt;/div&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">  `</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">styles</span><span class="o">:</span> <span class="p">[]</span>
-</span></span><span class="line"><span class="cl"><span class="p">})</span>
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">class</span> <span class="nx">CommentComponent</span> <span class="kr">implements</span> <span class="nx">OnInit</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="kd">@Input</span><span class="p">()</span> <span class="nx">commentId</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nx">comment</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="kr">constructor</span><span class="p">(</span><span class="kr">private</span> <span class="nx">db</span>: <span class="kt">AngularFireStore</span><span class="p">)</span> <span class="p">{}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="nx">ngOnInit() {</span>
-</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">comment</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">db</span><span class="p">.</span><span class="nx">doc</span><span class="p">(</span><span class="s1">&#39;comments/&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">commentId</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h2 id="tags-or-hashtags">Tags or HashTags</h2>
-<p>Going back to the Twitter theme, let&rsquo;s now try to model hashtags in Firestore. Hashtags must be a single continuous string and should be case insensitive. This means we can use the tag itself as the document ID. For example, a hashtag of <code>#AngularFire</code> would have a doc ID of <code>angularfire</code>.</p>
-<p>Whenever a new tweet is created, you can use a cloud function to aggregate the <code>postCount</code> property on the tag document.</p>
-<h3 id="data-model-3">Data Model</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">tweets/{tweetId}
-</span></span><span class="line"><span class="cl">  -- content (string)
-</span></span><span class="line"><span class="cl">  -- tags: {
-</span></span><span class="line"><span class="cl">       angular: true,
-</span></span><span class="line"><span class="cl">       firebase: true
-</span></span><span class="line"><span class="cl">  }
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">tags/{content}
-</span></span><span class="line"><span class="cl">  -- content (string)
-</span></span><span class="line"><span class="cl">  -- tweetCount (number)
-</span></span></code></pre></div><h3 id="sample-queries-1">Sample Queries</h3>
-<p><em>Get all tweets with a specific tag:</em></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;tweets&#39;</span><span class="p">).</span><span class="nx">where</span><span class="p">(</span><span class="s1">&#39;tags.angular&#39;</span><span class="p">,</span> <span class="s1">&#39;==&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// Or
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;tweets&#39;</span><span class="p">).</span><span class="nx">orderBy</span><span class="p">(</span><span class="s1">&#39;tags.angular&#39;</span><span class="p">);</span>
-</span></span></code></pre></div><p><em>Get the most popular tags:</em></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;tags&#39;</span><span class="p">).</span><span class="nx">orderBy</span><span class="p">(</span><span class="s1">&#39;tweetCount&#39;</span><span class="p">,</span> <span class="s1">&#39;desc&#39;</span><span class="p">);</span>
-</span></span></code></pre></div><p><em>Get a specific tag:</em></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">tagId</span> <span class="o">=</span> <span class="s1">&#39;SomeCoolTag&#39;</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="nx">db</span><span class="p">.</span><span class="nx">doc</span><span class="p">(</span><span class="s1">&#39;tags/&#39;</span> <span class="o">+</span> <span class="nx">tagId</span><span class="p">);</span>
-</span></span></code></pre></div><h2 id="the-end">The End</h2>
-<p>I love data modeling. If you want to talk about your own complex data structure challenges, please reach out on Slack. In the future, I will take some of these models and build out entire features that you can drop into any Angular app.</p>
+				<p>Introducing our new comfortable and stylish hoodie, perfect for any occasion! Made with high-quality materials, this hoodie will keep you warm and cozy in any weather.</p>
+<h2 id="features">Features</h2>
+<ol>
+<li>Soft and durable material for long-lasting wear</li>
+<li>Kangaroo pocket for convenient storage of your essentials</li>
+<li>Ribbed cuffs and hem for a snug fit</li>
+<li>Drawstring hood for extra warmth and comfort</li>
+<li>Available in multiple colors and sizes to suit your style and preferences</li>
+</ol>
+<h2 id="style">Style</h2>
+<p>Our hoodie features a minimalist design that will never go out of style. The simple yet elegant look is perfect for pairing with jeans, leggings, or any other casual wear. Whether you&rsquo;re running errands, hitting the gym, or just lounging around, this hoodie is a great choice.</p>
+<h2 id="quality">Quality</h2>
+<p>We take pride in the quality of our products, and this hoodie is no exception. It is made with premium materials that are both soft and durable, ensuring that it will last for years to come. The attention to detail is evident in the fine stitching and expert craftsmanship.</p>
+<h2 id="satisfaction-guarantee">Satisfaction Guarantee</h2>
+<p>We are confident that you will love our hoodie, and we stand behind our product with a satisfaction guarantee. If for any reason you are not completely satisfied with your purchase, simply return it for a full refund or exchange.</p>
+<blockquote>
+<p>Upgrade your wardrobe with our comfortable and stylish hoodie today!</p>
+</blockquote>
 
 
 				
@@ -391,41 +225,10 @@ Product inventory stock is limited.</p>
 		<aside class="tableOfContents">
 			<nav id="TableOfContents">
   <ul>
-    <li><a href="#advanced-techniques-in-nosql">Advanced Techniques in NoSQL</a>
-      <ul>
-        <li><a href="#duplication">Duplication</a></li>
-        <li><a href="#aggregation">Aggregation</a></li>
-        <li><a href="#composite-keys">Composite Keys</a></li>
-        <li><a href="#bucketing">Bucketing</a></li>
-        <li><a href="#sharding">Sharding</a></li>
-        <li><a href="#pipelining-unique-firebase-feature">Pipelining (Unique Firebase Feature)</a></li>
-      </ul>
-    </li>
-    <li><a href="#group-collection-query">Group Collection Query</a></li>
-    <li><a href="#shopping-cart--ecommerce-nosql-model">Shopping Cart + Ecommerce NoSQL Model</a>
-      <ul>
-        <li><a href="#data-model">Data Model</a></li>
-      </ul>
-    </li>
-    <li><a href="#user-followunfollow-system">User Follow/Unfollow System</a>
-      <ul>
-        <li><a href="#data-model-1">Data Model</a></li>
-        <li><a href="#sample-queries">Sample Queries</a></li>
-      </ul>
-    </li>
-    <li><a href="#threaded-comments-or-hierarchy-tree-structure">Threaded Comments or Hierarchy Tree Structure</a>
-      <ul>
-        <li><a href="#data-model-2">Data Model</a></li>
-        <li><a href="#recursive-query-structure-in-angular">Recursive Query Structure in Angular</a></li>
-      </ul>
-    </li>
-    <li><a href="#tags-or-hashtags">Tags or HashTags</a>
-      <ul>
-        <li><a href="#data-model-3">Data Model</a></li>
-        <li><a href="#sample-queries-1">Sample Queries</a></li>
-      </ul>
-    </li>
-    <li><a href="#the-end">The End</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#style">Style</a></li>
+    <li><a href="#quality">Quality</a></li>
+    <li><a href="#satisfaction-guarantee">Satisfaction Guarantee</a></li>
   </ul>
 </nav>
 		</aside>

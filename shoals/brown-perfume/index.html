@@ -189,66 +189,22 @@
 				</h1>
 
 
-				<p>Cloud providers and web application frameworks go to great lengths to protect you from writing insecure code. The Cloud provides secure defaults and monitoring for your infrastructure, while Angular and React automatically sanitize HTML to prevent the injection of malicious JavaScript. Despite these safeguards, no application is 100%, secure and clever new exploits will be discovered. The following lesson explains some of the most common hacking techniques and how to secure your app against them.</p>
-<h2 id="1-zero-day-vulnerability">1. Zero-day Vulnerability</h2>
-<p>A <strong>zero-day vulnerability</strong> is a weakness that is unknown or unfixed as of today. When a hacker decides to attack this weakness, it&rsquo;s called <strong>zero-day exploit</strong>.</p>
-<p>After it becomes known, you can think of it as a one-day or 20-day exploit based on the time since the initial discovery.</p>
-<h2 id="2-packages-with-known-vulnerabilities">2. Packages with Known Vulnerabilities</h2>
+				<h2 id="innovative-and-high-quality-shoal">Innovative and High-Quality Shoal</h2>
+<p>Introducing our innovative and high-quality shoal, perfect for any water enthusiast! Made with premium materials and expert craftsmanship, this shoal is designed to provide the ultimate swimming experience.</p>
+<h2 id="features">Features</h2>
+<p>Lightweight and buoyant design that allows for effortless swimming
+Comfortable and adjustable straps that ensure a secure and comfortable fit
+High-quality materials that are both durable and long-lasting
+Sleek and stylish design that is sure to turn heads
+Style
+Our shoal features a sleek and modern design that is both stylish and functional. The vibrant colors and eye-catching patterns are sure to make a statement, while the lightweight and buoyant construction allows for effortless swimming. Whether you&rsquo;re swimming laps, surfing, or just lounging on the beach, this shoal is a great choice.</p>
+<h2 id="quality">Quality</h2>
+<p>We take pride in the quality of our products, and this shoal is no exception. It is made with premium materials that are both durable and long-lasting, ensuring that it will provide years of use. The attention to detail is evident in the expert craftsmanship and fine stitching.</p>
+<h2 id="satisfaction-guarantee">Satisfaction Guarantee</h2>
+<p>We are confident that you will love our shoal, and we stand behind our product with a satisfaction guarantee. If for any reason you are not completely satisfied with your purchase, simply return it for a full refund or exchange.</p>
 <blockquote>
-<p>In 2017, the <a href="https://www.cnet.com/news/equifax-ceo-data-breach-heres-what-went-wrong/">Equifax Data Breach</a> exposed more than 140MM customer records and has cost the company over $1 billion. It was caused by a known exploit over two months old that could have been prevented with a simple update to Apache Struts.</p>
+<p>Upgrade your swimming experience with our innovative and high-quality shoal today!</p>
 </blockquote>
-<p>Using packages with <a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities">known vulnerabilities</a> is the most common way hackers exploit web apps.</p>
-<p>Audit your current NPM project using the <a href="https://docs.npmjs.com/cli/audit">audit</a> command. Then update your dependencies as needed.</p>
-
-
-<div class="file-name">
-  <span class="file-icon"><svg aria-hidden="true" data-prefix="fas" data-icon="terminal" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="svgterminal  "><path fill="currentColor" d="M257.981 272.971L63.638 467.314c-9.373 9.373-24.569 9.373-33.941 0L7.029 444.647c-9.357-9.357-9.375-24.522-.04-33.901L161.011 256 6.99 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L257.981 239.03c9.373 9.372 9.373 24.568 0 33.941zM640 456v-32c0-13.255-10.745-24-24-24H312c-13.255 0-24 10.745-24 24v32c0 13.255 10.745 24 24 24h304c13.255 0 24-10.745 24-24z" ></path></svg></span> command line
-</div>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">npm audit
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">npm audit fix
-</span></span></code></pre></div><h2 id="3-cross-site-scripting-xss">3. Cross-site Scripting (XSS)</h2>
-<blockquote>
-<p>The Samy worm was an XSS attack that spread to over 1 million MySpace pages in 24 hours. If affected, it would update your profile to say <em>but most of all, samy is my hero</em></p>
-</blockquote>
-<div class="insta">
-</div>
-<p>Cross Site Scripting occurs when a hacker runs malicious JavaScript on a client&rsquo;s browser. It can happen in a variety of ways, but is commonly the result of rendering raw HTML from the server.</p>
-<figure><img src="img/xss-diagram.png"
-         alt="A diagram of a typical Cross Site Scripting attack"/><figcaption>
-            <p>A diagram of a typical Cross Site Scripting attack</p>
-        </figcaption>
-</figure>
-
-<ol>
-<li>Hacker saves some JS code to the database like <code>&lt;script&gt;alert('you got got')&lt;/script&gt;</code> by submitting a comment via the web app.</li>
-<li>The victim user visits the webpage with that comment, but the developer did not sanitize the hacker&rsquo;s comment, so the browser thinks it&rsquo;s a trusted script/html.</li>
-<li>At this point, the hacker&rsquo;s JS is running as if it were the end-user.</li>
-</ol>
-<h2 id="4-sql-injection">4. SQL Injection</h2>
-<blockquote>
-<p>In 2008, Heartland Payment Systems exposed the data encoded on credit cards via a SQL injection attack. The hackers used this data to make physical counterfeit credit cards. The ringleader, Albert Gonzalez, was caught and sentenced to 20 years in prison.</p>
-</blockquote>
-<p><a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A1-Injection">SQL injection</a> is similar conceptually to XSS, but instead, it runs malicious code on the database.</p>
-<p>Notice how the code below relies on an external parameter to construct the query. If not sanitized, an attacker can submit raw SQL code and the database will execute it.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="s2">&#34;SELECT * FROM users WHERE uid=&#39;&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="n">getParameter</span><span class="p">(</span><span class="s2">&#34;uid&#34;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&#34;&#39;&#34;</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><p>Most ORMs will prevent SQL injection attacks because you do not construct the queries on your own. However, there have been hacks on ORMs directly, so again, nothing is 100% secure.</p>
-<h2 id="5-credential-leaks">5. Credential Leaks</h2>
-<p>Many APIs and Cloud Providers provide API keys that allow you to interact with paid services. If a hacker discovers a secret API key it can be used to take destructive action on your behalf. There are a few ways credentials are leaked.</p>
-<ol>
-<li>Using API keys directly in source code, then pushing the repo to Github.</li>
-<li>Using API keys directly in source code, then bundling them in your production app.</li>
-</ol>
-<p>You can prevent credential leaks by NOT putting them in your source code. Instead, use environment variables or a service like <a href="https://cloud.google.com/secret-manager/docs">Secret Manager</a>.</p>
-<h2 id="6-principle-of-least-privilege">6. Principle of Least Privilege</h2>
-<p>In the event that your credentials are compromised, you can mitigate the damage by following the Principle of Least Privilege. Basically, this means <strong>grant access only when it is absolutely required</strong>.</p>
-<p>A good example is <a href="/snippets/firestore-rules-recipes/">Firestore Database Rules</a>, which allow you to customize the permissions of an API key. When defining rules, you should always start by locking down everything, then selectively allow access as needed.</p>
-<h2 id="7-ddos-attacks">7. DDoS Attacks</h2>
-<blockquote>
-<p>In 2018, Github survived the largest DDoS attack in history after it was bombarded with 1.35 terabits of data per second. It only took the site down for about ten minutes thanks to a backup service, Akamai, which re-routed traffic and blocked the spoofed requests.</p>
-</blockquote>
-<p>A <a href="https://en.wikipedia.org/wiki/Denial-of-service_attack">DDoS</a> attack attempts to flood the service with so much traffic that it simply shuts down. The attack is typically distributed via many spoofed sources, making it impossible to just block a single IP address.</p>
-<p>For most developers, the best mitigation strategy is to use a large Cloud provider that has the bandwidth and monitoring capabilities to deal with such attacks.</p>
 
 
 				
@@ -267,13 +223,10 @@
 		<aside class="tableOfContents">
 			<nav id="TableOfContents">
   <ul>
-    <li><a href="#1-zero-day-vulnerability">1. Zero-day Vulnerability</a></li>
-    <li><a href="#2-packages-with-known-vulnerabilities">2. Packages with Known Vulnerabilities</a></li>
-    <li><a href="#3-cross-site-scripting-xss">3. Cross-site Scripting (XSS)</a></li>
-    <li><a href="#4-sql-injection">4. SQL Injection</a></li>
-    <li><a href="#5-credential-leaks">5. Credential Leaks</a></li>
-    <li><a href="#6-principle-of-least-privilege">6. Principle of Least Privilege</a></li>
-    <li><a href="#7-ddos-attacks">7. DDoS Attacks</a></li>
+    <li><a href="#innovative-and-high-quality-shoal">Innovative and High-Quality Shoal</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#quality">Quality</a></li>
+    <li><a href="#satisfaction-guarantee">Satisfaction Guarantee</a></li>
   </ul>
 </nav>
 		</aside>
