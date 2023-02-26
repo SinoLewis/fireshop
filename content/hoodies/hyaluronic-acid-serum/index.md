@@ -1,23 +1,13 @@
 ---
-title: Oil Free Moisturizer 100ml
-lastmod: 2022-10-22T19:39:39.527Z
-publishdate: 2022-10-22T19:39:39.527Z
+title: Hyaluronic Acid Serum
+lastmod: 2018-02-05T15:31:37-07:00
+publishdate: 2022-10-22T19:39:39.529Z
 category: Hoodies
 author: Lee Sino
 draft: false
-description: Dermive Oil Free Moisturizer with SPF 20 is specifically formulated with ceramides, hyaluronic acid & sunscreen.
+description: L'OrÃ©al Paris introduces Hyaluron Expert Replumping Serum formulated with 1.5% Hyaluronic Acid
 tags:
-  - hoody
-
-# pro: true
-# disable_toc: true
-# disable_qna: true
-
-# courses
-# step: 0
-
-# versions:
-#    rxdart: 0.20
+  - ladys
 ---
 
 Introducing our new comfortable and stylish hoodie, perfect for any occasion! Made with high-quality materials, this hoodie will keep you warm and cozy in any weather.

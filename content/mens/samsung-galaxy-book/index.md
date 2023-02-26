@@ -1,12 +1,13 @@
 ---
-title: Skin Beauty Serum.
-lastmod: 2022-10-22T19:39:39.547Z
-publishdate: 2022-10-22T19:39:39.547Z
+title: Samsung Galaxy Book
+lastmod: 2019-08-25T10:43:13-07:00
+publishdate: 2022-10-22T19:39:39.441Z
 category: Mens
 author: Lee Sino
-description: Product name rorec collagen hyaluronic acid white face serum riceNet weight 15 m
+description: Samsung Galaxy Book S (2020) Laptop With Intel Lakefield Chip, 8GB of RAM Launched
 tags:
-  - ladys
+  - mens
+  - hoody
 ---
 
 ## Classic and Versatile Men's Wear

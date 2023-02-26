@@ -1,14 +1,13 @@
 ---
-title: iPhone X
-lastmod: 2018-02-05T15:31:37-07:00
-publishdate: 2022-10-22T19:39:39.357Z
+title: Flying Wooden Bird
+lastmod: 2022-10-22T19:39:39.467Z
+publishdate: 2022-10-22T19:39:39.467Z
 category: Ladys
 author: Lee Sino
 draft: false
-description: SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...
+description: Package Include 6 Birds with Adhesive Tape Shape 3D Shaped Wooden Birds Material Wooden MDF, Laminated 3.5mm
 tags:
-  - jewellery
-  - shoals
+  - kids
 ---
 
 ## Stylish and Comfortable Lady's Wear
