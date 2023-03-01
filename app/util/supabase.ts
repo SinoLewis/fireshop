@@ -24,7 +24,7 @@ export async function signInWithGoogle() {
   let { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${window.location.href}/dashboard`,
+      redirectTo: `${window.location.origin}/dashboard`,
     },
   });
   loginHandler(error);
@@ -34,7 +34,7 @@ export async function signInWithApple() {
   let { error } = await supabase.auth.signInWithOAuth({
     provider: "apple",
     options: {
-      redirectTo: `${window.location.href}/dashboard`,
+      redirectTo: `${window.location.origin}/dashboard`,
     },
   });
   loginHandler(error);
@@ -54,7 +54,7 @@ export async function passwordlessSignin(email: string) {
   let { data, error } = await supabase.auth.signInWithOtp({
     email: email,
     options: {
-      emailRedirectTo: `${window.location.href}/dashboard`,
+      emailRedirectTo: `${window.location.origin}/dashboard`,
     },
   });
   serverError = error;
