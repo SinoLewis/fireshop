@@ -19,9 +19,7 @@
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
-  <div class="area">
-    <div><textarea placeholder="Type your comment" bind:value /></div>
-  </div>
+  <textarea placeholder="Type your comment" bind:value />
   <div>
     <button class="btn btn-lg btn-blue btn-display glow" type="submit"
       >Submit</button
@@ -31,15 +29,12 @@
 
 <style lang="scss">
   form {
+    width: 40rem;
     @apply grid gap-4;
   }
 
-  .area {
-    width: 100%;
-    textarea {
-      width: 90%;
-      @apply textarea textarea-bordered textarea-lg w-full;
-    }
+  textarea {
+    @apply textarea textarea-bordered textarea-lg;
   }
   .btn {
     @apply bg-white text-black uppercase font-bold inline-flex cursor-pointer text-center shadow-md no-underline px-5 py-2 transition-all duration-150 my-0.5;
