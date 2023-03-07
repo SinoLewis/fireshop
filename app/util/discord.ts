@@ -68,7 +68,7 @@ export async function sendMessageToWebhook(type, message) {
 
 export const sendOrderToWebhook = async (order: Order) => {
   const webhook = import.meta.env.VITE_HOOK_ORDER;
-  let items = Object.values(order.cart_products).map((item) => {
+  let items: any = Object.values(order.cart_products).map((item) => {
     return {
       title: item.title,
       description: `PRICE: ${item.price}`,
@@ -81,7 +81,26 @@ export const sendOrderToWebhook = async (order: Order) => {
       },
     };
   });
-
+  let details = [
+    {
+      title: "Delivery Details",
+      // description: `PRICE: Dummy Price`,
+      color: 12586019,
+      fields: [
+        {
+          name: "ADDRESS",
+          value: `${order.address.display_name}`,
+          inline: true,
+        },
+        {
+          name: "PHONE",
+          value: `${order.phone}`,
+          inline: true,
+        },
+      ],
+    },
+  ];
+  const data = details.concat(items);
   try {
     const response = await fetch(webhook, {
       method: "POST",
@@ -91,8 +110,9 @@ export const sendOrderToWebhook = async (order: Order) => {
       body: JSON.stringify({
         username: order.name,
         // avatar_url: "https://i.imgur.com/4M34hi2.png",
-        content: `ORDER ID: **${order.id}** \n ADDRESS: **${order.address.display_name}** \nPHONE: **${order.phone}**`,
-        embeds: items,
+        content: `${order.id}`,
+        // content: `ORDER ID: **${order.id}** \n ADDRESS: **${order.address.display_name}** \nPHONE: **${order.phone}**`,
+        embeds: data,
       }),
     });
     if (!response.ok) {

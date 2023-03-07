@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { toast, Cart, Order } from "../stores";
-import { sendMessageToWebhook } from "./discord";
+import { sendMessageToWebhook, sendOrderToWebhook } from "./discord";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -166,6 +166,7 @@ export async function updateOrder(order: Order): Promise<Order> {
         .select();
       if (error) throw error;
       console.log("ORDER update DB: ", data);
+      sendOrderToWebhook(order)
       return data[0];
     } else {
       const { data, error }: { data: any; error: any } = await supabase
