@@ -1,5 +1,5 @@
 export * from "./supa-user";
-export * from "./delivery";
+export * from "./glovo-delivery";
 export * from "./cart";
 export * from "./products";
 export * from "./loading";

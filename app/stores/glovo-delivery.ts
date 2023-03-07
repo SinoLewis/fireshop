@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import { toast } from "../stores";
+import { toast } from ".";
 
 interface Parcel {
   address: CustomerAddress;
