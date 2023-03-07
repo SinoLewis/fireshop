@@ -1,6 +1,26 @@
 # FIRESHOP
 
-## 1. Tutorials TODO's
+## 1. Svelte Web Components
+
+| NO. | WC.               | JS & Stores & Utils               | HTML    | CSS                              |
+| --- | ----------------- | --------------------------------- | ------- | -------------------------------- |
+| 1.  | checkout-cart     |                                   | - icons | - padding                        |
+|     |                   |                                   |         | - Bordered Card cart w/ Title    |
+|     |                   |                                   |         | - Formatted                      |
+| 2.  | checkout-delivery | - Geolocation                     |         | - Responsive Elements Placing    |
+|     |                   | - Post delivery Input clearing    |         |
+|     |                   | - Phone input w/ Area Codes       |         |
+| 3.  | checkout-order    | - Delivery Package testin         |         | - Bordered receipt cart w/ Title |
+|     |                   | - Delivery Tracking               |         | - Confirm Popup styling          |
+| 4.  | supa-signout      | - Reactive data after signout     |         | - Default Button styling         |
+|     |                   | - Toast after signout validation  |         |                                  |
+| 5.  | supa-signin       | - Toast after signin validation   |         | - Default Button styling         |
+|     |                   | - User email avatar image         |         |                                  |
+|     |                   | - Publish google signin API       |         |                                  |
+| 6.  | meili-search      | - Production search server or API |         |                                  |
+|     |                   | - conf & security                 |         |                                  |
+
+## 2. Beta Features
 
 - REST to tRPC
 - Edge Programming: use callUserAPI from app/util/firebase.ts 4 serveless functions
@@ -10,29 +30,10 @@
 - Localstorage stores or Cached API request using PWA or Redis 4 supa & maps APIS
 - Set supa db policies & Foreign Keys setup
 - Local supa db
-
-## 2. Svelte Web Components
-
-1 Cart wc
-2 Order/ Merchant wc
-
-> Phone input with area code with validation
-
-3 Delivery wc
-
-4.  User data wc
-
-> set auth id 4 google & apple
-> (BETA) supa auth extra = [captcha, mfa]
-
-5. Search wc
-
-> conf & security
-> Index Mngt in server
+- supa auth extra = [captcha, mfa, apple signin]
 
 ## 3. Hugo Markdown
 
-1. home.html: if-user modal code review
 1. footer.html: Need valid help email eg. help@fireshop.shop
 1. footer.html: create helpful links eg github, discord, twitter, whatsapp-business
 
