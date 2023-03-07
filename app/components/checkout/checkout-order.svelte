@@ -50,28 +50,21 @@
 {#if $user}
   <div id="template-section" bind:this={printEl}>
     <h2>Total Price: {$cart.cart_price}</h2>
-    {#each items as item}
-      {#if $cart.cart_products[item]}
-        <div class="content">
-          <!-- <div class="image-selector">
-            <img
-              src="https://assets.bitdegree.org/crypto/storage/media/pow-blockchain-infographics-5f572a4421ef9.o.jpg"
-              alt="Selected Image"
-            />
-          </div> -->
-          <span>
-            <h4>{item}</h4>
-          </span>
-          <!-- <p>
-          Many desktop publishing packages and web page editors now use Lorem
-          Ipsum as their default model text, and a search.
-        </p> -->
-          <span class="price">
-            <h4>Ksh {$cart.cart_products[item].total_price | 0}</h4>
-          </span>
-        </div>
-      {/if}
-    {/each}
+    <ul class="receipt">
+      {#each items as item}
+        {#if $cart.cart_products[item]}
+          <div class="items">
+            <img src={$cart.cart_products[item].image} alt={item} />
+            <span>
+              <h4>{item}</h4>
+            </span>
+            <span class="price">
+              <h4>Ksh {$cart.cart_products[item].total_price | 0}</h4>
+            </span>
+          </div>
+        {/if}
+      {/each}
+    </ul>
   </div>
 
   {#if $order?.approved === true}
@@ -94,6 +87,19 @@
 {/if}
 
 <style lang="scss">
+  .receipt {
+    @apply border-4;
+  }
+  .items {
+    img {
+      width: 50px;
+      height: 50px;
+    }
+    span {
+      @apply px-4 break-words;
+    }
+    @apply list-none p-4 my-3 bg-gray6 shadow-xl rounded-lg flex justify-between items-center;
+  }
   .content {
     // 4 elements in 2 rows: img, desc, price, btns
     // sm: 1st row = 2 cols, 2nd row = btns
