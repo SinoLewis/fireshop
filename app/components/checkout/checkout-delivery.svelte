@@ -6,7 +6,9 @@
   import { sendMessageToWebhook, sendOrderToWebhook } from "../../util/discord";
   import { toast, user, order, destination, cart } from "../../stores";
   import type { Address } from "../../stores/order";
-  import Openrouteservice from "openrouteservice-js";
+  // import Openrouteservice from "openrouteservice-js";
+
+  const KEY = import.meta.env.VITE_OPEN_ROUTE;
 
   let emailEl: HTMLInputElement;
   let nameEl: HTMLInputElement;
@@ -55,61 +57,21 @@
     try {
       addressValid = false;
       const q = (e.target as HTMLInputElement).value;
-      const url = `https://nominatim.openstreetmap.org/search?q=${q}&format=json`;
-      const response = await fetch(url);
+      const url = `https://nominatim.openstreetmap.org/search?q=${q}&countrycode=ke&format=json`;
+      // const url = `https://api.openrouteservice.org/geocode/autocomplete?api_key=${KEY}&text=${q}&boundary.country=KE&layers=address,neighbourhood`;
+      const response = await fetch(url, {
+        headers: {
+          Accept:
+            "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8",
+        },
+      });
       hits = await response.json();
-      console.log("NOMINATIM HITS: ", hits);
+      console.log("ORS HITS: ", hits);
     } catch (error) {
       console.log("NOMINATIM ERROR: ", error);
       sendMessageToWebhook("ERROR", error.message);
     }
   }
-  async function setAddress(e, index) {
-    hit = hits[index];
-    addressEl.value = hits[index].display_name;
-    $order.address = hits[index];
-    // TODO: API that can support glovo workingAreas
-    toast.set({
-      icon: "👍",
-      message: `${addressEl.value} set as delivery location`,
-    });
-    addressValid = addressEl.validity.valid;
-    hits.length = 0;
-    calculateDirections();
-    console.log("SELECTED: ", addressEl.value);
-    console.log("ORDER STORE: ", $order);
-  }
-
-  async function handleSubmit(e) {
-    loading = true;
-    try {
-      if (addressValid) {
-        updateCart($cart);
-        console.log("CART STORE: ", $cart);
-        updateOrder($order).then(() => ($order.name = $order.phone = ""));
-        console.log("ORDER STORE BEFORE: ", $order);
-        sendOrderToWebhook($order);
-
-        toast.set({
-          icon: "😎",
-          message: "Your Order was succesful!",
-          type: "success",
-        });
-        console.log("ORDER STORE AFTER: ", $order);
-      } else {
-        throw new Error(`ADDRESS: ${addressEl.value} is unknown`);
-      }
-    } catch (error) {
-      toast.set({
-        icon: "❌",
-        message: error.message,
-        type: "error",
-      });
-    }
-    // TODO: Router to /order
-    loading = false;
-  }
-
   async function calculateDirections() {
     try {
       // pickup to add1
@@ -118,7 +80,6 @@
       // add1 to add2
       // -1.2778674,36.8880893
       // -1.3156695, 36.8984952
-      const KEY = import.meta.env.VITE_OPEN_ROUTE;
       let orsDirections = new Openrouteservice.Directions({ api_key: KEY });
       let data = await orsDirections.calculate({
         coordinates: [
@@ -153,6 +114,52 @@
     } catch (error) {
       console.log("CALC ERROR: ", error.message);
     }
+  }
+  async function setAddress(e, index) {
+    hit = hits[index];
+    addressEl.value = hits[index].display_name;
+    $order.address = hits[index];
+    // TODO: API that can support glovo workingAreas
+    toast.set({
+      icon: "👍",
+      message: `${addressEl.value} set as delivery location`,
+    });
+    addressValid = addressEl.validity.valid;
+    hits.length = 0;
+    // calculateDirections();
+    console.log("SELECTED: ", addressEl.value);
+    console.log("ORDER STORE: ", $order);
+  }
+
+  async function handleSubmit(e) {
+    loading = true;
+    try {
+      if (addressValid) {
+        updateCart($cart);
+        console.log("CART STORE: ", $cart);
+        updateOrder($order).then(() => ($order.name = $order.phone = ""));
+        // updateOrder($order).then(() => (nameEl.value = phoneEl.value = ""));
+        console.log("ORDER STORE BEFORE: ", $order);
+        // sendOrderToWebhook($order);
+
+        toast.set({
+          icon: "😎",
+          message: "Your Order was succesful!",
+          type: "success",
+        });
+        console.log("ORDER STORE AFTER: ", $order);
+      } else {
+        throw new Error(`ADDRESS: ${addressEl.value} is unknown`);
+      }
+    } catch (error) {
+      toast.set({
+        icon: "❌",
+        message: error.message,
+        type: "error",
+      });
+    }
+    // TODO: Router to /order
+    loading = false;
   }
 </script>
 
