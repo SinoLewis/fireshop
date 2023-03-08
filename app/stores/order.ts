@@ -24,6 +24,7 @@ type Order = {
   updated_at: string;
 };
 
+// TODO: Change Address type based on API (ORS or Nomatim)
 interface Address {
   place_id: number;
   licence: string;
