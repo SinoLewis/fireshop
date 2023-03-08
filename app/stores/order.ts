@@ -3,6 +3,7 @@ import type { CartProducts } from "./cart";
 import { encrypt, decrypt } from "./cart";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "../util/supabase";
+import { cart, user } from "./";
 
 const SELECTED_ORDER: any = import.meta.env.VITE_LOCAL_ORDER;
 let initOrder = localStorage.getItem(SELECTED_ORDER);
@@ -82,6 +83,15 @@ supabase
   .subscribe();
 
 order.subscribe((value) => {
+  cart.subscribe((c) => {
+    value.cart_price = c.cart_price;
+    value.cart_products = c?.cart_products;
+  });
+  user.subscribe((u) => {
+    value.email = u?.email;
+  });
+  // TEST
+  console.log("ORDER STORE: ", value);
   localStorage.setItem(SELECTED_ORDER, encrypt(JSON.stringify(value)));
 });
 export { order };

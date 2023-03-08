@@ -40,13 +40,6 @@
     importance: 0.20000999999999997,
   };
 
-  onMount(async () => {
-    // TEST
-    // console.log("INIT ORDER STORE: ", $order);
-    $order.email = $user?.email;
-    $order.cart_price = $cart?.cart_price;
-    $order.cart_products = $cart?.cart_products;
-  });
   async function validate() {
     emailValid = emailEl.validity.valid;
     phoneValid = phoneEl.validity.valid;
