@@ -12,13 +12,17 @@
 |     |                   | - updateProductQuantity afta submit |         |
 |     |                   | - Route to /order afta handleSubmit |         |
 |     |                   | - Phone input w/ Area Codes         |         |
+|     |                   |                                     |         |                                  |
 | 3.  | checkout-order    | - Delivery Package testin           |         | - Bordered receipt cart w/ Title |
 |     |                   | - Delivery Tracking                 |         | - Confirm Popup styling          |
+|     |                   |                                     |         |                                  |
 | 4.  | supa-signout      | - Reactive data after signout       |         | - Default Button styling         |
 |     |                   | - Toast after signout validation    |         |                                  |
+|     |                   |                                     |         |                                  |
 | 5.  | supa-signin       | - Toast after signin validation     |         | - Default Button styling         |
 |     |                   | - User email avatar image           |         |                                  |
 |     |                   | - Publish google signin API         |         |                                  |
+|     |                   |                                     |         |                                  |
 | 6.  | meili-search      | - Production search server or API   |         |                                  |
 |     |                   | - conf & security                   |         |                                  |
 
@@ -36,6 +40,7 @@
 
 ## 3. Hugo Markdown
 
+1. Hugo config review
 1. footer.html: Need valid help email eg. help@fireshop.shop
 1. footer.html: create helpful links eg github, discord, twitter, whatsapp-business
 
