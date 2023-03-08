@@ -1,24 +1,6 @@
 <svelte:options tag="supa-signin" />
 
 <script lang="ts">
-  import { supabase } from "../../util/supabase";
-  import { cart, user, order } from "../../stores";
-  import { onMount } from "svelte";
-
-  supabase
-    .channel("any")
-    .on(
-      "postgres_changes",
-      { event: "UPDATE", schema: "public", table: "orders" },
-      (payload: any) => {
-        if (payload.new?.id === $order.id) {
-          $order = payload.new;
-          // TEST
-          console.log("ORDERS DB APPROVED: ", $order);
-        }
-      }
-    )
-    .subscribe();
 </script>
 
 <modal-dialog name="signin" esc="true">

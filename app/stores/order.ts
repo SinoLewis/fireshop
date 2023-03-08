@@ -2,6 +2,7 @@ import { writable } from "svelte/store";
 import type { CartProducts } from "./cart";
 import { encrypt, decrypt } from "./cart";
 import { v4 as uuidv4 } from "uuid";
+import { supabase } from "../util/supabase";
 
 const SELECTED_ORDER: any = import.meta.env.VITE_LOCAL_ORDER;
 let initOrder = localStorage.getItem(SELECTED_ORDER);
@@ -128,6 +129,23 @@ function getOrder(): Order {
 }
 const order = writable<Order>(getOrder());
 const destination = writable({} as Destination);
+
+supabase
+  .channel("any")
+  .on(
+    "postgres_changes",
+    { event: "UPDATE", schema: "public", table: "orders" },
+    (payload: any) => {
+      order.subscribe((value) => {
+        if (payload.new?.id === value.id) {
+          value = payload.new;
+          // TEST
+          console.log("ORDERS DB APPROVED CHECK: ", value);
+        }
+      });
+    }
+  )
+  .subscribe();
 
 order.subscribe((value) => {
   localStorage.setItem(SELECTED_ORDER, encrypt(JSON.stringify(value)));
