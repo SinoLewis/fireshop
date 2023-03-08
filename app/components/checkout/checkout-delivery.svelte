@@ -2,10 +2,10 @@
 
 <script lang="ts">
   import { updateCart, updateOrder } from "../../util/supabase";
-  import { sendMessageToWebhook, sendOrderToWebhook } from "../../util/discord";
-  import { toast, user, order, destination, cart } from "../../stores";
+  import { sendMessageToWebhook } from "../../util/discord";
+  import { toast, user, order, checkout, cart } from "../../stores";
   import type { Address } from "../../stores/order";
-  // import Openrouteservice from "openrouteservice-js";
+  import { onMount } from "svelte";
 
   const KEY = import.meta.env.VITE_OPEN_ROUTE;
 
@@ -39,6 +39,12 @@
     importance: 0.20000999999999997,
   };
 
+  onMount(() => {
+    console.log("INPUT VALIDITY NAME: ", nameValid);
+    console.log("INPUT VALIDITY PHONE: ", phoneValid);
+    console.log("INPUT VALIDITY EMAIL: ", emailValid);
+    console.log("INPUT VALIDITY ADDRESS: ", addressValid);
+  });
   async function validate() {
     emailValid = emailEl.validity.valid;
     phoneValid = phoneEl.validity.valid;
@@ -100,10 +106,10 @@
         // TEST
         // console.log("CART STORE: ", $cart);
         updateOrder($order).then(() => ($order.name = $order.phone = ""));
+        checkout.set(2);
         // updateOrder($order).then(() => (nameEl.value = phoneEl.value = ""));
         // TEST
         // console.log("ORDER STORE BEFORE: ", $order);
-        sendOrderToWebhook($order);
 
         toast.set({
           icon: "😎",

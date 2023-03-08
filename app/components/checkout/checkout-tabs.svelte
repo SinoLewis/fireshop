@@ -1,10 +1,10 @@
 <svelte:options tag="checkout-tabs" />
 
 <script lang="ts">
-  let activeTab = 0;
-  const tab1 = () => (activeTab = 0);
-  const tab2 = () => (activeTab = 1);
-  const tab3 = () => (activeTab = 2);
+  import { checkout } from "../../stores";
+  const tab1 = () => checkout.set(0);
+  const tab2 = () => checkout.set(1);
+  const tab3 = () => checkout.set(2);
 </script>
 
 <div class="box">
@@ -15,13 +15,13 @@
   </div>
 
   <div>
-    {#if activeTab === 0}
+    {#if $checkout === 0}
       <checkout-cart />
     {/if}
-    {#if activeTab === 1}
+    {#if $checkout === 1}
       <checkout-delivery />
     {/if}
-    {#if activeTab === 2}
+    {#if $checkout === 2}
       <checkout-order />
     {/if}
   </div>
