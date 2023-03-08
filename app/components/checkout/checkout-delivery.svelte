@@ -1,7 +1,6 @@
 <svelte:options tag="checkout-delivery" />
 
 <script lang="ts">
-  import { onMount } from "svelte";
   import { updateCart, updateOrder } from "../../util/supabase";
   import { sendMessageToWebhook, sendOrderToWebhook } from "../../util/discord";
   import { toast, user, order, destination, cart } from "../../stores";
@@ -69,6 +68,7 @@
   }
   async function calculateDirections() {
     try {
+      // TODO: Destination store logic here
       // TEST
       // console.log("CALC OPENROUTE: ", $destination);
     } catch (error) {
@@ -103,7 +103,7 @@
         // updateOrder($order).then(() => (nameEl.value = phoneEl.value = ""));
         // TEST
         // console.log("ORDER STORE BEFORE: ", $order);
-        // sendOrderToWebhook($order);
+        sendOrderToWebhook($order);
 
         toast.set({
           icon: "😎",
