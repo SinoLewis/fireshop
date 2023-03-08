@@ -4,15 +4,33 @@
   import { cart } from "../../stores";
 
   let items = Object.keys($cart.cart_products);
+  let image = null;
+  $: image;
+
+  const preload: any = async (src) => {
+    const resp = await fetch(src);
+    const blob = await resp.blob();
+
+    return new Promise(function (resolve, reject) {
+      let reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(`Error: ,${error}`);
+    });
+  };
 </script>
 
 <h2>Total Price: <span class="txt">{$cart.cart_price}</span></h2>
 {#each items as item}
   {#if $cart.cart_products[item]}
     <div class="item">
-      <figure>
-        <img src={$cart.cart_products[item].image} alt={item} />
-      </figure>
+      <div class="image">
+        {#await preload($cart.cart_products[item].image)}
+          <img src="/img/default-cover.png" />
+        {:then base64}
+          <img src={base64} alt={item} />
+        {/await}
+      </div>
       <div class="body">
         <p class="txt">{item}</p>
         <p>Ksh {$cart.cart_products[item].total_price | 0}</p>
@@ -35,6 +53,15 @@
   .txt {
     @apply text-blue-700;
   }
+  .image {
+    @apply w-72 pr-4;
+
+    img {
+      border-radius: 0.75rem;
+
+      @apply w-full h-48 object-cover;
+    }
+  }
   .item {
     height: 12rem;
     border: 2px solid #ffffff;
@@ -51,13 +78,6 @@
     }
     @apply card card-side shadow-xl;
 
-    figure {
-      width: 30%;
-      margin: 0px;
-      margin-right: 8px;
-
-      @apply object-cover;
-    }
     .body {
       @apply grid gap-y-0.5;
     }
