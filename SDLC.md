@@ -4,7 +4,7 @@
 
 | NO. | WC.               | JS & Stores & Utils               | HTML    | CSS                              |
 | --- | ----------------- | --------------------------------- | ------- | -------------------------------- |
-| 1.  | checkout-cart     |                                   | - icons | - padding                        |
+| 1.  | checkout-cart     | - Default image onLoad            | - icons | - padding                        |
 |     |                   |                                   |         | - Bordered Card cart w/ Title    |
 |     |                   |                                   |         | - Formatted                      |
 | 2.  | checkout-delivery | - Geolocation                     |         | - Responsive Elements Placing    |
