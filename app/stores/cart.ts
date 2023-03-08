@@ -135,9 +135,9 @@ cart.subscribe((value) => {
     dateStyle: "full",
     timeStyle: "full",
   });
-  // TEST
-  // console.log("TT PRICE", value.cart_price, "\n$CART", value);
   localStorage.setItem(SELECTED_CART, encrypt(JSON.stringify(value)));
+  // TEST
+  console.log("CART STORE", value);
 });
 
 export { cart, add, minus, remove, encrypt, decrypt };

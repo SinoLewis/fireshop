@@ -5,19 +5,6 @@
   import { cart, user, order } from "../../stores";
   import { onMount } from "svelte";
 
-  async function getUser() {
-    try {
-      const { data, error } = await supabase.auth.getUser();
-      if (error) throw error;
-      $cart.user_id = data.user ? data.user.id : null;
-      user.set(data.user);
-      // TEST
-      // console.log("CHECKOUT USER: ", $user);
-      // console.log("CHECKOUT CART: ", $cart);
-    } catch (error) {
-      console.log("USER ERROR: ", error.message);
-    }
-  }
   supabase
     .channel("any")
     .on(
@@ -32,8 +19,6 @@
       }
     )
     .subscribe();
-
-  onMount(getUser);
 </script>
 
 <modal-dialog name="signin" esc="true">
