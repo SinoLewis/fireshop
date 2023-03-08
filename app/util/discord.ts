@@ -59,7 +59,8 @@ export async function sendMessageToWebhook(type, message) {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      console.log("Successfully sent message to webhook of type: ", type);
+      //  TEST
+      // console.log("Successfully sent message to webhook of type: ", type);
     });
   } catch (err) {
     console.error(`Error sending message to webhook: ${err}`);
@@ -118,7 +119,8 @@ export const sendOrderToWebhook = async (order: Order) => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    console.log("Successfully sent message to webhook of type: ORDER");
+    //  TEST
+    // console.log("Successfully sent message to webhook of type: ORDER");
   } catch (error) {
     console.error(`Error sending message to webhook: ${error}`);
   }
@@ -127,10 +129,10 @@ export const sendOrderToWebhook = async (order: Order) => {
 // export const sendOrderToWebhook = async (order: Order) => {
 //   const webhook = import.meta.env.VITE_HOOK_ORDER;
 
-//   console.log(
-//     "DISCORD IMAGE: ",
-//     await getImage("/img/categories/shoals/perfume-oil.jpg")
-//   );
+// //  console.log(
+// //    "DISCORD IMAGE: ",
+// //    await getImage("/img/categories/shoals/perfume-oil.jpg")
+// //  );
 //   let items = Object.values(order.cart_products).map((item) => {
 //     return {
 //       title: item.title,
@@ -164,8 +166,8 @@ export const sendOrderToWebhook = async (order: Order) => {
 //     if (!response.ok) {
 //       throw new Error(`HTTP error! status: ${response.status}`);
 //     }
-//     console.log("Successfully sent message to webhook of type: ORDER");
+//     // console.log("Successfully sent message to webhook of type: ORDER");
 //   } catch (error) {
-//     console.error(`Error sending message to webhook: ${error}`);
+//    // console.error(`Error sending message to webhook: ${error}`);
 //   }
 // };

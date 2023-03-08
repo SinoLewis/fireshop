@@ -26,9 +26,6 @@
   }
 
   const cancelSubmit = async () => {
-    // TODO: Check with glovo when to cancel parcel
-    // TODO: If cancel is valid; re-update products.quantity db
-    // let status: any = await cancelParcel("tracking-number");
     // if (status === "SUCCESS") {
     //   toast.set({
     //     icon: "😎",
@@ -43,7 +40,6 @@
     //     type: "error",
     //   });
     // }
-    // TODO: if(status === undefined) Network conn posibly
   };
 </script>
 

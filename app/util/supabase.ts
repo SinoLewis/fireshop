@@ -58,8 +58,9 @@ export async function passwordlessSignin(email: string) {
     },
   });
   serverError = error;
-  console.log("SERVER DATA: ", data);
-  console.log("SERVER ERROR: ", data);
+  // TEST
+  // console.log("SERVER DATA: ", data);
+  // console.log("SERVER ERROR: ", data);
   if (!error) {
     res = `Magic signin link sent to ${email}`;
     sendMessageToWebhook("AUTH", `${email} requested a login link`);
@@ -74,7 +75,8 @@ async function getPriceById(id) {
       .select("*")
       .eq("id", id);
     if (error) throw error;
-    console.log("PRICE: ", data[0]["price"]);
+    // TEST
+    // console.log("PRICE: ", data[0]["price"]);
     return data[0]["price"];
   } catch (error) {
     console.error("PRICE ERROR", error.message);
@@ -98,7 +100,8 @@ export async function updateCart(cart: Cart): Promise<Cart> {
       .select("*")
       .eq("id", cart.id);
     if (error) throw error;
-    console.log("CART get DB: ", data);
+    // TEST
+    // console.log("CART get DB: ", data);
     if (data[0]?.id === cart.id) {
       const { data, error }: { data: any; error: any } = await supabase
         .from("carts")
@@ -106,7 +109,7 @@ export async function updateCart(cart: Cart): Promise<Cart> {
         .eq("user_id", cart.user_id)
         .select();
       if (error) throw error;
-      console.log("CART update DB: ", data);
+      // console.log("CART update DB: ", data);
       return data[0];
     } else {
       const { data, error }: { data: any; error: any } = await supabase
@@ -114,7 +117,7 @@ export async function updateCart(cart: Cart): Promise<Cart> {
         .insert(cart)
         .select();
       if (error) throw error;
-      console.log("CART insert DB: ", data);
+      // console.log("CART insert DB: ", data);
       return data[0];
     }
   } catch (error) {
@@ -137,7 +140,8 @@ async function updateProductQuantity(cart: Cart) {
         .update({ ...product })
         .eq("id", item.id);
       if (error) throw error;
-      console.log("PRODUCTS update: ", data);
+      // TEST
+      //  console.log("PRODUCTS update: ", data);
     } catch (error) {
       console.log("PRODUCTS update ERROR: ", error);
       sendMessageToWebhook("ERROR", error.message);
@@ -157,7 +161,8 @@ export async function updateOrder(order: Order): Promise<Order> {
       .select("*")
       .eq("id", order.id);
     if (error) throw error;
-    console.log("ORDER get DB: ", data);
+    //  TEST
+    // console.log("ORDER get DB: ", data);
     if (data[0]?.id === order.id) {
       const { data, error }: { data: any; error: any } = await supabase
         .from("orders")
@@ -165,8 +170,8 @@ export async function updateOrder(order: Order): Promise<Order> {
         .eq("id", order.id)
         .select();
       if (error) throw error;
-      console.log("ORDER update DB: ", data);
-      sendOrderToWebhook(order)
+      // console.log("ORDER update DB: ", data);
+      sendOrderToWebhook(order);
       return data[0];
     } else {
       const { data, error }: { data: any; error: any } = await supabase
@@ -174,7 +179,7 @@ export async function updateOrder(order: Order): Promise<Order> {
         .insert(order)
         .select();
       if (error) throw error;
-      console.log("ORDER insert DB: ", data);
+      // console.log("ORDER insert DB: ", data);
       return data[0];
     }
   } catch (error) {

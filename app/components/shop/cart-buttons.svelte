@@ -9,7 +9,6 @@
   let removeItem = () => remove(product_title);
 </script>
 
-<!-- TODO: Add favourite fuctionality -->
 {#if $cart.cart_products[product_title]}
   <div class="btns">
     <button class="button btn-red glow" on:click={removeItem}>Remove</button>

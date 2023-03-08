@@ -30,7 +30,8 @@
       highlightPostTag: "</mark>",
     });
     hits = results.hits;
-    console.log("MEILI: ", results);
+    // TEST
+    // console.log("MEILI: ", results);
     activeHit = 0;
   }
 

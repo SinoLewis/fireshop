@@ -7,7 +7,8 @@
   let value;
   async function handleSubmit() {
     sendMessageToWebhook("REVIEW", value);
-    console.log("REVIEW: ", value);
+    // TEST
+    // console.log("REVIEW: ", value);
     value = undefined;
 
     toast.set({

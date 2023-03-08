@@ -16,7 +16,6 @@
   let addressEl: HTMLInputElement;
 
   // TODO: default=white, valid=green, error_on_submit=red
-  // let emailValid = () => emailEl.validity.valid;
   let emailValid = $order.email ? true : false;
   let phoneValid = $order.phone ? true : false;
   let nameValid = $order.name ? true : false;
@@ -42,7 +41,8 @@
   };
 
   onMount(async () => {
-    console.log("INIT ORDER STORE: ", $order);
+    // TEST
+    // console.log("INIT ORDER STORE: ", $order);
     $order.email = $user?.email;
     $order.cart_price = $cart?.cart_price;
     $order.cart_products = $cart?.cart_products;
@@ -66,60 +66,27 @@
         },
       });
       hits = await response.json();
-      console.log("ORS HITS: ", hits);
+      // TEST
+      // console.log("ORS HITS: ", hits);
     } catch (error) {
+      // TEST
       console.log("NOMINATIM ERROR: ", error);
       sendMessageToWebhook("ERROR", error.message);
     }
   }
   async function calculateDirections() {
     try {
-      // pickup to add1
-      // -1.3009044,36.78706018120445
-      // -1.2778674,36.8880893
-      // add1 to add2
-      // -1.2778674,36.8880893
-      // -1.3156695, 36.8984952
-      let orsDirections = new Openrouteservice.Directions({ api_key: KEY });
-      let data = await orsDirections.calculate({
-        coordinates: [
-          [8.690958, 49.404662],
-          [8.687868, 49.390139],
-        ],
-        profile: "driving-hgv",
-        extra_info: ["waytype", "steepness"],
-        avoidables: ["highways", "tollways", "ferries", "fords"],
-        // avoid_polygons: {
-        //   type: "Polygon",
-        //   coordinates: [
-        //     [
-        //       [8.683533668518066, 49.41987949639816],
-        //       [8.680272102355957, 49.41812070066643],
-        //       [8.683919906616211, 49.4132348262363],
-        //       [8.689756393432617, 49.41806486484901],
-        //       [8.683533668518066, 49.41987949639816],
-        //     ],
-        //   ],
-        // },
-        format: "json",
-      });
-      // let response = await fetch(
-      //   // `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${KEY}&start=${pickup.lat},${pickup.lon}&end=${$order.address.lat},${$order.address.lon}`
-      //   `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${KEY}&start=8.681495,49.41461&end=8.687872,49.420318`
-      // );
-      // let data = await response.json();
-      // $destination = { ...data, features: data["features"][0] };
-      $destination = data;
-      console.log("CALC OPENROUTE: ", $destination);
+      // TEST
+      // console.log("CALC OPENROUTE: ", $destination);
     } catch (error) {
-      console.log("CALC ERROR: ", error.message);
+      // TEST
+      // console.log("CALC ERROR: ", error.message);
     }
   }
   async function setAddress(e, index) {
     hit = hits[index];
     addressEl.value = hits[index].display_name;
     $order.address = hits[index];
-    // TODO: API that can support glovo workingAreas
     toast.set({
       icon: "👍",
       message: `${addressEl.value} set as delivery location`,
@@ -127,8 +94,9 @@
     addressValid = addressEl.validity.valid;
     hits.length = 0;
     // calculateDirections();
-    console.log("SELECTED: ", addressEl.value);
-    console.log("ORDER STORE: ", $order);
+    // TEST
+    // console.log("SELECTED: ", addressEl.value);
+    // console.log("ORDER STORE: ", $order);
   }
 
   async function handleSubmit(e) {
@@ -136,10 +104,12 @@
     try {
       if (addressValid) {
         updateCart($cart);
-        console.log("CART STORE: ", $cart);
+        // TEST
+        // console.log("CART STORE: ", $cart);
         updateOrder($order).then(() => ($order.name = $order.phone = ""));
         // updateOrder($order).then(() => (nameEl.value = phoneEl.value = ""));
-        console.log("ORDER STORE BEFORE: ", $order);
+        // TEST
+        // console.log("ORDER STORE BEFORE: ", $order);
         // sendOrderToWebhook($order);
 
         toast.set({
@@ -147,7 +117,8 @@
           message: "Your Order was succesful!",
           type: "success",
         });
-        console.log("ORDER STORE AFTER: ", $order);
+        // TEST
+        // console.log("ORDER STORE AFTER: ", $order);
       } else {
         throw new Error(`ADDRESS: ${addressEl.value} is unknown`);
       }
@@ -158,7 +129,6 @@
         type: "error",
       });
     }
-    // TODO: Router to /order
     loading = false;
   }
 </script>

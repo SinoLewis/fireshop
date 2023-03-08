@@ -120,12 +120,10 @@ function getOrder(): Order {
       created_at: dateNow,
       updated_at: dateNow,
     } as Order;
-
-    console.log("STORE INIT Order: ", data);
-    // TODO: encrypt cart
+    // TEST
+    // console.log("STORE INIT Order: ", data);
     localStorage.setItem(SELECTED_ORDER, encrypt(JSON.stringify(data)));
   }
-  // TODO: decrypt cart
   return JSON.parse(decrypt(localStorage.getItem(SELECTED_ORDER)));
 }
 const order = writable<Order>(getOrder());

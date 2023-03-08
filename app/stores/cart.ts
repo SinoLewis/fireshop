@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from "uuid";
 
 const SELECTED_CART: any = import.meta.env.VITE_LOCAL_CART;
 const KEY: any = import.meta.env.VITE_LOCAL_KEY;
-// TODO: decrypt cart
 let initCart = localStorage.getItem(SELECTED_CART);
 
 interface CartProducts {
@@ -57,12 +56,10 @@ function getCart(): Cart {
       created_at: dateNow,
       updated_at: dateNow,
     } as Cart;
-
-    console.log("STORE INITCART: ", data);
-    // TODO: encrypt cart
+    // TEST
+    // console.log("STORE INITCART: ", data);
     localStorage.setItem(SELECTED_CART, encrypt(JSON.stringify(data)));
   }
-  // TODO: decrypt cart
   return JSON.parse(decrypt(localStorage.getItem(SELECTED_CART)));
 }
 const cart = writable<Cart>(getCart());
@@ -106,9 +103,7 @@ const remove = async (name: string) => {
 
 cart.subscribe((value) => {
   Object.values(value.cart_products).forEach(async (item) => {
-    // TODO: item price, cart price, cart total
     item.total_price = item.price * item.quantity;
-    // TODO: Update Images to reduce API request adter mutation
     const URL: any = import.meta.env.VITE_SUPABASE_URL;
     let publicUrl =
       URL +
@@ -118,6 +113,7 @@ cart.subscribe((value) => {
       item.title.toLowerCase().replaceAll(" ", "-") +
       ".jpg";
 
+    // CDN images via SUPABASE client
     // let { data } = await supabase.storage
     //   .from("fireshop-images")
     //   .getPublicUrl(
@@ -139,7 +135,8 @@ cart.subscribe((value) => {
     dateStyle: "full",
     timeStyle: "full",
   });
-  console.log("TT PRICE", value.cart_price, "\n$CART", value);
+  // TEST
+  // console.log("TT PRICE", value.cart_price, "\n$CART", value);
   localStorage.setItem(SELECTED_CART, encrypt(JSON.stringify(value)));
 });
 

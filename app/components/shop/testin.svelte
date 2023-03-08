@@ -1,47 +1,28 @@
 <svelte:options tag="testin-button" />
 
 <script lang="ts">
+  let image = null;
+  $: image;
+
+  const preload: any = async (src) => {
+    const resp = await fetch(src);
+    const blob = await resp.blob();
+
+    return new Promise(function (resolve, reject) {
+      let reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(`Error: ,${error}`);
+    });
+  };
 </script>
 
-<!-- The button to open modal -->
-<label for="my-modal">open modal</label>
-
-<!-- Put this part before </body> tag -->
-<input type="checkbox" id="my-modal" class="toggle" />
-<div class="popup">
-  <div class="box">
-    <h3>Congratulations random Internet user!</h3>
-    <p>
-      You've been selected for a chance to get one year of subscription to use
-      Wikipedia for free!
-    </p>
-    <div>
-      <label for="my-modal">Yay!</label>
-    </div>
-  </div>
-</div>
-
-<style lang="scss">
-  .toggle {
-    @apply modal-toggle;
-  }
-  .popup {
-    @apply modal;
-  }
-  .box {
-    @apply modal-box;
-    h3 {
-      @apply font-bold text-lg;
-    }
-    p {
-      @apply py-4;
-    }
-    div {
-      @apply modal-action;
-    }
-  }
-
-  label {
-    @apply btn;
-  }
-</style>
+{#await preload("https://picsum.photos/200/300")}
+  <img
+    src="https://yeodnfioatjhhthgvaxt.supabase.co/storage/v1/object/public/fireshop-images/default-cover.png"
+    alt="default image"
+  />
+{:then base64}
+  <img src={base64} alt="Alright Buddy!" />
+  <!-- 	<code>{base64}</code> -->
+{/await}

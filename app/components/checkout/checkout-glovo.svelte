@@ -26,12 +26,10 @@
   let addressEl: HTMLInputElement;
 
   // TODO: default=white, valid=green, error_on_submit=red
-  // let emailValid = () => emailEl.validity.valid;
   let emailValid = false;
   let phoneValid = false;
   let nameValid = false;
   let addressValid = false;
-  // TODO: button default=blue, all_inputs_valid=green
 
   let token;
   let selectedOption;
@@ -52,14 +50,15 @@
   }
 
   async function address(e: Event) {
-    // TODO: Reduce API calls using setTimeOut
     try {
       const q = (e.target as HTMLInputElement).value;
       const url = `https://nominatim.openstreetmap.org/search?q=${q}&format=json`;
       const response = await fetch(url);
       results = await response.json();
-      console.log("NOMINATIM HITS: ", results);
+      // TEST
+      // console.log("NOMINATIM HITS: ", results);
     } catch (error) {
+      // TEST
       console.log("NOMINATIM ERROR: ", error);
     }
   }
@@ -78,12 +77,12 @@
         : `${addressEl.value} is delivearable`,
     });
     results = [] as Result[];
-    console.log("SELECTED: ", addressEl.value);
-    console.log("VALID: ", valid_address);
+    // TEST
+    // console.log("SELECTED: ", addressEl.value);
+    // console.log("VALID: ", valid_address);
   }
 
   async function handleSubmit(e) {
-    // TODO: Handle request formating
     loading = true;
     let request = {
       address: {
@@ -98,7 +97,6 @@
       packageDetails: {} as PackageDetails,
       pickupDetails: pickupDetails,
       price: {
-        // TODO: getPrice from
         delivery: { currencyCode: "KSH" },
         parcel: { currencyCode: "KSH", value: $cart.cart_price },
       } as Price,
@@ -121,7 +119,8 @@
           message: "Your Order was succesful!",
           type: "success",
         });
-        console.log("DELIVERY STORE: ", $parcel);
+        // TEST
+        // console.log("DELIVERY STORE: ", $parcel);
       }
     } catch (error) {
       toast.set({
@@ -136,13 +135,13 @@
   }
 
   onMount(async () => {
-    console.log("GLOVO AUTH TEST ");
-    // TODO: if cart change
+    // TEST
+    // console.log("GLOVO AUTH TEST ");
     token = await authToken();
-    console.log("GLOVO AUTH: ", token);
+    // console.log("GLOVO AUTH: ", token);
     // updateCart($cart);
     working_areas = await workingAreas(token["accessToken"]);
-    console.log("Working Areas: \n", working_areas);
+    // console.log("Working Areas: \n", working_areas);
   });
 </script>
 

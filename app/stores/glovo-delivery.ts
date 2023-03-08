@@ -184,12 +184,12 @@ interface Bbox {
   lat2: number;
 }
 
-// TODO: if cancelParcel; if < ON_DELIVERY; set parcel null
+// DEV: if cancelParcel; if < ON_DELIVERY; set parcel null
 const parcel = writable<Parcel>(null);
 const courier = writable<Courier>(null);
 const workAreas = writable<WorkingArea[]>(null);
 const valid_parcel = writable(false);
-// TODO: DEV ONLY
+// DEV: DEV ONLY
 const simulate = writable<Simulate>(null);
 
 async function clearCart() {
