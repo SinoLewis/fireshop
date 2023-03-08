@@ -7,3 +7,4 @@ export * from "./modal";
 export * from "./settings";
 export * from "./toast";
 export * from "./order";
+export * from "./destination";
