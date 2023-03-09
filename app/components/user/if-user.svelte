@@ -5,7 +5,7 @@
   import { user } from "../../stores";
 </script>
 
-{#if $user}
+{#if $user?.aud === "authenticated"}
   <slot />
 {:else}
   <slot name="signed-out" />
