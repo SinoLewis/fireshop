@@ -5,7 +5,7 @@
     <title>Dashboard</title>
     <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="/svelte/index.6905e4c1.css" />
-    <script type="module" defer src="/svelte/index.es.3fe55072.js" /></script>
+    <script type="module" defer src="/svelte/index.bf522029.js" /></script>
 
     
     <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
@@ -113,7 +113,7 @@
         <a href="/dashboard">
           <div class="avatar online">
             <div class="w-12 rounded-full">
-              <img src="/img/ui/avatar.svg" />
+              <user-cred field="photoURL"></user-cred>
             </div>
           </div>
         </a>
@@ -181,7 +181,11 @@
         You're signed out... This page is useless to to you.
       </p>
       <modal-action name="signin" type="open">
-        <button class="btn btn-blue">Sign in Now</button>
+        <button
+          class="btn btn-blue cursor-pointer px-4 py-2 text-xl font-display text-white bg-white hover:bg-purple-600 drop-shadow-[6px_6px_0_black] hover:drop-shadow-[0_0_7px_rgba(168,85,247,0.5)] transition-all duration-300"
+        >
+          Sign in Now
+        </button>
       </modal-action>
     </div>
   </if-user>
