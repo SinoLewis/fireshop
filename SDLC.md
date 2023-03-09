@@ -96,11 +96,12 @@
 3. sys to harderend & secure linux kernel (OS Cloud Server or Docker)
 4. ads rev
 
-## 8. Perfomance
+## 8. Perfomance & Optimizaion
 
 1. memory & disk space stats
 2. Async scripts & Partydown.js & WebWorkers
-3. Browser support
+3. Purge unused css & adding Browser support
+4. Purge unused js
 
 ## 9. Business
 
