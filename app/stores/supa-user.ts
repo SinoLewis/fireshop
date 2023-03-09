@@ -21,6 +21,7 @@ async function getUser() {
     });
     user.set(data.user);
   } catch (error) {
+    user.set(null);
     console.log("USER ERROR: ", error.message);
   }
 }

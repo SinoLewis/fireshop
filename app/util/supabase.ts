@@ -42,11 +42,11 @@ export async function signInWithApple() {
 
 export async function supabaseSignOut() {
   let { error } = await supabase.auth.signOut();
+  if (error) sendMessageToWebhook("ERROR", error.message);
   toast.set({
     icon: error ? "❌" : "🫶",
     message: error ? error.message : "Thanks for hanging out, see ya around!",
   });
-  if (error) sendMessageToWebhook("ERROR", error.message);
 }
 
 export async function passwordlessSignin(email: string) {

@@ -17,8 +17,8 @@
 | 3.  | checkout-order    | - Delivery Package testin             |         | - Bordered receipt cart w/ Title |
 |     |                   | - Delivery Tracking                   |         | - Confirm Popup styling          |
 |     |                   |                                       |         |                                  |
-| 4.  | supa-signout      | - Reactive data after signout         |         | - Default Button styling         |
-|     |                   | - Toast after signout validation      |         |                                  |
+| 4.  | supa-signout      | (c) Reactive data after signout       |         | - Default Button styling         |
+|     |                   | (c) Toast after signout validation    |         |                                  |
 |     |                   |                                       |         |                                  |
 | 5.  | supa-signin       | - Toast after signin validation       |         | - Default Button styling         |
 |     |                   | - User email avatar image             |         |                                  |
