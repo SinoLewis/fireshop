@@ -9,10 +9,10 @@
 |     |                   |                                       |         | - Formatted                      |
 | 2.  | checkout-delivery | (c) Route to /order afta handleSubmit |         | - Responsive Elements Placing    |
 |     |                   | (c) Post delivery Input clearing      |         | - Button color afta & b4 submit  |
-|     |                   | - submit not valid if empty inputs    |         |
+|     |                   | - submit not valid if empty inputs    |         |                                  |
 |     |                   | - Geolocation                         |         |                                  |
-|     |                   | - updateProductQuantity afta submit   |         |
-|     |                   | - Phone input w/ Area Codes           |         |
+|     |                   | - updateProductQuantity afta submit   |         |                                  |
+|     |                   | - Phone input w/ Area Codes           |         |                                  |
 |     |                   |                                       |         |                                  |
 | 3.  | checkout-order    | - Delivery Package testin             |         | - Bordered receipt cart w/ Title |
 |     |                   | - Delivery Tracking                   |         | - Confirm Popup styling          |
@@ -41,6 +41,7 @@
 
 ## 3. Hugo Markdown
 
+1. User policy & Privacy & ToS pages
 1. Hugo config review
 1. footer.html: Need valid help email eg. help@fireshop.shop
 1. footer.html: create helpful links eg github, discord, twitter, whatsapp-business
