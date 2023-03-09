@@ -7,6 +7,6 @@
 
 <style lang="scss">
   btn {
-    @apply relative hidden md:inline-block cursor-pointer px-4 py-2 text-xl font-display text-black hover:text-white bg-white hover:bg-purple-600 drop-shadow-[6px_6px_0_black] hover:drop-shadow-[0_0_7px_rgba(168,85,247,0.5)] transition-all duration-300;
+    @apply btn cursor-pointer px-4 py-2 text-xl font-display text-white bg-white hover:bg-purple-600 drop-shadow-[6px_6px_0_black] hover:drop-shadow-[0_0_7px_rgba(168,85,247,0.5)] transition-all duration-300;
   }
 </style>
