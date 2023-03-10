@@ -13,12 +13,12 @@
   let nameEl: HTMLInputElement;
   let phoneEl: HTMLInputElement;
   let addressEl: HTMLInputElement;
-
+  $: isFormValid = false;
   // TODO: default=white, valid=green, error_on_submit=red
-  let emailValid = $order.email ? true : false;
-  let phoneValid = $order.phone ? true : false;
-  let nameValid = $order.name ? true : false;
-  let addressValid = $order.address.display_name ? true : false;
+  // let emailValid = $order.email ? true : false;
+  // let phoneValid = $order.phone ? true : false;
+  // let nameValid = $order.name ? true : false;
+  // let addressValid = $order.address.display_name ? true : false;
 
   let loading = false;
   let hits: Address[];
@@ -40,20 +40,27 @@
   };
 
   onMount(() => {
-    console.log("INPUT VALIDITY NAME: ", nameValid);
-    console.log("INPUT VALIDITY PHONE: ", phoneValid);
-    console.log("INPUT VALIDITY EMAIL: ", emailValid);
-    console.log("INPUT VALIDITY ADDRESS: ", addressValid);
+    isFormValid =
+      nameEl.validity.valid &&
+      phoneEl.validity.valid &&
+      emailEl.validity.valid &&
+      addressEl.validity.valid;
+    console.log("INPUT VALIDITY NAME: ", nameEl.validity.valid);
+    console.log("INPUT VALIDITY PHONE: ", phoneEl.validity.valid);
+    console.log("INPUT VALIDITY EMAIL: ", emailEl.validity.valid);
+    console.log("INPUT VALIDITY ADDRESS: ", addressEl.validity.valid);
+    console.log("FORM VALIDITY: ", isFormValid);
   });
-  async function validate() {
-    emailValid = emailEl.validity.valid;
-    phoneValid = phoneEl.validity.valid;
-    nameValid = nameEl.validity.valid;
-  }
+
+  // async function validate() {
+  //   emailValid = emailEl.validity.valid;
+  //   phoneValid = phoneEl.validity.valid;
+  //   nameValid = nameEl.validity.valid;
+  // }
 
   async function getAddressHits(e: Event) {
     try {
-      addressValid = false;
+      // addressValid = false;
       const q = (e.target as HTMLInputElement).value;
       const url = `https://nominatim.openstreetmap.org/search?q=${q}&countrycode=ke&format=json`;
       // const url = `https://api.openrouteservice.org/geocode/autocomplete?api_key=${KEY}&text=${q}&boundary.country=KE&layers=address,neighbourhood`;
@@ -90,7 +97,7 @@
       icon: "👍",
       message: `${addressEl.value} set as delivery location`,
     });
-    addressValid = addressEl.validity.valid;
+    // addressValid = addressEl.validity.valid;
     hits.length = 0;
     // calculateDirections();
     // TEST
@@ -101,7 +108,7 @@
   async function handleSubmit(e) {
     loading = true;
     try {
-      if (addressValid) {
+      if (isFormValid) {
         updateCart($cart);
         // TEST
         // console.log("CART STORE: ", $cart);
@@ -119,7 +126,11 @@
         // TEST
         // console.log("ORDER STORE AFTER: ", $order);
       } else {
-        throw new Error(`ADDRESS: ${addressEl.value} is unknown`);
+        if (!nameEl.validity.valid) throw new Error(`Name value is empty`);
+        if (!phoneEl.validity.valid) throw new Error(`Phone value is empty`);
+        if (!emailEl.validity.valid) throw new Error(`Email value is empty`);
+        if (!addressEl.validity.valid)
+          throw new Error(`Address value is empty`);
       }
     } catch (error) {
       toast.set({
@@ -144,7 +155,6 @@
           name="name"
           bind:this={nameEl}
           bind:value={$order.name}
-          on:input={validate}
           required
         />
       </label>
@@ -157,7 +167,6 @@
           placeholder="254712345678"
           bind:this={phoneEl}
           bind:value={$order.phone}
-          on:input={validate}
           required
         />
       </label>
@@ -169,7 +178,6 @@
           name="email"
           bind:this={emailEl}
           bind:value={$order.email}
-          on:input={validate}
           required
         />
       </label>
@@ -216,14 +224,8 @@
       <h2 class="mg">Total Cost</h2>
       <user-data />
       <div />
-      <button
-        on:click={handleSubmit}
-        class="send"
-        class:disabled={!emailValid ||
-          !phoneValid ||
-          !addressValid ||
-          !nameValid ||
-          loading}>{loading ? "proceeding..." : "proceed to order"}</button
+      <button on:click={handleSubmit} class="send"
+        >{loading ? "proceeding..." : "proceed to order"}</button
       >
     </div>
   </div>
@@ -267,7 +269,7 @@
     @apply select select-bordered select-lg w-full max-w-xs;
   }
   .send {
-    @apply btn bg-green-500 mx-4;
+    @apply btn bg-green-500 mx-4 px-4 py-2 text-xl font-display text-white hover:bg-info-content drop-shadow-[6px_6px_0_black] hover:drop-shadow-[0_0_7px_rgba(168,85,247,0.5)] transition-all duration-300;
   }
   .disabled {
     @apply opacity-50 cursor-not-allowed;
