@@ -2,30 +2,33 @@
 
 ## 1. Svelte Web Components
 
-| NO. | WC.               | JS & Stores & Utils                   | HTML    | CSS                              |
-| --- | ----------------- | ------------------------------------- | ------- | -------------------------------- |
-| 1.  | checkout-cart     | (c) Default image onLoad              | - icons | - padding                        |
-|     |                   | - Add favourite fuctionality          |         | - Bordered Card cart w/ Title    |
-|     |                   |                                       |         | - Formatted                      |
-| 2.  | checkout-delivery | (c) Route to /order afta handleSubmit |         | - Responsive Elements Placing    |
-|     |                   | (c) Post delivery Input clearing      |         | - Button color afta & b4 submit  |
-|     |                   | - submit not valid if empty inputs    |         |                                  |
-|     |                   | - Geolocation                         |         |                                  |
-|     |                   | - updateProductQuantity afta submit   |         |                                  |
-|     |                   | - Phone input w/ Area Codes           |         |                                  |
-|     |                   |                                       |         |                                  |
-| 3.  | checkout-order    | - Delivery Package testin             |         | - Bordered receipt cart w/ Title |
-|     |                   | - Delivery Tracking                   |         | - Confirm Popup styling          |
-|     |                   |                                       |         |                                  |
-| 4.  | supa-signout      | (c) Reactive data after signout       |         | - Default Button styling         |
-|     |                   | (c) Toast after signout validation    |         |                                  |
-|     |                   |                                       |         |                                  |
-| 5.  | supa-signin       | - Toast after signin validation       |         | - Default Button styling         |
-|     |                   | - User email avatar image             |         |                                  |
-|     |                   | - Publish google signin API           |         |                                  |
-|     |                   |                                       |         |                                  |
-| 6.  | meili-search      | - Production search server or API     |         |                                  |
-|     |                   | - conf & security                     |         |                                  |
+| NO. | WC.               | JS & Stores & Utils                      | HTML    | CSS                              |
+| --- | ----------------- | ---------------------------------------- | ------- | -------------------------------- |
+| 1.  | checkout-cart     | (c) Default image onLoad                 | - icons | - padding                        |
+|     |                   | - Add favourite fuctionality             |         | - Bordered Card cart w/ Title    |
+|     |                   |                                          |         | - Formatted                      |
+| 2.  | checkout-delivery | (c) Route to /order afta handleSubmit    |         | - Responsive Elements Placing    |
+|     |                   | (c) Post delivery Input clearing         |         | - Button color afta & b4 submit  |
+|     |                   | (c) submit not valid if empty inputs     |         |                                  |
+|     |                   | - Geolocation                            |         |                                  |
+|     |                   | - updateProductQuantity afta submit      |         |                                  |
+|     |                   | - Phone input w/ Area Codes              |         |                                  |
+|     |                   |                                          |         |                                  |
+| 3.  | checkout-order    | - Delivery Package testin                |         | - Bordered receipt cart w/ Title |
+|     |                   | - Delivery Tracking                      |         | - Confirm Popup styling          |
+|     |                   |                                          |         |                                  |
+| 4.  | supa-signout      | (c) Reactive data after signout          |         | - Default Button styling         |
+|     |                   | (c) Toast after signout validation       |         |                                  |
+|     |                   |                                          |         |                                  |
+| 5.  | supa-signin       | - Toast after signin validation          |         | - Default Button styling         |
+|     |                   | - User email avatar image                |         |                                  |
+|     |                   | - Publish google signin API              |         |                                  |
+|     |                   |                                          |         |                                  |
+| 6.  | meili-search      | - Production search server or API        |         |                                  |
+|     |                   | - conf & security                        |         |                                  |
+|     |                   |                                          |         |                                  |
+| 7.  | app               | - Reactivity issues: avatar, isFormValid |         |                                  |
+|     |                   |                                          |         |                                  |
 
 ## 2. Beta Features
 
