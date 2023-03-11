@@ -32,6 +32,7 @@
 
 ## 2. Beta Features
 
+- Discord to Matrix & Revolt
 - REST to tRPC
 - Edge Programming: use callUserAPI from app/util/firebase.ts 4 serveless functions
 - How postcss & tailwindcss work
