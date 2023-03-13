@@ -2,9 +2,9 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Fireshop</title>
-    <link>https://fireshop.com/categories/</link>
+    <link>fire-shop.netlify.app/categories/</link>
     <description>Recent content in Categories on Fireshop</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://fireshop.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="fire-shop.netlify.app/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
