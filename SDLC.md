@@ -20,8 +20,8 @@
 | 4.  | supa-signout      | (c) Reactive data after signout          |         | - Default Button styling         |
 |     |                   | (c) Toast after signout validation       |         |                                  |
 |     |                   |                                          |         |                                  |
-| 5.  | supa-signin       | - Toast after signin validation          |         | - Default Button styling         |
-|     |                   | - User email avatar image                |         |                                  |
+| 5.  | supa-signin       | (c) Toast after signin validation        |         | - Default Button styling         |
+|     |                   | (c) User email avatar image              |         |                                  |
 |     |                   | - Publish google signin API              |         |                                  |
 |     |                   |                                          |         |                                  |
 | 6.  | meili-search      | - Production search server or API        |         |                                  |
@@ -32,7 +32,6 @@
 
 ## 2. Beta Features
 
-- Discord to Matrix & Revolt
 - REST to tRPC
 - Edge Programming: use callUserAPI from app/util/firebase.ts 4 serveless functions
 - How postcss & tailwindcss work
