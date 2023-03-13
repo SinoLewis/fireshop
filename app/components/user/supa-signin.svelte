@@ -5,10 +5,10 @@
 
 <modal-dialog name="signin" esc="true">
   <h1>Login</h1>
-  <p>With magic email link:</p>
-  <supa-email />
-  <p>Or with account:</p>
+  <p>With account:</p>
   <supa-google />
+  <p>Or with magic email link:</p>
+  <supa-email />
   <p class="footer">
     By signing up, you agree to FireShop's Terms of Service & Privacy Policy.
   </p>
