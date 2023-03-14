@@ -13,6 +13,7 @@
   let nameEl: HTMLInputElement;
   let phoneEl: HTMLInputElement;
   let addressEl: HTMLInputElement;
+  let isAddressLocation = false;
   $: isFormValid = false;
   // TODO: default=white, valid=green, error_on_submit=red
   // let emailValid = $order.email ? true : false;
@@ -44,11 +45,13 @@
       nameEl.validity.valid &&
       phoneEl.validity.valid &&
       emailEl.validity.valid &&
-      addressEl.validity.valid;
+      addressEl.validity.valid &&
+      isAddressLocation;
     console.log("INPUT VALIDITY NAME: ", nameEl.validity.valid);
     console.log("INPUT VALIDITY PHONE: ", phoneEl.validity.valid);
     console.log("INPUT VALIDITY EMAIL: ", emailEl.validity.valid);
     console.log("INPUT VALIDITY ADDRESS: ", addressEl.validity.valid);
+    console.log("ADDRESS VALIDITY LOCATION: ", isAddressLocation);
     console.log("FORM VALIDITY: ", isFormValid);
   });
 
@@ -58,19 +61,42 @@
   //   nameValid = nameEl.validity.valid;
   // }
 
+  let counter = 1;
+  async function myAsyncFunction(event) {
+    // Do something asynchronously here
+    console.log(event.target.value);
+  }
+  function debounce(func, delay) {
+    let timeout;
+    return function () {
+      const context = this;
+      const args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func.apply(context, args);
+      }, delay);
+    };
+  }
+  const debouncedAsyncFunction = debounce(getAddressHits, 2000);
+
   async function getAddressHits(e: Event) {
     try {
-      // addressValid = false;
+      isAddressLocation = false;
       const q = (e.target as HTMLInputElement).value;
       const url = `https://nominatim.openstreetmap.org/search?q=${q}&countrycode=ke&format=json`;
       // const url = `https://api.openrouteservice.org/geocode/autocomplete?api_key=${KEY}&text=${q}&boundary.country=KE&layers=address,neighbourhood`;
-      const response = await fetch(url, {
-        headers: {
-          Accept:
-            "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8",
-        },
-      });
-      hits = await response.json();
+      setTimeout(async () => {
+        console.log("COUNTER: ", counter);
+        counter++;
+        const response = await fetch(url, {
+          headers: {
+            Accept:
+              "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8",
+          },
+        });
+        hits = await response.json();
+        console.log("HITS: ", hits);
+      }, 2000);
       // TEST
       // console.log("ORS HITS: ", hits);
     } catch (error) {
@@ -95,8 +121,9 @@
     $order.address = hits[index];
     toast.set({
       icon: "👍",
-      message: `${addressEl.value} set as delivery location`,
+      message: `${$order.address.display_name} set as delivery location`,
     });
+    isAddressLocation = true;
     // addressValid = addressEl.validity.valid;
     hits.length = 0;
     // calculateDirections();
@@ -131,6 +158,7 @@
         if (!emailEl.validity.valid) throw new Error(`Email value is empty`);
         if (!addressEl.validity.valid)
           throw new Error(`Address value is empty`);
+        if (!isAddressLocation) throw new Error(`Address Location is not set`);
       }
     } catch (error) {
       toast.set({
