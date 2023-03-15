@@ -10,12 +10,15 @@
 | 2.  | checkout-delivery | (c) Route to /order afta handleSubmit    |         | - Responsive Elements Placing    |
 |     |                   | (c) Post delivery Input clearing         |         | - Button color afta & b4 submit  |
 |     |                   | (c) submit not valid if empty inputs     |         |                                  |
-|     |                   | - Geolocation                            |         |                                  |
+|     |                   | - My custom Geolocation & delivery       |         |                                  |
+|     |                   | - isAddress valid check                  |         |                                  |
+|     |                   | - Glovo, Jumia, Sendy delivery           |         |                                  |
 |     |                   | - updateProductQuantity afta submit      |         |                                  |
 |     |                   | - Phone input w/ Area Codes              |         |                                  |
+|     |                   | - Discord to revolt & matrix             |         |                                  |
 |     |                   |                                          |         |                                  |
 | 3.  | checkout-order    | - Delivery Package testin                |         | - Bordered receipt cart w/ Title |
-|     |                   | - Delivery Tracking                      |         | - Confirm Popup styling          |
+|     |                   |                                          |         | - Confirm Popup styling          |
 |     |                   |                                          |         |                                  |
 | 4.  | supa-signout      | (c) Reactive data after signout          |         | - Default Button styling         |
 |     |                   | (c) Toast after signout validation       |         |                                  |
