@@ -45,8 +45,8 @@
       nameEl.validity.valid &&
       phoneEl.validity.valid &&
       emailEl.validity.valid &&
-      addressEl.validity.valid &&
-      isAddressLocation;
+      addressEl.validity.valid 
+      // isAddressLocation;
     console.log("INPUT VALIDITY NAME: ", nameEl.validity.valid);
     console.log("INPUT VALIDITY PHONE: ", phoneEl.validity.valid);
     console.log("INPUT VALIDITY EMAIL: ", emailEl.validity.valid);
@@ -81,7 +81,7 @@
 
   async function getAddressHits(e: Event) {
     try {
-      isAddressLocation = false;
+      // isAddressLocation = false;
       const q = (e.target as HTMLInputElement).value;
       const url = `https://nominatim.openstreetmap.org/search?q=${q}&countrycode=ke&format=json`;
       // const url = `https://api.openrouteservice.org/geocode/autocomplete?api_key=${KEY}&text=${q}&boundary.country=KE&layers=address,neighbourhood`;
@@ -126,6 +126,7 @@
     isAddressLocation = true;
     // addressValid = addressEl.validity.valid;
     hits.length = 0;
+    console.log("ADDRESS VALIDITY LOCATION: ", isAddressLocation);
     // calculateDirections();
     // TEST
     // console.log("SELECTED: ", addressEl.value);
@@ -158,7 +159,9 @@
         if (!emailEl.validity.valid) throw new Error(`Email value is empty`);
         if (!addressEl.validity.valid)
           throw new Error(`Address value is empty`);
-        if (!isAddressLocation) throw new Error(`Address Location is not set`);
+        // if (!isAddressLocation) throw new Error(`Address Location is not set`);
+        console.log("ADDRESS VALIDITY AFTA SUBMIT: ", isAddressLocation);
+
       }
     } catch (error) {
       toast.set({
