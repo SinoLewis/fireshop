@@ -51,10 +51,10 @@
 
 <style lang="scss">
   .txt {
-    @apply text-blue-700;
+    @apply text-blue-700 px-2;
   }
   .image {
-    @apply w-72 pr-4;
+    @apply w-56 pr-4;
 
     img {
       border-radius: 0.75rem;

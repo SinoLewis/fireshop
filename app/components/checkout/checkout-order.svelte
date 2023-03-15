@@ -1,11 +1,11 @@
 <svelte:options tag="checkout-order" />
 
 <script lang="ts">
-  import { user, cart, toast, order } from "../../stores";
+  import { user, order } from "../../stores";
   import jsPDF from "jspdf";
   import html2canvas from "html2canvas";
 
-  let items = Object.keys($cart.cart_products);
+  let items = Object.keys($order.cart_products);
 
   let printEl: HTMLDivElement;
 
@@ -45,21 +45,37 @@
 
 {#if $user}
   <div id="template-section" bind:this={printEl}>
-    <h2>Total Price: {$cart.cart_price}</h2>
+    <!-- TODO: Order total price logic -->
+    <h2>Total Price: <span class="txt">{$order.cart_price}</span></h2>
     <ul class="receipt">
       {#each items as item}
-        {#if $cart.cart_products[item]}
+        {#if $order.cart_products[item]}
           <div class="items">
-            <img src={$cart.cart_products[item].image} alt={item} />
+            <img src={$order.cart_products[item].image} alt={item} />
             <span>
               <h4>{item}</h4>
             </span>
             <span class="price">
-              <h4>Ksh {$cart.cart_products[item].total_price | 0}</h4>
+              <h4>Ksh {$order.cart_products[item].total_price | 0}</h4>
             </span>
           </div>
         {/if}
       {/each}
+      <div class="items">
+        <img src="/img/delivery.png" alt="delivery" />
+        <span>
+          <h4>
+            <span class="txt"
+              >Delivery {$order?.approved
+                ? "Executable"
+                : "Not Executable"}</span
+            >
+          </h4>
+        </span>
+        <span class="price">
+          <h4>Ksh {$order?.delivery_price | 0}</h4>
+        </span>
+      </div>
     </ul>
   </div>
 
@@ -76,15 +92,22 @@
       >
     </modal-dialog>
   {:else}
-    <h4>Delivery not EXECUTABLE</h4>
+    <h4>Delivery <span class="txt">not EXECUTABLE</span></h4>
   {/if}
 {:else}
   <no-user />
 {/if}
 
 <style lang="scss">
+  .txt {
+    @apply text-purple-700 px-2;
+  }
   .receipt {
-    @apply border-4;
+    padding-left: 14px;
+    padding-right: 14px;
+    border-color: rgb(88, 11, 171);
+    border-radius: 20px;
+    @apply grid justify-center border-double border-4;
   }
   .items {
     img {
