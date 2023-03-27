@@ -2,6 +2,8 @@
 
 ## 1. Svelte Web Components
 
+### 1.1 DEV
+
 | NO. | WC.               | JS & Stores & Utils                          | HTML    | CSS                                |
 | --- | ----------------- | -------------------------------------------- | ------- | ---------------------------------- |
 | 1.  | checkout-cart     | (c) Default image onLoad                     | - icons | - padding                          |
@@ -33,6 +35,35 @@
 |     |                   | - AI model images                            |         |                                    |
 |     |                   | - Glovo, Jumia, Sendy business delivery init |         |                                    |
 |     |                   |                                              |         |                                    |
+
+### 1.2 TESTIN
+
+| NO. | WC.               | Testin Feaure                                        | Status |
+| --- | ----------------- | ---------------------------------------------------- | ------ |
+| 1.  | checkout-cart     | a) Persistent Store                                  | OK     |
+|     |                   |                                                      |        |
+| 2.  | checkout-delivery | a) Address Autocomplete                              |        |
+|     |                   | - Limit 5 Addresses                                  |        |
+|     |                   |                                                      |        |
+|     |                   | b) Delivery Distance Calc                            |        |
+|     |                   |                                                      |        |
+|     |                   | c) Submit delivery                                   |        |
+|     |                   | - Show Current delivery details                      |        |
+|     |                   | - Discord Delivery API call with delivery store      |        |
+|     |                   | - Clear specific delivery store properties           |        |
+|     |                   | - Redirect to Order                                  |        |
+|     |                   |                                                      |        |
+| 3.  | checkout-order    | a) Delivery Status                                   |        |
+|     |                   | - Subscribe supa db for confirmed delivery           |        |
+|     |                   |                                                      |        |
+|     |                   | b) Delivery Payments (Popup)                         |        |
+|     |                   | - Mpesa payment logic w/ supa db updates             |        |
+|     |                   | - Confirm delivery supa db updates                   |        |
+|     |                   |                                                      |        |
+|     |                   | c) Delivery Status                                   |        |
+|     |                   | - Discord API custom delivery status supa db updates |        |
+|     |                   | - Download receipt if delivery paid                  |        |
+|     |                   |                                                      |        |
 
 ## 2. Beta Features
 
