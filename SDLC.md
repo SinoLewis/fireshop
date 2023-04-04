@@ -84,35 +84,63 @@
 1. footer.html: Need valid help email eg. help@fireshop.shop
 1. footer.html: create helpful links eg github, discord, twitter, whatsapp-business
 
-## 4. SERVER:
+## 4. Server:
 
-1. Static file mngt
+1. Custom Server
 
-> If db changes; Hugo needs new Product(s) content & new remote Product.id[]
-> Genrating glovo products
+   a) Static file mngt
 
-2. Image App & svelte wc compos
+   - If db changes; Hugo needs new Product(s) content & new remote Product.id[]
+   - Genrating glovo products
 
-> meilisearch image url
-> Image generator as like firship (nextjs vercel app): home.html: image gifs, home logo & pic
+   b) Image App & svelte wc compos
+
+   - meilisearch image url
+   - Image generator as like firship (nextjs vercel app): home.html: image gifs, home logo & pic
+
+2. Client/Server server scripts
+
+All app's APIs will be defined by a Data Representation protocol. Ours will be **GraphQL** + **Express**
+
+    a) App API's dependacies:
+    - Meilisearch docker
+    - Mpesa
+    - Discord delivery bot
+    - OpenRouteService
+    - Delivery API's
+
+    b) Data Representation:
+    - Express
+    - RPC
+    - GraphQL
+    - tPRC
+    - REST
 
 ## 5. Full PWA
 
-1.  Set debug false in prod
+1.  PWA dev reminders
+
+    - Cache auto re-update (ChatGPT PWA chat, Workbox docs)
+    - Set debug false in prod
 
 2.  Install banner (USER)
-    4.1 Fulfil PWA requirements: chrome & firefox & top browsers.
-    4.2 New Icons in manifest not loading
-    4.3 Run Site in docker or adnroid emulator
+
+    - Fulfil PWA requirements: chrome & firefox & top browsers.
+    - New Icons in manifest not loading
+    - Run Site in docker or adnroid emulator
+
 3.  Offline mode
-    5.1 Caching: Versioning, Dynamic caching
-    5.2 Offline mode API calls
+
+    - Caching: Versioning, Dynamic caching
+    - Offline mode API calls
 
 4.  Update
-    6.1 Push & sound notifications
-    5.2 Background synchronization: For Rest API
-    6.3 Web periodic background sync
-    6.4 Background Fetch
+
+    - Push & sound notifications
+    - Background synchronization: For Rest API
+    - Web periodic background sync
+    - Background Fetch
+
 5.  Os Integration
 6.  Detection: how your users interact with your app
 7.  Window Mngt
