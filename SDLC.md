@@ -88,15 +88,17 @@
 
 1. Custom Server
 
-   a) Static file mngt
+Manages server files.
 
-   - If db changes; Hugo needs new Product(s) content & new remote Product.id[]
-   - Genrating glovo products
+    a) Static file mngt
 
-   b) Image App & svelte wc compos
+    - If db changes; Hugo needs new Product(s) content & new remote Product.id[]
+    - Genrating glovo products
 
-   - meilisearch image url
-   - Image generator as like firship (nextjs vercel app): home.html: image gifs, home logo & pic
+    b) Image App & svelte wc compos
+
+    - meilisearch image url
+    - Image generator as like firship (nextjs vercel app): home.html: image gifs, home logo & pic
 
 2. Client/Server server scripts
 
