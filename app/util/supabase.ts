@@ -178,7 +178,6 @@ export async function updateOrder(order: Order): Promise<Order> {
         .select();
       if (error) throw error;
       // console.log("ORDER update DB: ", data);
-      sendOrderToWebhook(order);
       return data[0];
     } else {
       const { data, error }: { data: any; error: any } = await supabase

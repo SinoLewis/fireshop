@@ -1,10 +1,15 @@
 <svelte:options tag="checkout-delivery" />
 
 <script lang="ts">
-  import { updateCart, updateOrder } from "../../util/supabase";
   import { sendMessageToWebhook } from "../../util/discord";
-  import { toast, user, order, checkout, cart } from "../../stores";
-  import type { Address } from "../../stores/order";
+  import {
+    toast,
+    user,
+    order,
+    checkout,
+    geocode,
+    directions,
+  } from "../../stores";
   import { onMount } from "svelte";
 
   const KEY = import.meta.env.VITE_OPEN_ROUTE;
@@ -13,155 +18,114 @@
   let nameEl: HTMLInputElement;
   let phoneEl: HTMLInputElement;
   let addressEl: HTMLInputElement;
-  let isAddressLocation = false;
   $: isFormValid = false;
   // TODO: default=white, valid=green, error_on_submit=red
-  // let emailValid = $order.email ? true : false;
-  // let phoneValid = $order.phone ? true : false;
-  // let nameValid = $order.name ? true : false;
-  // let addressValid = $order.address.display_name ? true : false;
-
   let loading = false;
-  let hits: Address[];
-  let hit: Address;
-  let pickup = {
-    place_id: 129591613,
-    licence:
-      "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
-    osm_type: "way",
-    osm_id: 95790444,
-    boundingbox: ["-1.3012552", "-1.3001224", "36.7866732", "36.7874179"],
-    lat: "-1.3009044",
-    lon: "36.78706018120445",
-    display_name:
-      "Prestige Plaza, Ngong Road, Hurlingham, Nairobi, Nairobi County, Nairobi, 44847, Kenya",
-    class: "shop",
-    type: "mall",
-    importance: 0.20000999999999997,
-  };
+
+  let pickupAddress = [36.786911, -1.300596];
+  let addressValue = $order.geocode
+    ? $order.geocode.features.properties.name +
+      "," +
+      $order.geocode.features.properties?.region
+    : "";
+  let counter = 1;
 
   onMount(() => {
     isFormValid =
       nameEl.validity.valid &&
       phoneEl.validity.valid &&
       emailEl.validity.valid &&
-      addressEl.validity.valid 
-      // isAddressLocation;
+      !!$order.geocode.features?.properties.name;
+
     console.log("INPUT VALIDITY NAME: ", nameEl.validity.valid);
     console.log("INPUT VALIDITY PHONE: ", phoneEl.validity.valid);
     console.log("INPUT VALIDITY EMAIL: ", emailEl.validity.valid);
     console.log("INPUT VALIDITY ADDRESS: ", addressEl.validity.valid);
-    console.log("ADDRESS VALIDITY LOCATION: ", isAddressLocation);
     console.log("FORM VALIDITY: ", isFormValid);
+    console.log("ORDER STORE: ", $order);
   });
 
-  // async function validate() {
-  //   emailValid = emailEl.validity.valid;
-  //   phoneValid = phoneEl.validity.valid;
-  //   nameValid = nameEl.validity.valid;
-  // }
-
-  let counter = 1;
-  async function myAsyncFunction(event) {
-    // Do something asynchronously here
-    console.log(event.target.value);
-  }
   function debounce(func, delay) {
-    let timeout;
-    return function () {
-      const context = this;
-      const args = arguments;
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        func.apply(context, args);
+    let timeoutId;
+    return function (...args) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func.apply(this, args);
       }, delay);
     };
   }
-  const debouncedAsyncFunction = debounce(getAddressHits, 2000);
 
-  async function getAddressHits(e: Event) {
+  async function getAddressHits(query) {
     try {
-      // isAddressLocation = false;
-      const q = (e.target as HTMLInputElement).value;
-      const url = `https://nominatim.openstreetmap.org/search?q=${q}&countrycode=ke&format=json`;
-      // const url = `https://api.openrouteservice.org/geocode/autocomplete?api_key=${KEY}&text=${q}&boundary.country=KE&layers=address,neighbourhood`;
-      setTimeout(async () => {
-        console.log("COUNTER: ", counter);
-        counter++;
-        const response = await fetch(url, {
-          headers: {
-            Accept:
-              "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8",
-          },
+      fetch(`http://localhost:3000/geocode/${query}`)
+        .then((response) => response.json())
+        .then((data) => {
+          geocode.set(data["data"]);
+          console.log(data);
         });
-        hits = await response.json();
-        console.log("HITS: ", hits);
-      }, 2000);
-      // TEST
-      // console.log("ORS HITS: ", hits);
+      console.log(`API REQ NO: ${query}, ${counter++}`);
     } catch (error) {
-      // TEST
-      console.log("NOMINATIM ERROR: ", error);
+      console.log("OSM GEOCODE ERROR: ", error);
       sendMessageToWebhook("ERROR", error.message);
     }
   }
-  async function calculateDirections() {
-    try {
-      // TODO: Destination store logic here
-      // TEST
-      // console.log("CALC OPENROUTE: ", $destination);
-    } catch (error) {
-      // TEST
-      // console.log("CALC ERROR: ", error.message);
-    }
-  }
+  const debouncedSearch = debounce(getAddressHits, 2500);
+
+  const handleAddress = (e: Event) => {
+    const q = (e.target as HTMLInputElement).value;
+    debouncedSearch(q);
+  };
   async function setAddress(e, index) {
-    hit = hits[index];
-    addressEl.value = hits[index].display_name;
-    $order.address = hits[index];
+    const destination = $geocode.features[index];
+    $geocode.features = destination;
+    $order.geocode = $geocode;
+    addressEl.value =
+      destination.properties.name + "," + destination.properties.region;
+    calculateDirections($order.geocode.features.geometry.coordinates);
     toast.set({
       icon: "👍",
-      message: `${$order.address.display_name} set as delivery location`,
+      message: `${$geocode.features.properties.name} set as delivery location`,
     });
-    isAddressLocation = true;
-    // addressValid = addressEl.validity.valid;
-    hits.length = 0;
-    console.log("ADDRESS VALIDITY LOCATION: ", isAddressLocation);
-    // calculateDirections();
-    // TEST
-    // console.log("SELECTED: ", addressEl.value);
-    // console.log("ORDER STORE: ", $order);
+    console.log("GEOCODE STORE: ", $geocode);
+  }
+
+  async function calculateDirections(coordinates: number[]) {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/directions/${pickupAddress[0]},${pickupAddress[1]}/${coordinates[0]},${coordinates[1]}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch directions");
+      }
+      const data = await response.json();
+      directions.set(data["data"]);
+      $order.directions = $directions;
+      console.log("DIRECTIONS STORE: ", $directions);
+    } catch (error) {
+      console.log("OSM DIRECTIONS ERROR: ", error);
+      sendMessageToWebhook("ERROR", error.message);
+    }
   }
 
   async function handleSubmit(e) {
     loading = true;
     try {
       if (isFormValid) {
-        updateCart($cart);
-        // TEST
-        // console.log("CART STORE: ", $cart);
-        updateOrder($order).then(() => ($order.name = $order.phone = ""));
         checkout.set(2);
-        // updateOrder($order).then(() => (nameEl.value = phoneEl.value = ""));
-        // TEST
-        // console.log("ORDER STORE BEFORE: ", $order);
-
         toast.set({
           icon: "😎",
-          message: "Your Order was succesful!",
+          message: "Your Delivery details are set succesful!",
           type: "success",
         });
         // TEST
         // console.log("ORDER STORE AFTER: ", $order);
       } else {
         if (!nameEl.validity.valid) throw new Error(`Name value is empty`);
-        if (!phoneEl.validity.valid) throw new Error(`Phone value is empty`);
-        if (!emailEl.validity.valid) throw new Error(`Email value is empty`);
-        if (!addressEl.validity.valid)
-          throw new Error(`Address value is empty`);
-        // if (!isAddressLocation) throw new Error(`Address Location is not set`);
-        console.log("ADDRESS VALIDITY AFTA SUBMIT: ", isAddressLocation);
-
+        else if (!phoneEl.validity.valid)
+          throw new Error(`Phone value is empty`);
+        else if (!emailEl.validity.valid)
+          throw new Error(`Email value is empty`);
+        else throw new Error(`Address value is not selected`);
       }
     } catch (error) {
       toast.set({
@@ -220,12 +184,12 @@
           name="address"
           placeholder="Address"
           bind:this={addressEl}
-          bind:value={$order.address.display_name}
-          on:input={getAddressHits}
+          bind:value={addressValue}
+          on:input={handleAddress}
           required
         />
       </label>
-      {#if hits?.length}
+      {#if Array.isArray($geocode?.features)}
         <div class="results">
           <div class="hit">
             <table>
@@ -237,11 +201,11 @@
                 </tr>
               </thead>
               <tbody>
-                {#each hits || [] as hit, i}
+                {#each $geocode?.features || [] as hit, i}
                   <tr>
                     <th>📍</th>
                     <td on:click={(e) => setAddress(e, i)}
-                      >{hit.display_name}</td
+                      >{hit.properties.name}, {hit.properties?.region}</td
                     >
                   </tr>
                 {/each}

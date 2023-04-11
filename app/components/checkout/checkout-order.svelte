@@ -1,14 +1,30 @@
 <svelte:options tag="checkout-order" />
 
 <script lang="ts">
-  import { user, order } from "../../stores";
+  import { user, order, cart } from "../../stores";
   import jsPDF from "jspdf";
   import html2canvas from "html2canvas";
+  import { onMount } from "svelte";
+  import { updateCart, updateOrder } from "../../util/supabase";
+  import { sendMessageToWebhook } from "../../util/discord";
 
   let items = Object.keys($order.cart_products);
 
   let printEl: HTMLDivElement;
 
+  onMount(() => {
+    try {
+      updateCart($cart).then((value) =>
+        console.log("updated cart db: ", value)
+      );
+      updateOrder($order).then((value) =>
+        console.log("updated orders db: ", value)
+      );
+    } catch (error) {
+      console.log("UPDATE DB ERROR: ", error);
+      sendMessageToWebhook("ERROR", error.message);
+    }
+  });
   function printPDF() {
     // Select the section to be printed
     // let elementToPrint = document.getElementById("template-section");

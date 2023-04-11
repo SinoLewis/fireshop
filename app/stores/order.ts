@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import type { CartProducts } from "./cart";
+import type { CartProducts, Geocode, Directions } from "./";
 import { encrypt, decrypt } from "./cart";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "../util/supabase";
@@ -13,7 +13,8 @@ type Order = {
   name: string;
   phone: string;
   email: string;
-  address: Address;
+  geocode: Geocode;
+  directions: Directions;
   cart_products: CartProducts;
   delivery_price: number;
   cart_price: number;
@@ -23,22 +24,6 @@ type Order = {
   created_at: string;
   updated_at: string;
 };
-
-// TODO: Change Address type based on API (ORS or Nomatim)
-interface Address {
-  place_id: number;
-  licence: string;
-  osm_type: string;
-  osm_id: number;
-  boundingbox: string[];
-  lat: string;
-  lon: string;
-  display_name: string;
-  class: string;
-  type: string;
-  importance: number;
-  icon: string;
-}
 
 function getOrder(): Order {
   if (!initOrder) {
@@ -52,9 +37,6 @@ function getOrder(): Order {
       email: "",
       phone: "",
       name: "",
-      address: {
-        display_name: "",
-      },
       created_at: dateNow,
       updated_at: dateNow,
     } as Order;
@@ -96,4 +78,4 @@ order.subscribe((value) => {
   localStorage.setItem(SELECTED_ORDER, encrypt(JSON.stringify(value)));
 });
 export { order };
-export type { Order, Address };
+export type { Order };

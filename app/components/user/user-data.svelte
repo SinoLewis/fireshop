@@ -1,7 +1,23 @@
 <svelte:options tag="user-data" />
 
 <script lang="ts">
-  import { cart, destination } from "../../stores";
+  import { cart, order } from "../../stores";
+
+  let km;
+  let metres;
+  let mins;
+  let seconds;
+
+  order.subscribe((value) => {
+    km = Math.floor(
+      value.directions.features[0].properties.summary.distance / 1000
+    );
+    metres = value.directions.features[0].properties.summary.distance % 1000;
+    mins = Math.floor(
+      value.directions.features[0].properties.summary.duration / 60
+    );
+    seconds = value.directions.features[0].properties.summary.duration % 60;
+  });
 </script>
 
 <div class="container">
@@ -16,10 +32,10 @@
     <div class="item">
       <div class="title">Delivery 🚚</div>
       <div class="value">
-        {$destination?.features?.properties?.summary?.distance | 0} KM
+        {km | 0}.{metres | 0} KM
       </div>
       <div class="desc">
-        {$destination?.features?.properties?.summary?.duration | 0} mins delivery time
+        {mins | 0} mins & {seconds | 0} seconds for delivery time
       </div>
     </div>
   </div>

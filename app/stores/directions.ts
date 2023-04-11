@@ -1,8 +1,8 @@
 import { writable } from "svelte/store";
 
-interface Destination {
+interface Directions {
   type: string;
-  features: Feature;
+  features: Feature[];
   bbox: number[];
   metadata: Metadata;
 }
@@ -65,6 +65,8 @@ interface Engine {
   graph_date: string;
 }
 
-const nomatim_destination = writable({} as Destination);
+const directions = writable({} as Directions);
 
-export { nomatim_destination };
+export { directions };
+
+export type { Directions };
