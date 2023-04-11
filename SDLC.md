@@ -65,6 +65,7 @@
 
 ## 2. Beta Features
 
+- Integrating Delivery as a Service instead of my custom discord bot
 - Data manupulation: lodash (debounce & throttle)
 - Data repsenration: REST, tPRC, GraphQL, RPC
 - Edge Programming: use callUserAPI from app/util/firebase.ts 4 serveless functions
@@ -170,6 +171,9 @@ All app's APIs will be defined by a dockercached Data Representation protocol. O
 ## 9. Business
 
 1. Business Plan docs
+
+- Document websites timed fiscal infrastucture spending
+
 2. Balance sheets & Balance Investments (Economics Explained)
 3. Load products on Sendy fulfilment
 4. Setting Products on market websites = jumia & Glovo
