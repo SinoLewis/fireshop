@@ -38,36 +38,35 @@
 
 ### 1.2 TESTIN
 
-| NO. | WC.               | Testin Feaure                                        | Status |
-| --- | ----------------- | ---------------------------------------------------- | ------ |
-| 1.  | checkout-cart     | a) Persistent Store                                  | OK     |
-|     |                   |                                                      |        |
-| 2.  | checkout-delivery | a) Address Autocomplete                              |        |
-|     |                   | - Limit 5 Addresses                                  |        |
-|     |                   |                                                      |        |
-|     |                   | b) Delivery Distance Calc                            |        |
-|     |                   |                                                      |        |
-|     |                   | c) Submit delivery                                   |        |
-|     |                   | - Show Current delivery details                      |        |
-|     |                   | - Discord Delivery API call with delivery store      |        |
-|     |                   | - Clear specific delivery store properties           |        |
-|     |                   | - Redirect to Order                                  |        |
-|     |                   |                                                      |        |
-| 3.  | checkout-order    | a) Delivery Status                                   |        |
-|     |                   | - Subscribe supa db for confirmed delivery           |        |
-|     |                   |                                                      |        |
-|     |                   | b) Delivery Payments (Popup)                         |        |
-|     |                   | - Mpesa payment logic w/ supa db updates             |        |
-|     |                   | - Confirm delivery supa db updates                   |        |
-|     |                   |                                                      |        |
-|     |                   | c) Delivery Status                                   |        |
-|     |                   | - Discord API custom delivery status supa db updates |        |
-|     |                   | - Download receipt if delivery paid                  |        |
-|     |                   |                                                      |        |
+| NO. | WC.               | Testin Feaure                                          | Status |
+| --- | ----------------- | ------------------------------------------------------ | ------ |
+| 1.  | checkout-cart     | a) Persistent Store                                    | OK     |
+|     |                   |                                                        |        |
+| 2.  | checkout-delivery | a) Hide hits after not focused address input           |        |
+|     |                   |                                                        |        |
+|     |                   | b) Reactive isFormValid var                            |        |
+|     |                   |                                                        |        |
+|     |                   | c) Loading var with setTimeout & animated loading btn  |        |
+|     |                   |                                                        |        |
+|     |                   | d) tick logo for valid inputs that matches order store |        |
+|     |                   |                                                        |        |
+|     |                   |                                                        |        |
+| 3.  | checkout-order    | a) Delivery Status                                     |        |
+|     |                   | - Subscribe supa db for confirmed delivery             |        |
+|     |                   |                                                        |        |
+|     |                   | b) Delivery Payments (Popup)                           |        |
+|     |                   | - Mpesa payment logic w/ supa db updates               |        |
+|     |                   | - Confirm delivery supa db updates                     |        |
+|     |                   |                                                        |        |
+|     |                   | c) Delivery Status                                     |        |
+|     |                   | - Discord API custom delivery status supa db updates   |        |
+|     |                   | - Download receipt if delivery paid                    |        |
+|     |                   |                                                        |        |
 
 ## 2. Beta Features
 
-- REST to tRPC
+- Data manupulation: lodash (debounce & throttle)
+- Data repsenration: REST, tPRC, GraphQL, RPC
 - Edge Programming: use callUserAPI from app/util/firebase.ts 4 serveless functions
 - How postcss & tailwindcss work
 - typescript framework config (fireship tuts) & remove any types
@@ -100,9 +99,9 @@ Manages server files.
     - meilisearch image url
     - Image generator as like firship (nextjs vercel app): home.html: image gifs, home logo & pic
 
-2. Client/Server server scripts
+2. Client/Server docker-compose server scripts
 
-All app's APIs will be defined by a Data Representation protocol. Ours will be **GraphQL** + **Express**
+All app's APIs will be defined by a dockercached Data Representation protocol. Ours will be **redis** + **Express**
 
     a) App API's dependacies:
     - Meilisearch docker
@@ -113,9 +112,6 @@ All app's APIs will be defined by a Data Representation protocol. Ours will be *
 
     b) Data Representation:
     - Express
-    - RPC
-    - GraphQL
-    - tPRC
     - REST
 
 ## 5. Full PWA
@@ -158,11 +154,11 @@ All app's APIs will be defined by a Data Representation protocol. Ours will be *
 
 ## 7. Deployment (Local = Ngrok & Cloud = GCP)
 
-1. Docker Compose
+1. Docker Compose for our client/server apps
 2. SSL certs & ip addr to domain name in client & server app
-
 3. sys to harderend & secure linux kernel (OS Cloud Server or Docker)
-4. ads rev
+4. Production pruned src code: Test data, Unsed files
+5. ads rev
 
 ## 8. Perfomance & Optimizaion
 
