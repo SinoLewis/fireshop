@@ -24,12 +24,12 @@ dist-ssr
 *.sw?
 .hugo_build.lock
 static/svelte/
+data
 public
 .firebaserc
 firebase.json
 .firebase
 resources/
-data/*
 *.env
 server/products.json
 static/svelte/index.html
