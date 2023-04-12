@@ -115,6 +115,9 @@ All app's APIs will be defined by a dockercached Data Representation protocol. O
     - Express
     - REST
 
+    c) Cloud Server
+    - Supabase & Firebase cloudless functions
+
 ## 5. Full PWA
 
 1.  PWA dev reminders
@@ -159,7 +162,7 @@ All app's APIs will be defined by a dockercached Data Representation protocol. O
 2. SSL certs & ip addr to domain name in client & server app
 3. sys to harderend & secure linux kernel (OS Cloud Server or Docker)
 4. Production pruned src code: Test data, Unsed files
-5. ads rev
+5. ads rev: GoogleAdsense
 
 ## 8. Perfomance & Optimizaion
 
