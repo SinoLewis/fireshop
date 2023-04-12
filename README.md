@@ -1,15 +1,16 @@
-## Fireshop
+# Fireshop
 
 The Fireshop online shop platform frontend built with Svelte, Tailwind, Hugo, Firebase, & Flamethrower.
 
-### Live Site
+## Live Site
+
 You can view the [demo site](https://fire-shop.netlify.app)
 
 ## Dev Assistance
 
 All static content is managed with Hugo in the `content` dir. You can easily extend your ideas directly by forking this repo.
 
-### Getting started
+## Getting started local
 
 First, install [Hugo Extended](https://gohugo.io/getting-started/installing/) ver `0.101.0` or greater.
 Then Fork the repository and start you development.
@@ -22,6 +23,26 @@ npm start
 ```
 
 Check it on on `http://localhost:6969/`.
+
+## Getting started with docker
+
+First make sure you have [docker](https://docker.com) installed in your system
+
+Then build the docker repo image by:
+
+```
+docker build . -t fireshop
+```
+
+This will build the image required to run the repo inside a docker container
+
+```
+docker run -p 6969 fireshop
+```
+
+Check it on on `http://localhost:6969/`.
+
+<!-- [![Build Status](/static/img/delivery.png)](https://travis-ci.org/username/repo) -->
 
 ## Developing Components
 
@@ -55,6 +76,7 @@ Now use it in anywhere in your HTML or Markdown.
 ## Commands
 
 - `npm start`: Main dev server. Runs everything you need.
-- `npm run dev`: Runs components in isolation. Serves `app/index.html` as a playground for components.
-- `npm run hugo`: Only runs static site.
+- `npm run svelte:serve`: Runs components in isolation. Serves `app/index.html` as a playground for components.
+- `npm run hugo:serve`: Only runs static site.
+- `npm run dev`: Concurrently rebuilds changes in svelte & runs hugo server.
 - `npm run build`: Build for production
