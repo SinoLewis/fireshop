@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const redis = require("redis");
 const cors = require("cors");
+const { OSM_KEY } = require("./config.json");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -19,7 +20,7 @@ let redisClient;
 
 async function fetchGeocode(place) {
   const apiResponse = await axios.get(
-    `https://api.openrouteservice.org/geocode/autocomplete?api_key=KendrickFEAR&text=${place}&boundary.country=KE`
+    `https://api.openrouteservice.org/geocode/autocomplete?api_key=${OSM_KEY}&text=${place}&boundary.country=KE`
   );
   console.log("Request sent to the API");
   return apiResponse.data;
@@ -55,7 +56,7 @@ async function getGeocode(req, res) {
 
 async function fetchDirections(start, end) {
   const apiResponse = await axios.get(
-    `https://api.openrouteservice.org/v2/directions/driving-car?api_key=TravisTRANCE&start=${start}&end=${end}`
+    `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${OSM_KEY}&start=${start}&end=${end}`
   );
   console.log("Request sent to the API");
   return apiResponse.data;
