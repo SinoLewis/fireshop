@@ -100,7 +100,7 @@ Manages server files.
     - meilisearch image url
     - Image generator as like firship (nextjs vercel app): home.html: image gifs, home logo & pic
 
-2. Client/Server docker-compose server scripts
+2. Client/Server server scripts
 
 All app's APIs will be defined by a dockercached Data Representation protocol. Ours will be **redis** + **Express**
 
@@ -158,7 +158,7 @@ All app's APIs will be defined by a dockercached Data Representation protocol. O
 
 ## 7. Deployment (Local = Ngrok & Cloud = GCP)
 
-1. Docker Compose for our client/server apps
+1. Dockerfile for our fireshop site
 2. SSL certs & ip addr to domain name in client & server app
 3. sys to harderend & secure linux kernel (OS Cloud Server or Docker)
 4. Production pruned src code: Test data, Unsed files
