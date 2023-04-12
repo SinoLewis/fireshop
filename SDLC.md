@@ -116,6 +116,7 @@ All app's APIs will be defined by a dockercached Data Representation protocol. O
     - REST
 
     c) Cloud Server
+    - Test server dir locally & docker container server
     - Supabase & Firebase cloudless functions
 
 ## 5. Full PWA
