@@ -1,5 +1,4 @@
 export * from "./supa-user";
-export * from "./glovo-delivery";
 export * from "./cart";
 export * from "./products";
 export * from "./loading";
@@ -7,7 +6,6 @@ export * from "./modal";
 export * from "./settings";
 export * from "./toast";
 export * from "./order";
-export * from "./nominatim-destination";
 export * from "./checkout";
 export * from "./directions";
 export * from "./geocode";
