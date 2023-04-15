@@ -35,7 +35,7 @@ jobs:
         with:
           hugo-version: "0.109.0"
           extended: true
-          
+
       - name: Install pnpm
         run: npm install -g pnpm
 
@@ -53,4 +53,9 @@ jobs:
       - name: Snyk test
         run: snyk test
 
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        with:
+          command: monitor
+          
       - run: npm run build
