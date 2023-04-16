@@ -57,7 +57,7 @@
     "jspdf-autotable": "^3.5.28",
     "jspdf-html2canvas": "^1.4.9",
     "mapbox-gl": "^2.11.1",
-    "meilisearch": "^0.30.0",
+    "meilisearch": "^0.31.1",
     "ol": "^7.2.2",
     "svelte-tel-input": "^1.1.0",
     "uuid": "^9.0.0"
