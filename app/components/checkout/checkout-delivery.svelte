@@ -109,32 +109,35 @@
 
   async function handleSubmit(e) {
     loading = true;
-    try {
-      if (isFormValid) {
-        checkout.set(2);
+    setTimeout(() => {
+      try {
+        if (isFormValid) {
+          checkout.set(2);
+          toast.set({
+            icon: "😎",
+            message: "Your Delivery details are set succesful!",
+            type: "success",
+          });
+          // TEST
+          // console.log("ORDER STORE AFTER: ", $order);
+        } else {
+          if (!nameEl.validity.valid) throw new Error(`Name value is empty`);
+          else if (!phoneEl.validity.valid)
+            throw new Error(`Phone value is empty`);
+          else if (!emailEl.validity.valid)
+            throw new Error(`Email value is empty`);
+          else throw new Error(`Address value is not selected`);
+        }
+      } catch (error) {
         toast.set({
-          icon: "😎",
-          message: "Your Delivery details are set succesful!",
-          type: "success",
+          icon: "❌",
+          message: error.message,
+          type: "error",
         });
-        // TEST
-        // console.log("ORDER STORE AFTER: ", $order);
-      } else {
-        if (!nameEl.validity.valid) throw new Error(`Name value is empty`);
-        else if (!phoneEl.validity.valid)
-          throw new Error(`Phone value is empty`);
-        else if (!emailEl.validity.valid)
-          throw new Error(`Email value is empty`);
-        else throw new Error(`Address value is not selected`);
       }
-    } catch (error) {
-      toast.set({
-        icon: "❌",
-        message: error.message,
-        type: "error",
-      });
-    }
-    loading = false;
+      loading = false;
+      console.log("Delayed execution");
+    }, 2000);
   }
 </script>
 
@@ -219,7 +222,8 @@
       <h2 class="mg">Total Cost</h2>
       <user-data />
       <div />
-      <button on:click={handleSubmit} class="send"
+      <!-- <button class:animate={loading}>Testing...</button> -->
+      <button on:click={handleSubmit} class:animate={loading} class="send"
         >{loading ? "proceeding..." : "proceed to order"}</button
       >
     </div>
@@ -262,6 +266,9 @@
   }
   .confirm {
     @apply select select-bordered select-lg w-full max-w-xs;
+  }
+  .animate {
+    @apply animate-spin;
   }
   .send {
     @apply btn bg-green-500 mx-4 px-4 py-2 text-xl font-display text-white hover:bg-info-content drop-shadow-[6px_6px_0_black] hover:drop-shadow-[0_0_7px_rgba(168,85,247,0.5)] transition-all duration-300;

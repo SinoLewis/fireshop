@@ -3,21 +3,29 @@
 <script lang="ts">
   import { cart, order } from "../../stores";
 
-  let km;
-  let metres;
-  let mins;
-  let seconds;
+  let km = 0;
+  let metres = 0;
+  let mins = 0;
+  let seconds = 0;
 
-  order.subscribe((value) => {
-    km = Math.floor(
-      value.directions.features[0].properties.summary.distance / 1000
-    );
-    metres = value.directions.features[0].properties.summary.distance % 1000;
-    mins = Math.floor(
-      value.directions.features[0].properties.summary.duration / 60
-    );
-    seconds = value.directions.features[0].properties.summary.duration % 60;
-  });
+  try {
+    order.subscribe((value) => {
+      if (value.directions !== undefined) {
+        km = Math.floor(
+          value.directions.features[0]?.properties.summary.distance / 1000
+        );
+        metres =
+          value.directions.features[0]?.properties.summary.distance % 1000;
+        mins = Math.floor(
+          value.directions.features[0]?.properties.summary.duration / 60
+        );
+        seconds =
+          value.directions.features[0]?.properties.summary.duration % 60;
+      }
+    });
+  } catch (error) {
+    console.log("ORDER SUB ERROR: ", error);
+  }
 </script>
 
 <div class="container">
