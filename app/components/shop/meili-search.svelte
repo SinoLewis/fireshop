@@ -5,6 +5,8 @@
   import { modal } from "../../stores";
   import { router } from "../../main";
   import { onMount } from "svelte";
+  import { supabase } from "../../util/supabase";
+  import { construct_svelte_component } from "svelte/internal";
 
   const client = new MeiliSearch({
     host: "http://localhost:7700",
@@ -22,17 +24,25 @@
 
   async function search(e: Event) {
     const q = (e.target as HTMLInputElement).value;
-    results = await index.search(q, {
-      hitsPerPage: 7,
-      attributesToCrop: ["description"],
-      attributesToHighlight: ["title", "description"],
-      highlightPreTag: '<mark class="high">',
-      highlightPostTag: "</mark>",
-    });
-    hits = results.hits;
+    const body = {
+      query: q,
+    };
+    try {
+      try {
+        const { data, error } = await supabase.functions.invoke("meilisearch", {
+          body: JSON.stringify(body),
+        });
+        if (error) throw error;
+        hits = data["hits"];
+        activeHit = 0;
+      } catch (error) {
+        console.warn("MEILISEARCH Edge Error", error);
+      }
+    } catch (error) {
+      console.log("MEILI SEARCH ERROR: ", error);
+    }
     // TEST
     // console.log("MEILI: ", results);
-    activeHit = 0;
   }
 
   function goUp() {

@@ -7,18 +7,11 @@
   "scripts": {
     "start": "npm run dev",
     "build": "vite build && hugo",
-    "dev": "concurrently \"npm run svelte:build\" \"npm run hugo:serve\" \"npm run server\"",
-    "server": "concurrently \"npm run server:osm\" \"npm run server:meili \" \"npm run server:discord \"",
+    "dev": "concurrently \"npm run svelte:build\" \"npm run hugo:serve\"",
+    "svelte": "vite",
     "svelte:build": "vite build --watch",
-    "svelte:serve": "vite",
     "hugo:build": "hugo",
     "hugo:serve": "hugo server --forceSyncStatic --minify --bind=0.0.0.0 --port 6969",
-    "server:osm": "node server/osm.js",
-    "server:meili": "npm run docker:meili",
-    "server:discord": "node server/discord.js",
-    "docker:meili": "docker start meili-search",
-    "discord:deploy": "node server/utils/deploy.js",
-    "discord:delete": "node server/utils/delete.js",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
@@ -48,18 +41,13 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.2.0",
+    "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
     "daisyui": "^2.49.0",
     "dotenv": "^16.0.3",
     "html2canvas": "^1.4.1",
-    "intl-tel-input": "^17.0.19",
     "jspdf": "^2.5.1",
-    "jspdf-autotable": "^3.5.28",
-    "jspdf-html2canvas": "^1.4.9",
-    "mapbox-gl": "^2.11.1",
     "meilisearch": "^0.30.0",
-    "ol": "^7.2.2",
-    "svelte-tel-input": "^1.1.0",
     "uuid": "^9.0.0"
   }
 }

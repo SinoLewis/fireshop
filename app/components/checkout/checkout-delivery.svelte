@@ -11,6 +11,7 @@
     directions,
   } from "../../stores";
   import { onMount } from "svelte";
+  import { supabase } from "../../util/supabase";
 
   const KEY = import.meta.env.VITE_OPEN_ROUTE;
 
@@ -22,12 +23,14 @@
   // TODO: default=white, valid=green, error_on_submit=red
   let loading = false;
 
-  let pickupAddress = [36.786911, -1.300596];
   let addressValue = $order.geocode
-    ? $order.geocode.features.properties.name +
-      "," +
-      $order.geocode.features.properties?.region
+    ? $order.geocode.features.properties.label
     : "";
+  // let addressValue = $order.geocode
+  //   ? $order.geocode.features.properties.name +
+  //     "," +
+  //     $order.geocode.features.properties?.region
+  //   : "";
   let counter = 1;
 
   onMount(() => {
@@ -35,7 +38,8 @@
       nameEl.validity.valid &&
       phoneEl.validity.valid &&
       emailEl.validity.valid &&
-      !!$order.geocode.features?.properties.name;
+      !!$order.geocode.features?.properties.label;
+    // !!$order.geocode.features?.properties.name;
 
     console.log("INPUT VALIDITY NAME: ", nameEl.validity.valid);
     console.log("INPUT VALIDITY PHONE: ", phoneEl.validity.valid);
@@ -57,12 +61,15 @@
 
   async function getAddressHits(query) {
     try {
-      fetch(`http://localhost:3000/geocode/${query}`)
-        .then((response) => response.json())
-        .then((data) => {
-          geocode.set(data["data"]);
-          console.log(data);
-        });
+      const body = {
+        place: query,
+      };
+      const { data, error } = await supabase.functions.invoke("ors-geocode", {
+        body: JSON.stringify(body),
+      });
+      if (error) throw error;
+      geocode.set(data["data"]);
+      console.log(data);
       console.log(`API REQ NO: ${query}, ${counter++}`);
     } catch (error) {
       console.log("OSM GEOCODE ERROR: ", error);
@@ -79,25 +86,29 @@
     const destination = $geocode.features[index];
     $geocode.features = destination;
     $order.geocode = $geocode;
-    addressEl.value =
-      destination.properties.name + "," + destination.properties.region;
+    addressEl.value = destination.properties.label;
+    // addressEl.value =
+    //   destination.properties.name + "," + destination.properties.region;
     calculateDirections($order.geocode.features.geometry.coordinates);
     toast.set({
       icon: "👍",
-      message: `${$geocode.features.properties.name} set as delivery location`,
+      message: `${$geocode.features.properties.label} set as delivery location`,
     });
     console.log("GEOCODE STORE: ", $geocode);
   }
 
   async function calculateDirections(coordinates: number[]) {
+    let pickupAddress = [36.786911, -1.300596];
+
     try {
-      const response = await fetch(
-        `http://localhost:3000/directions/${pickupAddress[0]},${pickupAddress[1]}/${coordinates[0]},${coordinates[1]}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch directions");
-      }
-      const data = await response.json();
+      const body = {
+        start: `${pickupAddress[0]},${pickupAddress[1]}`,
+        end: `${coordinates[0]},${coordinates[1]}`,
+      };
+      const { data, error } = await supabase.functions.invoke("ors-directions", {
+        body: JSON.stringify(body),
+      });
+      if (error) throw error;
       directions.set(data["data"]);
       $order.directions = $directions;
       console.log("DIRECTIONS STORE: ", $directions);
@@ -208,7 +219,7 @@
                   <tr>
                     <th>📍</th>
                     <td on:click={(e) => setAddress(e, i)}
-                      >{hit.properties.name}, {hit.properties?.region}</td
+                      >{hit.properties?.label}</td
                     >
                   </tr>
                 {/each}

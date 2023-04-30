@@ -1,7 +1,32 @@
 <svelte:options tag="testin-button" />
 
 <script lang="ts">
+  import { supabase } from "../../util/supabase";
+  import { onMount } from "svelte";
+
   let addressEl: HTMLInputElement;
+
+  const edgeTest = async () => {
+    const body = {
+      start: "8.681495,49.41461",
+      end: "8.687862,49.420318",
+    };
+    try {
+      const { data, error } = await supabase.functions.invoke(
+        "ors-directions",
+        {
+          body: JSON.stringify(body),
+        }
+      );
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.warn("Edge Testin Error", error);
+    }
+  };
+  onMount(async () => {
+    console.log("Testin", await edgeTest());
+  });
 
   function debounce(func, delay) {
     let timeoutId;

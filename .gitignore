@@ -32,6 +32,8 @@ firebase.json
 resources/
 *.env
 *config.json
-server/products.json
 static/svelte/index.html
 AttacheCase/*
+
+# Sever
+server/products.json
