@@ -1,32 +1,15 @@
-const express = require("express");
-const axios = require("axios");
-const redis = require("redis");
-const cors = require("cors");
-const { OSM_KEY } = require("./config.json");
+import axios from "axios";
+import { redisClient } from "../redis";
 
-const app = express();
-const port = process.env.PORT || 3000;
-app.use(cors({ origin: "*" }));
-
-let redisClient;
-
-(async () => {
-  redisClient = redis.createClient();
-
-  redisClient.on("error", (error) => console.error(`Error : ${error}`));
-
-  await redisClient.connect();
-})();
-
-async function fetchGeocode(place) {
+async function fetchGeocode(place: any) {
   const apiResponse = await axios.get(
-    `https://api.openrouteservice.org/geocode/autocomplete?api_key=${OSM_KEY}&text=${place}&boundary.country=KE`
+    `https://api.openrouteservice.org/geocode/autocomplete?api_key=5b3ce3597851110001cf624884d3e22b307546f5b0333ac9fe70efe9&text=${place}&boundary.country=KE`
   );
   console.log("Request sent to the API");
   return apiResponse.data;
 }
 
-async function getGeocode(req, res) {
+async function getGeocode(req: any, res: any) {
   const place = String(req.params.place).toLowerCase();
   let results;
   let isCached = false;
@@ -43,7 +26,7 @@ async function getGeocode(req, res) {
       }
       await redisClient.set(place, JSON.stringify(results));
     }
-
+    console.log(`OSR GEOCODE: ${req.params.place} searched 🎯`);
     res.send({
       fromCache: isCached,
       data: results,
@@ -54,15 +37,15 @@ async function getGeocode(req, res) {
   }
 }
 
-async function fetchDirections(start, end) {
+async function fetchDirections(start: any, end: any) {
   const apiResponse = await axios.get(
-    `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${OSM_KEY}&start=${start}&end=${end}`
+    `https://api.openrouteservice.org/v2/directions/driving-car?api_key=5b3ce3597851110001cf624884d3e22b307546f5b0333ac9fe70efe9&start=${start}&end=${end}`
   );
   console.log("Request sent to the API");
   return apiResponse.data;
 }
 
-async function getDirections(req, res) {
+async function getDirections(req: any, res: any) {
   const start = req.params.start;
   const end = req.params.end;
   const cacheKey = `${start}:${end}`;
@@ -81,7 +64,7 @@ async function getDirections(req, res) {
       }
       await redisClient.set(cacheKey, JSON.stringify(results));
     }
-
+    console.log(`OSR DIRECTION: ${req.params.end} searched 🎯`);
     res.send({
       fromCache: isCached,
       data: results,
@@ -91,9 +74,5 @@ async function getDirections(req, res) {
     res.status(404).send("Data unavailable");
   }
 }
-app.get("/geocode/:place", getGeocode);
-app.get("/directions/:start/:end", getDirections);
 
-app.listen(port, () => {
-  console.log(`Cached App listening on port ${port}`);
-});
+export { getGeocode, getDirections };
