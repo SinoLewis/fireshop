@@ -1,7 +1,6 @@
 import { writable } from "svelte/store";
 import type { CartProducts, Geocode, Directions } from "./";
-import { encrypt, decrypt } from "./cart";
-import { v4 as uuidv4 } from "uuid";
+import { decrypt, encrypt } from "../util/crypt";
 import { supabase } from "../util/supabase";
 import { cart, user } from "./";
 
@@ -10,6 +9,7 @@ let initOrder = localStorage.getItem(SELECTED_ORDER);
 
 type Order = {
   id?: string;
+  user_id: string;
   name: string;
   phone: string;
   email: string;
@@ -33,7 +33,6 @@ function getOrder(): Order {
       timeStyle: "full",
     });
     const data = {
-      id: uuidv4(),
       email: "",
       phone: "",
       name: "",
@@ -72,6 +71,7 @@ order.subscribe((value) => {
   });
   user.subscribe((u) => {
     value.email = u?.email;
+    value.user_id = u?.id;
   });
   // TEST
   console.log("ORDER STORE: ", value);

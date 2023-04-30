@@ -90,7 +90,7 @@ export const sendOrderToWebhook = async (order: Order) => {
       fields: [
         {
           name: "ADDRESS",
-          value: `${order.address.display_name}`,
+          value: `${order.geocode.features.properties.name}, ${order.geocode.features.properties?.region}`,
           inline: true,
         },
         {

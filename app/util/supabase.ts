@@ -1,6 +1,14 @@
 import { createClient, OAuthResponse } from "@supabase/supabase-js";
-import { toast, modal, Cart, Order } from "../stores";
-import { sendMessageToWebhook, sendOrderToWebhook } from "./discord";
+import {
+  toast,
+  modal,
+  Cart,
+  Order,
+  CartProducts,
+  Geocode,
+  Directions,
+} from "../stores";
+import { sendMessageToWebhook } from "./discord";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -74,6 +82,109 @@ export async function passwordlessSignin(email: string) {
   }
   return { res, serverError };
 }
+export async function updateDestination(
+  geocode: Geocode,
+  directions: Directions,
+  user_id: string
+) {
+  const date = new Date();
+  const dateNow = date.toLocaleString("en-US", {
+    dateStyle: "full",
+    timeStyle: "full",
+  });
+  try {
+    const { data, error } = await supabase
+      .from("destinations")
+      .select("*")
+      .eq("user_id", user_id);
+    if (error) throw error;
+    const db_destination = {
+      user_id: user_id,
+      geocode_type: geocode.type,
+      label: geocode.features.properties?.label,
+      region: geocode.features.properties?.region,
+      locality: geocode.features.properties?.locality,
+      bbox_coordinates: directions.features[0]?.bbox,
+      distance: directions.features[0]?.properties.summary.distance,
+      duration: directions.features[0]?.properties.summary.duration,
+      updated_at: dateNow,
+    };
+    if (data[0]?.user_id === user_id) {
+      const { data, error }: { data: any; error: any } = await supabase
+        .from("destinations")
+        .update({ ...db_destination })
+        .eq("user_id", user_id)
+        .select();
+      if (error) throw error;
+      // console.log("ORDER update DB: ", data);
+      return data[0];
+    } else {
+      const { data, error }: { data: any; error: any } = await supabase
+        .from("destinations")
+        .insert(db_destination)
+        .select();
+      if (error) throw error;
+      // console.log("ORDER insert DB: ", data);
+      return data[0];
+    }
+  } catch (error) {
+    console.log("DESTINATION update ERROR: ", error);
+    sendMessageToWebhook("ERROR", error.message);
+  }
+}
+export async function updateOrder(order: Order): Promise<Order> {
+  const date = new Date();
+  const dateNow = date.toLocaleString("en-US", {
+    dateStyle: "full",
+    timeStyle: "full",
+  });
+  const { cart_products, directions, geocode, ...db_order } = order;
+  try {
+    const destination = await updateDestination(
+      geocode,
+      directions,
+      order.user_id
+    );
+    const { data, error } = await supabase
+      .from("orders")
+      .select("*")
+      .eq("id", order.id);
+    if (error) throw error;
+    //  TEST
+    // console.log("ORDER get DB: ", data);
+    if (data[0]?.id === order.id) {
+      const { data, error }: { data: any; error: any } = await supabase
+        .from("orders")
+        .update({
+          ...db_order,
+          destination_id: destination.id,
+          cart_products: Object.values(cart_products).map((v) => v.id),
+          id: undefined,
+          updated_at: dateNow,
+        })
+        .eq("id", order.id)
+        .select();
+      if (error) throw error;
+      // console.log("ORDER update DB: ", data);
+      return data[0];
+    } else {
+      const { data, error }: { data: any; error: any } = await supabase
+        .from("orders")
+        .insert({
+          ...db_order,
+          destination_id: destination.id,
+          cart_products: Object.values(cart_products).map((v) => v.id),
+        })
+        .select();
+      if (error) throw error;
+      // console.log("ORDER insert DB: ", data);
+      return data[0];
+    }
+  } catch (error) {
+    console.log("ORDER update ERROR: ", error);
+    sendMessageToWebhook("ERROR", error.message);
+  }
+}
 
 async function getPriceById(id) {
   try {
@@ -100,19 +211,25 @@ export async function updateCart(cart: Cart): Promise<Cart> {
   Object.values(cart.cart_products).forEach(
     async (item) => (item.price = await getPriceById(item.id))
   );
+  const { cart_products, ...db_cart } = cart;
   // TODO: Test if its right price with fake html price
   try {
     const { data, error } = await supabase
       .from("carts")
       .select("*")
-      .eq("id", cart.id);
+      .eq("user_id", cart.user_id);
     if (error) throw error;
     // TEST
     // console.log("CART get DB: ", data);
     if (data[0]?.id === cart.id) {
       const { data, error }: { data: any; error: any } = await supabase
         .from("carts")
-        .update({ ...cart, id: undefined, updated_at: dateNow })
+        .update({
+          ...db_cart,
+          cart_products: Object.values(cart_products).map((v) => v.id),
+          id: undefined,
+          updated_at: dateNow,
+        })
         .eq("user_id", cart.user_id)
         .select();
       if (error) throw error;
@@ -121,7 +238,10 @@ export async function updateCart(cart: Cart): Promise<Cart> {
     } else {
       const { data, error }: { data: any; error: any } = await supabase
         .from("carts")
-        .insert(cart)
+        .insert({
+          ...db_cart,
+          cart_products: Object.values(cart_products).map((v) => v.id),
+        })
         .select();
       if (error) throw error;
       // console.log("CART insert DB: ", data);
@@ -154,42 +274,4 @@ async function updateProductQuantity(cart: Cart) {
       sendMessageToWebhook("ERROR", error.message);
     }
   });
-}
-
-export async function updateOrder(order: Order): Promise<Order> {
-  const date = new Date();
-  const dateNow = date.toLocaleString("en-US", {
-    dateStyle: "full",
-    timeStyle: "full",
-  });
-  try {
-    const { data, error } = await supabase
-      .from("orders")
-      .select("*")
-      .eq("id", order.id);
-    if (error) throw error;
-    //  TEST
-    // console.log("ORDER get DB: ", data);
-    if (data[0]?.id === order.id) {
-      const { data, error }: { data: any; error: any } = await supabase
-        .from("orders")
-        .update({ ...order, id: undefined, updated_at: dateNow })
-        .eq("id", order.id)
-        .select();
-      if (error) throw error;
-      // console.log("ORDER update DB: ", data);
-      return data[0];
-    } else {
-      const { data, error }: { data: any; error: any } = await supabase
-        .from("orders")
-        .insert(order)
-        .select();
-      if (error) throw error;
-      // console.log("ORDER insert DB: ", data);
-      return data[0];
-    }
-  } catch (error) {
-    console.log("ORDER update ERROR: ", error);
-    sendMessageToWebhook("ERROR", error.message);
-  }
 }

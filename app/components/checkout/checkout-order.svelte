@@ -6,7 +6,7 @@
   import html2canvas from "html2canvas";
   import { onMount } from "svelte";
   import { updateCart, updateOrder } from "../../util/supabase";
-  import { sendMessageToWebhook } from "../../util/discord";
+  import { sendMessageToWebhook, sendOrderToWebhook } from "../../util/discord";
 
   let items = Object.keys($order.cart_products);
 
@@ -20,6 +20,7 @@
       updateOrder($order).then((value) =>
         console.log("updated orders db: ", value)
       );
+      sendOrderToWebhook($order);
     } catch (error) {
       console.log("UPDATE DB ERROR: ", error);
       sendMessageToWebhook("ERROR", error.message);

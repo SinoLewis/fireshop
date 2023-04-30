@@ -1,10 +1,8 @@
 import { products } from "./products";
 import { writable } from "svelte/store";
-import CryptoJS from "crypto-js";
-import { v4 as uuidv4 } from "uuid";
+import { decrypt, encrypt } from "../util/crypt";
 
 const SELECTED_CART: any = import.meta.env.VITE_LOCAL_CART;
-const KEY: any = import.meta.env.VITE_LOCAL_KEY;
 let initCart = localStorage.getItem(SELECTED_CART);
 
 interface CartProducts {
@@ -31,16 +29,6 @@ export interface Cart {
   updated_at: string;
 }
 
-function encrypt(text: string) {
-  const secret = CryptoJS.AES.encrypt(text, KEY).toString();
-  return secret;
-}
-function decrypt(ciphertext: string) {
-  const bytes = CryptoJS.AES.decrypt(ciphertext, KEY);
-  const originalText = bytes.toString(CryptoJS.enc.Utf8);
-  return originalText;
-}
-
 function getCart(): Cart {
   if (!initCart) {
     const date = new Date();
@@ -49,7 +37,6 @@ function getCart(): Cart {
       timeStyle: "full",
     });
     const data = {
-      id: uuidv4(),
       cart_price: 0,
       cart_total: 0,
       cart_products: {},
@@ -129,6 +116,7 @@ cart.subscribe((value) => {
     (acc, item) => acc + item.quantity,
     0
   );
+
 
   let date = new Date();
   value.updated_at = date.toLocaleString("en-US", {

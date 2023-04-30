@@ -1,6 +1,12 @@
 <svelte:options tag="supa-signin" />
 
 <script lang="ts">
+  import { user, cart } from "../../stores";
+  import { onMount } from "svelte";
+
+  onMount(() => {
+    $cart.user_id = $user.id || undefined;
+  });
 </script>
 
 <modal-dialog name="signin" esc="true">
