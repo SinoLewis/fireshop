@@ -37,3 +37,4 @@ AttacheCase/*
 
 # Sever
 server/products.json
+data/svelte.json
