@@ -1,12 +1,24 @@
 <svelte:options tag="supa-signin" />
 
 <script lang="ts">
-  import { user, cart } from "../../stores";
-  import { onMount } from "svelte";
+  import { order } from "../../stores";
+  import { supabase } from "../../util/supabase.auth";
 
-  onMount(() => {
-    $cart.user_id = $user.id || undefined;
-  });
+  supabase
+    .channel("any")
+    .on(
+      "postgres_changes",
+      { event: "UPDATE", schema: "public", table: "custom-orders" },
+      (payload: any) => {
+        if (payload.new?.id === $order.id) {
+          $order.delivery_price = payload.new.delivery_price;
+          $order.approved = payload.new.approved
+          // TEST
+          console.log("ORDERS STORE DB CHANGE CHECK: ", $order);
+        }
+      }
+    )
+    .subscribe();
 </script>
 
 <modal-dialog name="signin" esc="true">
