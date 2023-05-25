@@ -1,7 +1,7 @@
 <svelte:options tag="supa-signout" />
 
 <script type="ts">
-  import { supabaseSignOut } from "../../util/supabase";
+  import { supabaseSignOut } from "../../util/supabase.auth";
 </script>
 
 <button on:click={supabaseSignOut}> Sign Out </button>

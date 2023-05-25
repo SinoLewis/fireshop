@@ -5,8 +5,7 @@
   import { modal } from "../../stores";
   import { router } from "../../main";
   import { onMount } from "svelte";
-  import { supabase } from "../../util/supabase";
-  import { construct_svelte_component } from "svelte/internal";
+  import { supabase } from "../../util/supabase.auth";
 
   const client = new MeiliSearch({
     host: "http://localhost:7700",

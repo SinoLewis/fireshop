@@ -1,6 +1,6 @@
 <svelte:options tag="supa-google" />
 <script>
-    import { signInWithGoogle } from '../../util/supabase';
+    import { signInWithGoogle } from '../../util/supabase.auth';
 </script>
 
 <!-- <span on:click={signInWithGoogle}>

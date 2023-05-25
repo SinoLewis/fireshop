@@ -1,7 +1,8 @@
 <svelte:options tag="supa-email" />
 
 <script lang="ts">
-  import { passwordlessSignin } from "../../util/supabase";
+  import { passwordlessSignin } from "../../util/supabase.auth";
+  
   let emailEl: HTMLInputElement;
   let isValid = false;
   let isTouched = false;
