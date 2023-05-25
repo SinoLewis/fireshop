@@ -1,14 +1,20 @@
 <svelte:options tag="checkout-order" />
 
 <script lang="ts">
-  import { user, order, cart } from "../../stores";
+  import { user, order, cart, destination, checkout } from "../../stores";
   import jsPDF from "jspdf";
   import html2canvas from "html2canvas";
   import { onMount } from "svelte";
-  import { updateCart, updateOrder } from "../../util/supabase";
+  import {
+    updateCart,
+    updateOrder,
+    updateDestination,
+  } from "../../util/supabase.db";
   import { sendMessageToWebhook, sendOrderToWebhook } from "../../util/discord";
+  // import { sendOrder } from "../../util/discord.webhooks";
 
-  let items = Object.keys($order.cart_products);
+  const tab2 = () => checkout.set(1);
+  let items = Object.keys($cart.cart_products);
 
   let printEl: HTMLDivElement;
 
@@ -20,12 +26,19 @@
       updateOrder($order).then((value) =>
         console.log("updated orders db: ", value)
       );
-      sendOrderToWebhook($order);
+      updateDestination($destination).then((value) =>
+        console.log("updated Destination db: ", value)
+      );
     } catch (error) {
       console.log("UPDATE DB ERROR: ", error);
       sendMessageToWebhook("ERROR", error.message);
     }
   });
+
+  function placeOrder() {
+    // sendOrder();
+    sendOrderToWebhook($order, $cart, $destination);
+  }
   function printPDF() {
     // Select the section to be printed
     // let elementToPrint = document.getElementById("template-section");
@@ -63,17 +76,17 @@
 {#if $user}
   <div id="template-section" bind:this={printEl}>
     <!-- TODO: Order total price logic -->
-    <h2>Total Price: <span class="txt">{$order.cart_price}</span></h2>
+    <h2>Total Price: <span class="txt">{$cart.cart_price}</span></h2>
     <ul class="receipt">
       {#each items as item}
-        {#if $order.cart_products[item]}
+        {#if !!$cart.cart_products[item]}
           <div class="items">
-            <img src={$order.cart_products[item].image} alt={item} />
+            <img src={$cart.cart_products[item].image} alt={item} />
             <span>
               <h4>{item}</h4>
             </span>
             <span class="price">
-              <h4>Ksh {$order.cart_products[item].total_price | 0}</h4>
+              <h4>Ksh {$cart.cart_products[item].total_price | 0}</h4>
             </span>
           </div>
         {/if}
@@ -97,11 +110,18 @@
   </div>
 
   {#if $order?.approved === true}
-    <h4>Delivery EXECUTABLE</h4>
-    <button class="btn btn-blue glow" on:click={printPDF}>Download PDF</button>
-    <modal-action type="open" name="cancel">
-      <button class="btn btn-blue btn-sm glow">Cancel Delivery 🚫</button>
+    <h4>Order<span class="txt">APPROVED</span></h4>
+    <modal-action type="open" name="pay">
+      <button class="btn btn-green btn-sm glow">Pay Order 💵</button>
     </modal-action>
+    <modal-action type="open" name="cancel">
+      <button class="btn btn-red btn-sm glow">Cancel Delivery 🚫</button>
+    </modal-action>
+    <modal-dialog name="pay" esc="true">
+      <h2>Are you Sure you want to proceed with payment?</h2>
+      <button class="btn btn-blue glow" on:click={printPDF}>Download PDF</button
+      >
+    </modal-dialog>
     <modal-dialog name="cancel" esc="true">
       <h2>Are you Sure you want to cancel the Delivery?</h2>
       <button class="btn btn-red glow" on:click={cancelSubmit}
@@ -109,8 +129,14 @@
       >
     </modal-dialog>
   {:else}
-    <h4>Delivery <span class="txt">not EXECUTABLE</span></h4>
+    <h4>Order<span class="txt">not APPROVED</span></h4>
   {/if}
+  <button class="btn btn-green btn-sm glow" on:click={tab2}
+    >Back to Delivery 📲</button
+  >
+  <button class="btn btn-blue btn-sm glow" on:click={placeOrder}
+    >Place Order 📲</button
+  >
 {:else}
   <no-user />
 {/if}
@@ -167,7 +193,12 @@
   .glow {
     @apply hover:translate-y-[-2px];
   }
-
+  .btn-green {
+    @apply bg-green-500 text-white hover:bg-green-600 active:bg-green-700;
+    &.glow {
+      @apply hover:drop-shadow-[0_0_5px_rgba(59,130,246,0.5)];
+    }
+  }
   .btn-blue {
     @apply bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700;
     &.glow {

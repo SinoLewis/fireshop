@@ -7,5 +7,4 @@ export * from "./settings";
 export * from "./toast";
 export * from "./order";
 export * from "./checkout";
-export * from "./directions";
-export * from "./geocode";
+export * from "./destination";

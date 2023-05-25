@@ -1,6 +1,4 @@
-import { writable } from "svelte/store";
-
-interface Directions {
+export interface Directions {
   type: string;
   features: Feature[];
   bbox: number[];
@@ -64,9 +62,3 @@ interface Engine {
   build_date: string;
   graph_date: string;
 }
-
-const directions = writable({} as Directions);
-
-export { directions };
-
-export type { Directions };

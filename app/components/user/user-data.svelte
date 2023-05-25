@@ -1,31 +1,21 @@
 <svelte:options tag="user-data" />
 
 <script lang="ts">
-  import { cart, order } from "../../stores";
+  import { cart, destination } from "../../stores";
 
   let km = 0;
   let metres = 0;
   let mins = 0;
   let seconds = 0;
 
-  try {
-    order.subscribe((value) => {
-      if (value.directions !== undefined) {
-        km = Math.floor(
-          value.directions.features[0]?.properties.summary.distance / 1000
-        );
-        metres =
-          value.directions.features[0]?.properties.summary.distance % 1000;
-        mins = Math.floor(
-          value.directions.features[0]?.properties.summary.duration / 60
-        );
-        seconds =
-          value.directions.features[0]?.properties.summary.duration % 60;
-      }
-    });
-  } catch (error) {
-    console.log("ORDER SUB ERROR: ", error);
-  }
+  destination.subscribe((value) => {
+    if (!!value.distance && !!value.duration) {
+      km = Math.floor(value.distance / 1000);
+      metres = value.distance % 1000;
+      mins = Math.floor(value.duration / 60);
+      seconds = value.duration % 60;
+    }
+  });
 </script>
 
 <div class="container">

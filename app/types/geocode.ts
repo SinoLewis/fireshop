@@ -1,9 +1,7 @@
-import { writable } from "svelte/store";
-
-interface Geocode {
+export interface Geocode {
   geocoding: Geocoding;
   type: string;
-  features: Feature;
+  features: Feature[];
   bbox: number[];
 }
 
@@ -115,8 +113,3 @@ interface Concordances {
 interface Geonames {
   feature_code: string;
 }
-
-const geocode = writable({} as Geocode);
-
-export { geocode };
-export type { Geocode, Feature };
