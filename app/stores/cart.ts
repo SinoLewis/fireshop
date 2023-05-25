@@ -1,6 +1,8 @@
 import { products } from "./products";
 import { writable } from "svelte/store";
 import { decrypt, encrypt } from "../util/crypt";
+import { v4 as uuidv4 } from "uuid";
+import { order } from "./order";
 
 const SELECTED_CART: any = import.meta.env.VITE_LOCAL_CART;
 let initCart = localStorage.getItem(SELECTED_CART);
@@ -37,6 +39,7 @@ function getCart(): Cart {
       timeStyle: "full",
     });
     const data = {
+      id: uuidv4(),
       cart_price: 0,
       cart_total: 0,
       cart_products: {},
@@ -117,16 +120,22 @@ cart.subscribe((value) => {
     0
   );
 
-
   let date = new Date();
   value.updated_at = date.toLocaleString("en-US", {
     dateStyle: "full",
     timeStyle: "full",
   });
+
+  order.update((o) => {
+    o.cart_id = value.id;
+    console.log("ORDER ID", o);
+    return { ...o };
+  });
+
   localStorage.setItem(SELECTED_CART, encrypt(JSON.stringify(value)));
   // TEST
   console.log("CART STORE", value);
 });
 
-export { cart, add, minus, remove, encrypt, decrypt };
+export { cart, add, minus, remove };
 export type { CartProducts };
