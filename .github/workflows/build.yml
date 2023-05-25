@@ -58,4 +58,4 @@ jobs:
         with:
           command: monitor
           
-      - run: npm run build
+      - run: mkdir ./static/svelte; npm run build
