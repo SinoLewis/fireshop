@@ -11,11 +11,9 @@ const axiosClient = axios.create({
 });
 
 // orders procedures
-export async function updateOrderStatus(
-  store_id: string,
-  order_id: string,
-  body: object
-) {
+export async function updateOrderStatus(req: any, res: any) {
+  const { store_id, order_id } = req.params;
+  const body = req.body;
   try {
     const response = await axiosClient.put(
       `/webhook/stores/${store_id}/orders/${order_id}/status`,
@@ -27,11 +25,9 @@ export async function updateOrderStatus(
     console.error("Error:", error);
   }
 }
-export async function updateOrderProducts(
-  store_id: string,
-  order_id: string,
-  body: object
-) {
+export async function updateOrderProducts(req: any, res: any) {
+  const { store_id, order_id } = req.params;
+  const body = req.body;
   try {
     const response = await axiosClient.post(
       `/webhook/stores/${store_id}/orders/${order_id}/replace_products`,
@@ -48,7 +44,8 @@ export async function updateOrderProducts(
 // notification procedure
 
 // menu procdures
-export async function uploadMenu(store_id: string, body: object) {
+export async function uploadMenu(req: any, res: any) {
+  const { store_id, body } = req.params;
   try {
     const response = await axiosClient.post(
       `/webhook/stores/${store_id}/menu`,
@@ -61,7 +58,8 @@ export async function uploadMenu(store_id: string, body: object) {
   }
 }
 
-export async function verifyMenu(store_id: string, transaction_id: string) {
+export async function verifyMenu(req: any, res: any) {
+  const { store_id, transaction_id } = req.params;
   try {
     const response = await axiosClient.get(
       `/webhook/stores/${store_id}/menu/${transaction_id}`
@@ -73,7 +71,8 @@ export async function verifyMenu(store_id: string, transaction_id: string) {
   }
 }
 
-export async function validateMenu(body: object) {
+export async function validateMenu(req: any, res: any) {
+  const body = req.body;
   try {
     const response = await axiosClient.post(`/paris/menu/validate`, body);
     console.log("Response:", response.data);
@@ -84,11 +83,9 @@ export async function validateMenu(body: object) {
 }
 
 // items procdures
-export async function updateItemProduct(
-  store_id: string,
-  product_id: string,
-  body: object
-) {
+export async function updateItemProduct(req: any, res: any) {
+  const { store_id, product_id } = req.params;
+  const body = req.body;
   try {
     const response = await axiosClient.patch(
       `/webhook/stores/${store_id}/products/${product_id}`,
@@ -101,11 +98,9 @@ export async function updateItemProduct(
   }
 }
 
-export async function updateItemAttributes(
-  store_id: string,
-  attr_id: string,
-  body: object
-) {
+export async function updateItemAttributes(req: any, res: any) {
+  const { store_id, attr_id } = req.params;
+  const body = req.body;
   try {
     const response = await axiosClient.patch(
       `/webhook/stores/${store_id}/attributes/${attr_id}`,
@@ -118,7 +113,9 @@ export async function updateItemAttributes(
   }
 }
 
-export async function updateBulkItems(store_id: string, body: object) {
+export async function updateBulkItems(req: any, res: any) {
+  const { store_id } = req.params;
+  const body = req.body;
   try {
     const response = await axiosClient.post(
       `/webhook/stores/${store_id}/menu/updates`,
@@ -131,7 +128,8 @@ export async function updateBulkItems(store_id: string, body: object) {
   }
 }
 
-export async function getBulkItems(store_id: string, transaction_id: string) {
+export async function getBulkItems(req: any, res: any) {
+  const { store_id, transaction_id } = req.params;
   try {
     const response = await axiosClient.get(
       `/webhook/stores/${store_id}/menu/updates/${transaction_id}`
@@ -144,7 +142,8 @@ export async function getBulkItems(store_id: string, transaction_id: string) {
 }
 
 // scheduling procedures
-export async function getScheduleStore(store_id: string) {
+export async function getScheduleStore(req: any, res: any) {
+  const { store_id } = req.params;
   try {
     const response = await axiosClient.get(
       `/webhook/stores/${store_id}/schedule`
@@ -155,7 +154,8 @@ export async function getScheduleStore(store_id: string) {
     console.dir(error);
   }
 }
-export async function updateCloseStore(store_id: string, body: object) {
+export async function updateCloseStore(req: any, res: any) {
+  const { store_id, order_id, body } = req.params;
   try {
     const response = await axiosClient.put(
       `/webhook/stores/${store_id}/closing`,
@@ -167,7 +167,8 @@ export async function updateCloseStore(store_id: string, body: object) {
     console.dir(error);
   }
 }
-export async function getCloseStore(store_id: string) {
+export async function getCloseStore(req: any, res: any) {
+  const { store_id } = req.params;
   try {
     const response = await axiosClient.get(
       `/webhook/stores/${store_id}/closing`
@@ -178,7 +179,8 @@ export async function getCloseStore(store_id: string) {
     console.error("Error:", error);
   }
 }
-export async function deleteTempClose(store_id: string) {
+export async function deleteTempClose(req: any, res: any) {
+  const { store_id } = req.params;
   try {
     const response = await axiosClient.delete(
       `/webhook/stores/${store_id}/closing`
