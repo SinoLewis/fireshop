@@ -16,4 +16,4 @@ done
 # NGROK_URL=$(curl http://localhost:4040/api/tunnels | grep -oP 'public_url":"\K[^"]+' | awk '{print $1}');
 
 # Start supabase edge deployment
-for dir in $(find ../supabase/functions -maxdepth 1 -type d -not -path '*/\.*' -printf '%f\n'); do supabase functions deploy "$dir" --no-verify-jwt; done
+for dir in $(find ../supabase/functions -maxdepth 1 -type d  -not -name '_types' -not -name '_shared' -not -path '*/\.*' -printf '%f\n'); do supabase functions deploy "$dir" --no-verify-jwt; done
