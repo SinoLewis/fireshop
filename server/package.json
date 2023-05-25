@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon express.ts",
+    "start": "npm run deploy",
+    "express": "nodemon express.ts",
     "ngrok": "ngrok http 3000;",
-    "supabase": "./deploy.sh",
-    "deploy": "concurrently \"npm start\" \"npm run ngrok\" \"npm run supabase\""
+    "supabase": "./supabase.deploy.sh",
+    "discord": "nodemon discord.ts",
+    "discord:deploy": "nodemon utils/deploy-commands.js",
+    "discord:delete": "nodemon utils/delete-commands.js.",
+    "deploy": "concurrently \"npm run express\" \"npm run ngrok\" \"npm run supabase\" \"npm run discord\""
   },
   "keywords": [],
   "author": "",
@@ -17,12 +21,15 @@
     "@types/express": "^4.17.14",
     "@types/node": "^18.11.14",
     "nodemon": "^2.0.20",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.22.0",
     "axios": "^1.3.6",
     "concurrently": "^8.0.1",
     "cors": "^2.8.5",
+    "discord.js": "^14.11.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "meilisearch": "^0.32.3",
