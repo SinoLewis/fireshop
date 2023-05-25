@@ -1,11 +1,11 @@
-import { json, serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import axiod from "https://deno.land/x/axiod/mod.ts";
+import { serve } from "std/server";
+import axios from "axios";
 import { corsHeaders } from "../_shared/cors.ts";
 
 console.log(`Function "meilisearch" up and running!`);
 
 serve(async (req) => {
-  const NGROK_URL = Deno.env.get("NGROK_URL")!;
+  const NGROK_URL = Deno.env.get("NGROK_URL");
 
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -13,7 +13,7 @@ serve(async (req) => {
 
   try {
     const { query } = await req.json();
-    const { data } = await axiod.get(`${NGROK_URL}/meilisearch/${query}`);
+    const { data } = await axios.get(`${NGROK_URL}/meilisearch/${query}`);
 
     return new Response(JSON.stringify(data), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
