@@ -1,6 +1,5 @@
-import { user } from "../stores";
+import { Cart, Destination, user } from "../stores";
 import type { Order } from "../stores";
-import { order } from "../stores";
 
 export async function sendMessageToWebhook(type, message) {
   let webhook;
@@ -67,9 +66,15 @@ export async function sendMessageToWebhook(type, message) {
   }
 }
 
-export const sendOrderToWebhook = async (order: Order) => {
-  const webhook = import.meta.env.VITE_HOOK_ORDER;
-  let items: any = Object.values(order.cart_products).map((item) => {
+export const sendOrderToWebhook = async (
+  order: Order,
+  cart: Cart,
+  destination: Destination
+) => {
+  // TODO: update webook to PROD channel
+  // const webhook = import.meta.env.VITE_HOOK_ORDER;
+  const webhook = import.meta.env.VITE_HOOK_TESTIN;
+  let items: any = Object.values(cart.cart_products).map((item) => {
     return {
       title: item.title,
       description: `PRICE: ${item.price}`,
@@ -90,7 +95,7 @@ export const sendOrderToWebhook = async (order: Order) => {
       fields: [
         {
           name: "ADDRESS",
-          value: `${order.geocode.features.properties.name}, ${order.geocode.features.properties?.region}`,
+          value: `${destination?.label}`,
           inline: true,
         },
         {
@@ -125,49 +130,3 @@ export const sendOrderToWebhook = async (order: Order) => {
     console.error(`Error sending message to webhook: ${error}`);
   }
 };
-
-// export const sendOrderToWebhook = async (order: Order) => {
-//   const webhook = import.meta.env.VITE_HOOK_ORDER;
-
-// //  console.log(
-// //    "DISCORD IMAGE: ",
-// //    await getImage("/img/categories/shoals/perfume-oil.jpg")
-// //  );
-//   let items = Object.values(order.cart_products).map((item) => {
-//     return {
-//       title: item.title,
-//       description: `PRICE: ${item.price}`,
-//       color: 32441,
-//       image: async () => await getImage(item.image),
-//       footer: {
-//         text: `QUANTITY: ${item.quantity}`,
-//       },
-//     };
-//   });
-//   let customer = {
-//     username: order.name,
-//     // avatar_url: "https://i.imgur.com/4M34hi2.png",
-//     content: `ADDRESS: ${order.address.display_name} \nPHONE: ${order.phone}`,
-//     embeds: JSON.stringify(items),
-//   };
-//   const formData = new FormData();
-//   Object.entries(customer).forEach((value) => {
-//     formData.append(value[0], value[1]);
-//   });
-
-//   try {
-//     const response = await fetch(webhook, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "multipart/form-data",
-//       },
-//       body: formData,
-//     });
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! status: ${response.status}`);
-//     }
-//     // console.log("Successfully sent message to webhook of type: ORDER");
-//   } catch (error) {
-//    // console.error(`Error sending message to webhook: ${error}`);
-//   }
-// };
