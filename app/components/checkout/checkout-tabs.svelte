@@ -2,16 +2,13 @@
 
 <script lang="ts">
   import { checkout } from "../../stores";
-  const tab1 = () => checkout.set(0);
-  const tab2 = () => checkout.set(1);
-  const tab3 = () => checkout.set(2);
 </script>
 
 <div class="box">
   <div class="group">
-    <btn on:click={tab1} class="blue">Cart 🛒</btn>
-    <btn on:click={tab2} class="green">Delivery 🚚</btn>
-    <btn on:click={tab3} class="purple">Order 🖲️</btn>
+    <btn class:glow={$checkout === 0} class="blue">1. Cart 🛒</btn>
+    <btn class:glow={$checkout === 1} class="green">2. Delivery 🚚</btn>
+    <btn class:glow={$checkout === 2} class="purple">3. Order 🖲️</btn>
   </div>
 
   <div>
@@ -35,7 +32,7 @@
     @apply text-center btn-group btn-group-horizontal gap-1 justify-items-center;
 
     btn {
-      @apply text-xs md:text-xl btn-display glow uppercase cursor-pointer shadow-md px-5 py-2 transition-all duration-150 my-0.5 hover:drop-shadow-[0_0_4px_rgba(225,225,225,0.5)];
+      @apply text-xs md:text-xl btn-display uppercase cursor-pointer shadow-md px-5 py-2 transition-all duration-150 my-0.5 hover:drop-shadow-[0_0_4px_rgba(225,225,225,0.5)];
     }
 
     .blue {
@@ -49,7 +46,7 @@
     }
   }
   .glow {
-    @apply hover:translate-y-[-2px];
+    @apply translate-y-[-20px];
   }
   .btn-display {
     @apply font-display font-normal;

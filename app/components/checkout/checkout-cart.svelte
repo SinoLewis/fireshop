@@ -1,8 +1,9 @@
 <svelte:options tag="checkout-cart" />
 
 <script lang="ts">
-  import { cart } from "../../stores";
+  import { cart, checkout } from "../../stores";
 
+  const tab2 = () => checkout.set(1);
   let items = Object.keys($cart.cart_products);
   let image = null;
   $: image;
@@ -38,16 +39,10 @@
           <cart-buttons product_title={item} />
         </div>
       </div>
-      <!-- <div class="item-body">
-        <h2 class="item-title">{item}</h2>
-        <p>Ksh {$cart.cart_products[item].total_price | 0}</p>
-        <div class="item-btns">
-          <cart-buttons product_title={item} />
-        </div>
-      </div> -->
     </div>
   {/if}
 {/each}
+<button on:click={tab2}>Proceed to Delivery</button>
 
 <style lang="scss">
   .txt {
@@ -81,15 +76,8 @@
     .body {
       @apply grid gap-y-0.5;
     }
-    // .item-body {
-    //   @apply card-body;
-    // }
-
-    // .item-title {
-    //   @apply card-title;
-    // }
-    // .item-btns {
-    //   @apply card-actions justify-end;
-    // }
+  }
+  button {
+    @apply btn bg-blue-500 mx-4 px-4 py-2 text-xl font-display text-white hover:bg-info-content drop-shadow-[6px_6px_0_black] hover:drop-shadow-[0_0_7px_rgba(168,85,247,0.5)] transition-all duration-300;
   }
 </style>
