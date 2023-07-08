@@ -35,8 +35,6 @@ function getOrder(): Order {
       created_at: dateNow,
       updated_at: dateNow,
     } as Order;
-    // TEST
-    // console.log("STORE INIT Order: ", data);
     localStorage.setItem(SELECTED_ORDER, encrypt(JSON.stringify(data)));
   }
   return JSON.parse(decrypt(localStorage.getItem(SELECTED_ORDER)));

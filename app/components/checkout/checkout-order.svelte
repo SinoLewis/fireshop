@@ -11,7 +11,6 @@
     updateDestination,
   } from "../../util/supabase.db";
   import { orders_revolt } from "../../util/revolt";
-  // import { sendOrder } from "../../util/discord.webhooks";
 
   const tab2 = () => checkout.set(1);
   let items = Object.keys($cart.cart_products);
@@ -36,16 +35,12 @@
   });
 
   function placeOrder() {
-    // sendOrder();
     orders_revolt($order, $cart, $destination);
-    // sendOrderToWebhook($order, $cart, $destination);
   }
   function printPDF() {
-    // Select the section to be printed
-    // let elementToPrint = document.getElementById("template-section");
-
+    // TODO: Select the section to be printed
     html2canvas(printEl, { width: 240, height: 320 }).then((canvas) => {
-      // Create a new PDF document
+      // TODO: Create a new PDF document
       let pdf = new jsPDF("p", "pt", [595, 842]);
       // pdf.setFontSize(16);
       // Add the canvas to the PDF

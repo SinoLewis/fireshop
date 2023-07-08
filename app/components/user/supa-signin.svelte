@@ -12,9 +12,7 @@
       (payload: any) => {
         if (payload.new?.id === $order.id) {
           $order.delivery_price = payload.new.delivery_price;
-          $order.approved = payload.new.approved
-          // TEST
-          console.log("ORDERS STORE DB CHANGE CHECK: ", $order);
+          $order.approved = payload.new.approved;
         }
       }
     )

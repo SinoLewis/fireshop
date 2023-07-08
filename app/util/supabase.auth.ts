@@ -65,9 +65,6 @@ export async function passwordlessSignin(email: string) {
     },
   });
   serverError = error;
-  // TEST
-  // console.log("SERVER DATA: ", data);
-  // console.log("SERVER ERROR: ", data);
   if (!error) {
     res = `Magic signin link sent to ${email}`;
     auth(`${email} requested a login link`);

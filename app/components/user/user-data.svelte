@@ -37,19 +37,6 @@
       </div>
     </div>
   </div>
-  <!-- <div class="box">
-    <div class="item">
-      <div class="title">User 👤</div>
-      <div class="value">{$user?.email}</div>
-    </div>
-    <div class="fig">
-      <div class="profile">
-        <div>
-          <img src="/img/ui/avatar.svg" />
-        </div>
-      </div>
-    </div>
-  </div> -->
 </div>
 
 <style lang="scss">
@@ -58,11 +45,6 @@
   }
   .box {
     overflow: hidden;
-    // background: linear-gradient(
-    //   176deg,
-    //   rgb(0, 56, 80) 50%,
-    //   rgb(8, 10, 15) 100%
-    // );
     @apply stats bg-info-content m-4 text-white;
   }
   .item {
@@ -78,14 +60,4 @@
   .desc {
     @apply stat-desc;
   }
-  // .fig {
-  //   @apply stat-figure;
-  // }
-  // .profile {
-  //   @apply avatar online;
-
-  //   div {
-  //     @apply w-16 rounded-full;
-  //   }
-  // }
 </style>

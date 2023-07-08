@@ -25,8 +25,6 @@ export interface Cart {
   cart_products: CartProducts;
   cart_price: number;
   cart_total: number;
-  // is_paid: boolean;
-  // ["Checkout", "Paid"];
   created_at: string;
   updated_at: string;
 }
@@ -46,8 +44,6 @@ function getCart(): Cart {
       created_at: dateNow,
       updated_at: dateNow,
     } as Cart;
-    // TEST
-    // console.log("STORE INITCART: ", data);
     localStorage.setItem(SELECTED_CART, encrypt(JSON.stringify(data)));
   }
   return JSON.parse(decrypt(localStorage.getItem(SELECTED_CART)));

@@ -7,8 +7,6 @@
   let value;
   async function handleSubmit() {
     review(value);
-    // TEST
-    // console.log("REVIEW: ", value);
     value = undefined;
 
     toast.set({

@@ -69,8 +69,6 @@ export async function updateOrder(order: Order): Promise<Order> {
   const date = new Date();
   try {
     const user_order = await getCustomOrders(order);
-    //  TEST
-    console.log("ORDER get DB: ", user_order);
     if (user_order?.user_id === order.user_id && user_order?.id === order.id) {
       const { data, error }: { data: any; error: any } = await supabase
         .from("custom-orders")
@@ -98,8 +96,6 @@ async function getPriceById(id) {
       .select("*")
       .eq("id", id);
     if (error) throw error;
-    // TEST
-    // console.log("PRICE: ", data[0]["price"]);
     return data[0]["price"];
   } catch (error) {
     console.error("PRICE ERROR", error.message);
@@ -136,15 +132,12 @@ export async function updateCart(cart: Cart): Promise<Cart> {
   // TODO: Test if its right price with fake html price
   try {
     const user_cart = await getCarts(cart);
-    // TEST
-    console.log("CART get DB: ", user_cart);
     if (user_cart?.user_id === cart.user_id && user_cart?.id === cart.id) {
       const { data, error }: { data: any; error: any } = await supabase
         .from("carts")
         .update({
           ...db_cart,
           cart_products: Object.values(cart_products).map((v) => v.id),
-          // id: undefined,
         })
         .eq("id", cart.id)
         .select();
@@ -176,8 +169,6 @@ async function updateProductQuantity(cart: Cart) {
         .update({ ...product })
         .eq("id", item.id);
       if (error) throw error;
-      // TEST
-      //  console.log("PRODUCTS update: ", data);
     } catch (error) {
       console.log("PRODUCTS update ERROR: ", error);
       error_revolt(error.message);

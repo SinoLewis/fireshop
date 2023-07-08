@@ -2,7 +2,7 @@
 
 <script lang="ts">
   import { passwordlessSignin } from "../../util/supabase.auth";
-  
+
   let emailEl: HTMLInputElement;
   let isValid = false;
   let isTouched = false;
@@ -15,7 +15,6 @@
   }
 
   async function handleSubmit(e) {
-    // toLowerCase
     const email = emailEl.value;
     loading = true;
     const { res, serverError } = await passwordlessSignin(email);
@@ -23,8 +22,6 @@
     error = serverError;
     confirmation = res;
     if (!serverError) emailEl.value = null;
-    // TEST
-    // console.log("MAGIC LINK SENT");
   }
 </script>
 

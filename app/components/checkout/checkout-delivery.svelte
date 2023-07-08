@@ -57,15 +57,9 @@
 
   async function getAddressHits(query) {
     try {
-      // const res = getGeocode(query);
-      // geocode = res["data"];
-      // console.log(res);
-
-      // Edge Supa REDIS
       const body = {
         place: query,
       };
-      // const { data, error } = await supabase.functions.invoke("ors-geocode", {
       const { data, error } = await supabase.functions.invoke(
         "upstash-ors-geocode",
         {
@@ -102,18 +96,11 @@
     let pickupAddress = [36.786911, -1.300596];
 
     try {
-      // const start = `${pickupAddress[0]},${pickupAddress[1]}`;
-      // const end = `${coordinates[0]},${coordinates[1]}`;
-      // const res = getDirections(start, end);
-      // directions = res["data"];
-
-      // Edge Supa REDIS
       const body = {
         start: `${pickupAddress[0]},${pickupAddress[1]}`,
         end: `${coordinates[0]},${coordinates[1]}`,
       };
       const { data, error } = await supabase.functions.invoke(
-        // "ors-directions",
         "upstash-ors-directions",
         {
           body: JSON.stringify(body),
@@ -140,8 +127,6 @@
             message: "Your Delivery details are set succesful!",
             type: "success",
           });
-          // TEST
-          // console.log("ORDER STORE AFTER: ", $order);
         } else {
           console.log("FORM VALIDITY: ", $is_form_valid);
           if (!$order.name) throw new Error(`Name value is empty`);
@@ -217,7 +202,6 @@
         <div class="results">
           <div class="hit">
             <table>
-              <!-- head -->
               <thead>
                 <tr>
                   <th />
@@ -243,7 +227,6 @@
       <h2 class="mg">Total Cost</h2>
       <user-data />
       <div />
-      <!-- <button class:animate={loading}>Testing...</button> -->
       <div class="btn-flex">
         <button on:click={tab1} class="send blue">Back to Cart</button>
         <button
@@ -283,9 +266,6 @@
       @apply input input-bordered border-b-4 border-b-white border-t-0 border-r-0 border-l-0;
     }
   }
-  // input {
-  //   height: 56px;
-  // }
   input[type="email"]:valid,
   input[type="tel"]:valid,
   input[type="text"]:valid {
@@ -329,12 +309,9 @@
       );
       @apply text-lg font-bold cursor-pointer glow transition-all duration-150 my-0.5 hover:drop-shadow-[0_0_4px_rgba(225,225,225,0.5)];
     }
-    // @apply overflow-x-auto;
-
     table {
       @apply table-auto text-left;
     }
-    // @apply btn btn-primary block m-2;
   }
   .glow {
     @apply hover:translate-y-[-2px];

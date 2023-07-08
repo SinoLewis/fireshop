@@ -7,7 +7,6 @@
 
   let src = "/img/ui/avatar.svg";
   $: {
-    // Reactive assignment to update src when $user changes
     src = $user?.user_metadata?.avatar_url ?? "/img/ui/avatar.svg";
   }
 </script>
