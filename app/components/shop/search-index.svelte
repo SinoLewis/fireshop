@@ -1,47 +1,46 @@
-<svelte:options tag="meili-search" />
+<svelte:options tag="search-index" />
 
 <script lang="ts">
-  import { MeiliSearch } from "meilisearch";
   import { modal } from "../../stores";
   import { router } from "../../main";
   import { onMount } from "svelte";
-  import { supabase } from "../../util/supabase.auth";
+  import { products } from "../../stores/products";
 
-  const client = new MeiliSearch({
-    host: "http://localhost:7700",
-  });
-  const index = client.index("products");
-
-  let results: any;
   let hits = [];
   let activeHit = 0;
+
   onMount(async () => {
     return () => {
       window.removeEventListener("keydown", handleSpecialKeys);
     };
   });
+  // TODO: Add thumbnail img
+  // TODO: Fixed size search modal
+  function toKebabCase(str) {
+    return str.toLowerCase().replace(/\s+/g, "-");
+  }
+
+  function performSearch(query) {
+    if (query.length !== 0) {
+      let results = Object.values(products).filter((item) =>
+        item.title.toLowerCase().includes(query.toLowerCase())
+      );
+      return results;
+    } else return [];
+  }
 
   async function search(e: Event) {
     const q = (e.target as HTMLInputElement).value;
-    const body = {
-      query: q,
-    };
     try {
       try {
-        const { data, error } = await supabase.functions.invoke("meilisearch", {
-          body: JSON.stringify(body),
-        });
-        if (error) throw error;
-        hits = data["hits"];
+        hits = performSearch(q);
         activeHit = 0;
       } catch (error) {
-        console.warn("MEILISEARCH Edge Error", error);
+        console.warn("PRODUCTS SEARCH Error", error);
       }
     } catch (error) {
-      console.log("MEILI SEARCH ERROR: ", error);
+      console.log("PRODUCTS SEARCH ERROR: ", error);
     }
-    // TEST
-    // console.log("MEILI: ", results);
   }
 
   function goUp() {
@@ -87,20 +86,19 @@
   </form>
 
   <div class="results">
-    {#if !results?.totalHits}
+    {#if hits.length === 0}
       <p class="no-results">No results yet</p>
     {/if}
     {#each hits as hit, i}
       <a
         class="hit"
-        href={hit.relpermalink}
+        href={`/${hit.category}/${toKebabCase(hit.title)}`}
         class:active={i === activeHit}
         on:mouseover={() => (activeHit = i)}
         on:focus={() => (activeHit = i)}
       >
         <span class="hit-title">{hit.title}</span>
-        <span class="hit-type"> in {hit.category}</span>
-        <span class="hit-description">{@html hit._formatted.description}</span>
+        <span class="hit-type"> in {hit.price}</span>
       </a>
     {/each}
   </div>

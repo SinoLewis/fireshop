@@ -12,7 +12,7 @@ export const products = {
     category: "shoals",
   },
 
-  OPPOF19: {
+  "OPPOF19": {
     title: "OPPOF19",
     price: 280,
     id: "d153138b-8bbe-4606-aa60-0babcc529186",
