@@ -33,7 +33,6 @@ resources/
 *.env
 *config.json
 static/svelte/index.html
-AttacheCase/*
 
 # Sever
 server/products.json

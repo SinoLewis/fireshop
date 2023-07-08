@@ -40,14 +40,14 @@
     "vite": "^3.0.5"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.2.0",
-    "cors": "^2.8.5",
+    "@supabase/supabase-js": "^2.23.0",
+    "@upstash/redis": "^1.21.0",
     "crypto-js": "^4.1.1",
     "daisyui": "^2.49.0",
-    "dotenv": "^16.0.3",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "meilisearch": "^0.30.0",
+    "revolt.js": "7.0.0-beta.9",
     "uuid": "^9.0.0"
   }
 }
