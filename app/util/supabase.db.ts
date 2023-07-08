@@ -1,6 +1,6 @@
 import type { Cart, Order, CartProducts, Destination } from "../stores";
 import { supabase } from "./supabase.auth";
-import { sendMessageToWebhook } from "./discord";
+import { error_revolt } from "./revolt";
 
 async function getDestination(id: string) {
   const { data, error } = await supabase
@@ -43,7 +43,7 @@ export async function updateDestination(destination: Destination) {
     }
   } catch (error) {
     console.log("DESTINATION update ERROR: ", error);
-    sendMessageToWebhook("ERROR", error.message);
+    error_revolt(error.message);
   }
 }
 
@@ -87,7 +87,7 @@ export async function updateOrder(order: Order): Promise<Order> {
     }
   } catch (error) {
     console.log("ORDER update ERROR: ", error);
-    sendMessageToWebhook("ERROR", error.message);
+    error_revolt(error.message);
   }
 }
 
@@ -103,7 +103,7 @@ async function getPriceById(id) {
     return data[0]["price"];
   } catch (error) {
     console.error("PRICE ERROR", error.message);
-    sendMessageToWebhook("ERROR", error.message);
+    error_revolt(error.message);
   }
 }
 
@@ -158,7 +158,7 @@ export async function updateCart(cart: Cart): Promise<Cart> {
     }
   } catch (error) {
     console.log("CART update ERROR: ", error);
-    sendMessageToWebhook("ERROR", error.message);
+    error_revolt(error.message);
   }
 }
 
@@ -180,7 +180,7 @@ async function updateProductQuantity(cart: Cart) {
       //  console.log("PRODUCTS update: ", data);
     } catch (error) {
       console.log("PRODUCTS update ERROR: ", error);
-      sendMessageToWebhook("ERROR", error.message);
+      error_revolt(error.message);
     }
   });
 }

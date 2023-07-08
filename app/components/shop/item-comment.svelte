@@ -1,12 +1,12 @@
 <svelte:options tag="item-comment" />
 
 <script lang="ts">
-  import { sendMessageToWebhook } from "../../util/discord";
+  import { review } from "../../util/revolt";
   import { toast } from "../../stores";
 
   let value;
   async function handleSubmit() {
-    sendMessageToWebhook("REVIEW", value);
+    review(value);
     // TEST
     // console.log("REVIEW: ", value);
     value = undefined;

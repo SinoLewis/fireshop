@@ -1,6 +1,6 @@
 import { createClient, OAuthResponse } from "@supabase/supabase-js";
 import { toast, modal } from "../stores";
-import { sendMessageToWebhook } from "./discord";
+import { error_revolt, auth } from "./revolt";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -49,7 +49,7 @@ export async function signInWithApple() {
 
 export async function supabaseSignOut() {
   let { error } = await supabase.auth.signOut();
-  if (error) sendMessageToWebhook("ERROR", error.message);
+  if (error) error_revolt(error.message);
   toast.set({
     icon: error ? "❌" : "🫶",
     message: error ? error.message : "Thanks for hanging out, see ya around!",
@@ -70,7 +70,7 @@ export async function passwordlessSignin(email: string) {
   // console.log("SERVER ERROR: ", data);
   if (!error) {
     res = `Magic signin link sent to ${email}`;
-    sendMessageToWebhook("AUTH", `${email} requested a login link`);
+    auth(`${email} requested a login link`);
   }
   return { res, serverError };
 }

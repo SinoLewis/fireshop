@@ -10,7 +10,7 @@
     updateOrder,
     updateDestination,
   } from "../../util/supabase.db";
-  import { sendMessageToWebhook, sendOrderToWebhook } from "../../util/discord";
+  import { orders_revolt } from "../../util/revolt";
   // import { sendOrder } from "../../util/discord.webhooks";
 
   const tab2 = () => checkout.set(1);
@@ -31,13 +31,14 @@
       );
     } catch (error) {
       console.log("UPDATE DB ERROR: ", error);
-      sendMessageToWebhook("ERROR", error.message);
+      error(error.message);
     }
   });
 
   function placeOrder() {
     // sendOrder();
-    sendOrderToWebhook($order, $cart, $destination);
+    orders_revolt($order, $cart, $destination);
+    // sendOrderToWebhook($order, $cart, $destination);
   }
   function printPDF() {
     // Select the section to be printed

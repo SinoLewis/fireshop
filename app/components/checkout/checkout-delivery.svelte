@@ -1,7 +1,7 @@
 <svelte:options tag="checkout-delivery" />
 
 <script lang="ts">
-  import { sendMessageToWebhook } from "../../util/discord";
+  import { error_revolt } from "../../util/revolt";
   import {
     toast,
     user,
@@ -15,6 +15,7 @@
   import { onMount } from "svelte";
   import { supabase } from "../../util/supabase.auth";
   import type { Directions, Geocode } from "../../types";
+
   const KEY = import.meta.env.VITE_OPEN_ROUTE;
 
   let emailEl: HTMLInputElement;
@@ -56,18 +57,27 @@
 
   async function getAddressHits(query) {
     try {
+      // const res = getGeocode(query);
+      // geocode = res["data"];
+      // console.log(res);
+
+      // Edge Supa REDIS
       const body = {
         place: query,
       };
-      const { data, error } = await supabase.functions.invoke("ors-geocode", {
-        body: JSON.stringify(body),
-      });
+      // const { data, error } = await supabase.functions.invoke("ors-geocode", {
+      const { data, error } = await supabase.functions.invoke(
+        "upstash-ors-geocode",
+        {
+          body: JSON.stringify(body),
+        }
+      );
       if (error) throw error;
       geocode = data["data"];
       console.log(data);
     } catch (error) {
       console.log("OSM GEOCODE ERROR: ", error);
-      sendMessageToWebhook("ERROR", error.message);
+      error_revolt(error.message);
     }
   }
   const debouncedSearch = debounce(getAddressHits, 2500);
@@ -92,12 +102,19 @@
     let pickupAddress = [36.786911, -1.300596];
 
     try {
+      // const start = `${pickupAddress[0]},${pickupAddress[1]}`;
+      // const end = `${coordinates[0]},${coordinates[1]}`;
+      // const res = getDirections(start, end);
+      // directions = res["data"];
+
+      // Edge Supa REDIS
       const body = {
         start: `${pickupAddress[0]},${pickupAddress[1]}`,
         end: `${coordinates[0]},${coordinates[1]}`,
       };
       const { data, error } = await supabase.functions.invoke(
-        "ors-directions",
+        // "ors-directions",
+        "upstash-ors-directions",
         {
           body: JSON.stringify(body),
         }
@@ -108,7 +125,7 @@
       console.log("DIRECTIONS API: ", directions);
     } catch (error) {
       console.log("OSM DIRECTIONS ERROR: ", error);
-      sendMessageToWebhook("ERROR", error.message);
+      error_revolt(error.message);
     }
   }
 
