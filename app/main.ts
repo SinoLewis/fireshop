@@ -22,12 +22,12 @@ scrollSave();
 export const router = flamethrower({ prefetch: "hover", log: false });
 
 // TEST
-export * from './components/shop/testin.svelte';
+// export * from './components/shop/testin.svelte';
 // Shop
 export * from "./components/shop/cart-buttons.svelte";
 export * from "./components/shop/cart-indicator.svelte";
 export * from "./components/shop/item-comment.svelte";
-export * from "./components/shop/meili-search.svelte";
+export * from "./components/shop/search-index.svelte";
 // AUTH
 export * from "./components/user/supa-email.svelte";
 export * from "./components/user/if-user.svelte";
