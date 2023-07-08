@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "nacl": "https://cdn.skypack.dev/tweetnacl@v1.0.3?dts",
+    "axios": "https://deno.land/x/axiod/mod.ts",
+    "std/server": "https://deno.land/std@0.177.0/http/server.ts"
+  }
+}
