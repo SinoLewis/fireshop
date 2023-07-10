@@ -34,7 +34,7 @@
     }
   });
 
-  function placeOrder() {
+  async function placeOrder() {
     orders_revolt($order, $cart, $destination);
   }
   function printPDF() {
