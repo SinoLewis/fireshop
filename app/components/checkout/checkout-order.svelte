@@ -127,10 +127,10 @@
   {:else}
     <h4>Order<span class="txt">not APPROVED</span></h4>
   {/if}
-  <button class="btn btn-green btn-sm glow" on:click={tab2}
-    >Back to Delivery 📲</button
+  <button class="send btn btn-green btn-sm glow" on:click={tab2}
+    >Back to Delivery 🚚</button
   >
-  <button class="btn btn-blue btn-sm glow" on:click={placeOrder}
+  <button class="send btn btn-purple btn-sm glow" on:click={placeOrder}
     >Place Order 📲</button
   >
 {:else}
@@ -176,6 +176,9 @@
       @apply text-right px-2;
     }
   }
+  .send {
+    @apply btn mx-4 px-4 py-2 text-xl font-display text-white hover:bg-info-content drop-shadow-[6px_6px_0_black] hover:drop-shadow-[0_0_7px_rgba(168,85,247,0.5)] transition-all duration-300;
+  }
   .btn {
     @apply bg-white text-black uppercase font-bold inline-flex cursor-pointer text-center shadow-md no-underline px-5 py-2 transition-all duration-150 my-0.5;
     &.glow {
@@ -197,6 +200,12 @@
   }
   .btn-blue {
     @apply bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700;
+    &.glow {
+      @apply hover:drop-shadow-[0_0_5px_rgba(59,130,246,0.5)];
+    }
+  }
+  .btn-purple {
+    @apply bg-purple-500 text-white hover:bg-blue-600 active:bg-blue-700;
     &.glow {
       @apply hover:drop-shadow-[0_0_5px_rgba(59,130,246,0.5)];
     }

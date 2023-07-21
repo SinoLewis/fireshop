@@ -8,7 +8,7 @@
   <div class="group">
     <btn class:glow={$checkout === 0} class="blue">1. Cart 🛒</btn>
     <btn class:glow={$checkout === 1} class="green">2. Delivery 🚚</btn>
-    <btn class:glow={$checkout === 2} class="purple">3. Order 🖲️</btn>
+    <btn class:glow={$checkout === 2} class="purple">3. Order 📲</btn>
   </div>
 
   <div>

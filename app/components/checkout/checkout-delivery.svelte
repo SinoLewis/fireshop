@@ -228,11 +228,11 @@
       <user-data />
       <div />
       <div class="btn-flex">
-        <button on:click={tab1} class="send blue">Back to Cart</button>
+        <button on:click={tab1} class="send blue glow">Back to Cart</button>
         <button
           on:click={handleSubmit}
           class:animate={loading}
-          class="send green"
+          class="send green glow"
           >{loading ? "proceeding..." : "proceed to Order"}</button
         >
       </div>
