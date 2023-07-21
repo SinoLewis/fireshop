@@ -15,6 +15,12 @@ jobs:
       VITE_LOCAL_CART: ${{ secrets.VITE_LOCAL_CART }}
       VITE_LOCAL_ORDER: ${{ secrets.VITE_LOCAL_ORDER }}
       VITE_LOCAL_KEY: ${{ secrets.VITE_LOCAL_KEY }}
+      VITE_REVOLT_EMAIL: ${{ secrets.VITE_REVOLT_EMAIL }}
+      VITE_REVOLT_PASS: ${{ secrets.VITE_REVOLT_PASS }}
+      VITE_REVOLT_ERROR: ${{ secrets.VITE_REVOLT_ERROR }}
+      VITE_REVOLT_AUTH: ${{ secrets.VITE_REVOLT_AUTH }}
+      VITE_REVOLT_REVIEW: ${{ secrets.VITE_REVOLT_REVIEW }}
+      VITE_REVOLT_ORDERS: ${{ secrets.VITE_REVOLT_ORDERS }}
       VITE_HOOK_SUPA: ${{ secrets.VITE_HOOK_SUPA }}
       VITE_HOOK_REVIEW: ${{ secrets.VITE_HOOK_REVIEW }}
       VITE_HOOK_ORDER: ${{ secrets.VITE_HOOK_ORDER }}
@@ -24,7 +30,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
@@ -49,7 +55,7 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: "1.13"
-      
+
       - name: Snyk test
         run: snyk test
 
@@ -57,5 +63,5 @@ jobs:
         uses: snyk/actions/node@master
         with:
           command: monitor
-          
+
       - run: mkdir ./static/svelte; touch static/svelte/index.html; npm run build

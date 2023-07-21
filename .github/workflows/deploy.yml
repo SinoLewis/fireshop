@@ -14,6 +14,12 @@ jobs:
       VITE_LOCAL_CART: ${{ secrets.VITE_LOCAL_CART }}
       VITE_LOCAL_ORDER: ${{ secrets.VITE_LOCAL_ORDER }}
       VITE_LOCAL_KEY: ${{ secrets.VITE_LOCAL_KEY }}
+      VITE_REVOLT_EMAIL: ${{ secrets.VITE_REVOLT_EMAIL }}
+      VITE_REVOLT_PASS: ${{ secrets.VITE_REVOLT_PASS }}
+      VITE_REVOLT_ERROR: ${{ secrets.VITE_REVOLT_ERROR }}
+      VITE_REVOLT_AUTH: ${{ secrets.VITE_REVOLT_AUTH }}
+      VITE_REVOLT_REVIEW: ${{ secrets.VITE_REVOLT_REVIEW }}
+      VITE_REVOLT_ORDERS: ${{ secrets.VITE_REVOLT_ORDERS }}
       VITE_HOOK_SUPA: ${{ secrets.VITE_HOOK_SUPA }}
       VITE_HOOK_REVIEW: ${{ secrets.VITE_HOOK_REVIEW }}
       VITE_HOOK_ORDER: ${{ secrets.VITE_HOOK_ORDER }}
