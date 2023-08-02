@@ -11,8 +11,8 @@ You can view the [demo site](https://fire-shop.netlify.app)
 - [x] Revolt Merchant API's for customer notification
 - [x] Supabase user authentication
 - [x] Supabase Serveless edge functions
-- [] Mpesa Payments
-- [] Glovo or Sendy kenya delivery service
+- [ ] Mpesa Payments
+- [ ] Glovo or Sendy kenya delivery service
 
 ## Dev Assistance
 
