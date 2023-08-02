@@ -6,6 +6,14 @@ The Fireshop online shop platform frontend built with Svelte, Tailwind, Hugo, Fi
 
 You can view the [demo site](https://fire-shop.netlify.app)
 
+## Project TODO's
+
+- [x] Revolt Merchant API's for customer notification
+- [x] Supabase user authentication
+- [x] Supabase Serveless edge functions
+- [] Mpesa Payments
+- [] Glovo or Sendy kenya delivery service
+
 ## Dev Assistance
 
 All static content is managed with Hugo in the `content` dir. You can easily extend your ideas directly by forking this repo.
@@ -24,23 +32,32 @@ npm start
 
 Check it on on `http://localhost:6969/`.
 
-## Getting started with docker
+## Getting started with docker server
 
-First make sure you have [docker](https://docker.com) installed in your system
+> First make sure you have [docker](https://docker.com) installed in your system
 
-Then build the docker repo image by:
-
-```
-docker build . -t fireshop
-```
-
-This will build the image required to run the repo inside a docker container
+Then start meilisearch container
 
 ```
-docker run -p 6969 fireshop
+docker run -p 7700:7700 --name meilisearch getmeili/meilisearch:v1.1
 ```
 
-Check it on on `http://localhost:6969/`.
+Then start redis container
+
+> redis-stack is used for dev & debug purpose only. Mainly need redis only
+
+Check redis status on on `http://localhost:8001/`.
+
+```
+docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
+```
+
+> Start whole server
+
+```sh
+cd docker
+npm start
+```
 
 <!-- [![Build Status](/static/img/delivery.png)](https://travis-ci.org/username/repo) -->
 
@@ -48,7 +65,7 @@ Check it on on `http://localhost:6969/`.
 
 Create a Svelte file in the `app/components` directory. It must have a custom element tag.
 
-```svelte
+```html
 <svelte:options tag="cart-info" />
 
 <script>
