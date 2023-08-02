@@ -31,7 +31,7 @@ npm start
 ```
 
 Check it on on `http://localhost:6969/`.
-
+<!-- 
 ## Getting started with docker server
 
 > First make sure you have [docker](https://docker.com) installed in your system
@@ -57,7 +57,7 @@ docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:lat
 ```sh
 cd docker
 npm start
-```
+``` -->
 
 <!-- [![Build Status](/static/img/delivery.png)](https://travis-ci.org/username/repo) -->
 
@@ -93,7 +93,7 @@ Now use it in anywhere in your HTML or Markdown.
 ## Commands
 
 - `npm start`: Main dev server. Runs everything you need.
-- `npm run svelte:serve`: Runs components in isolation. Serves `app/index.html` as a playground for components.
+- `npm run svelte`: Runs components in isolation. Serves `app/index.html` as a playground for components.
 - `npm run hugo:serve`: Only runs static site.
 - `npm run dev`: Concurrently rebuilds changes in svelte & runs hugo server.
-- `npm run build`: Build for production
+- `npm run build`: Hugo & Svelte Build for production
