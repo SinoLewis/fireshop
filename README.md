@@ -1,4 +1,5 @@
 # Fireshop
+![Intro](./static/img/Intro.gif)
 
 The Fireshop online shop platform frontend built with Svelte, Tailwind, Hugo, Firebase, & Flamethrower.
 
