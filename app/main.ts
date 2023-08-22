@@ -22,7 +22,7 @@ scrollSave();
 export const router = flamethrower({ prefetch: "hover", log: false });
 
 // TEST
-// export * from './components/shop/testin.svelte';
+export * from './components/shop/testin.svelte';
 // Shop
 export * from "./components/shop/cart-buttons.svelte";
 export * from "./components/shop/cart-indicator.svelte";
