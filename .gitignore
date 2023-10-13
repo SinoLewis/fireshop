@@ -36,5 +36,5 @@ static/svelte/index.html
 
 # Sever
 server/products.json
-# data/svelte.json
+data/svelte.json
 app/.env
