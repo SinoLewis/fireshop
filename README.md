@@ -6,6 +6,7 @@
 [![Whatsapp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](./LICENSE)
 [![Youtube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](./LICENSE)
 [![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](./LICENSE)
+[![Codespaces](https://img.shields.io/badge/Codesandbox-000000?style=for-the-badge&logo=CodeSandbox&logoColor=white)](./LICENSE)
 
 <img src="./static/img/fireshop.png" alt="logo" width="240"/>
 <!-- ![Intro](./static/img/fireshop.png) { width:"300px"; height:"200px"} -->
