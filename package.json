@@ -45,7 +45,7 @@
     "crypto-js": "^4.1.1",
     "daisyui": "^2.49.0",
     "html2canvas": "^1.4.1",
-    "jspdf": "^2.5.1",
+    "jspdf": "^4.1.0",
     "meilisearch": "^0.30.0",
     "revolt.js": "7.0.0-beta.9",
     "uuid": "^9.0.0"
